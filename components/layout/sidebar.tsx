@@ -7,11 +7,8 @@ import {
   Building2, 
   DraftingCompass, 
   CreditCard, 
-  User,
-  Menu,
-  X
+  User
 } from 'lucide-react';
-import { useState } from 'react';
 
 const navItems = [
   { key: 'home', label: 'Home', icon: Home, href: '/' },
@@ -23,26 +20,11 @@ const navItems = [
 
 export function Sidebar() {
   const pathname = usePathname();
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   return (
     <>
-      {/* Mobile menu button */}
-      <button
-        onClick={() => setIsMobileOpen(!isMobileOpen)}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-white shadow-md"
-      >
-        {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
-      </button>
-
-      {/* Sidebar */}
-      <aside
-        className={`
-          fixed lg:sticky top-0 left-0 h-screen w-64 bg-white border-r border-gray-200
-          transform transition-transform duration-300 ease-in-out z-40
-          ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-        `}
-      >
+      {/* Desktop Sidebar - Hidden on mobile */}
+      <aside className="hidden lg:block sticky top-0 left-0 h-screen w-64 bg-white border-r border-gray-200">
         <div className="flex flex-col h-full p-4">
           {/* Logo */}
           <div className="mb-8 px-3 pt-2">
@@ -62,7 +44,6 @@ export function Sidebar() {
                 <Link
                   key={item.key}
                   href={item.href}
-                  onClick={() => setIsMobileOpen(false)}
                   className={`
                     flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm
                     transition-all duration-200
@@ -88,13 +69,42 @@ export function Sidebar() {
         </div>
       </aside>
 
-      {/* Mobile overlay */}
-      {isMobileOpen && (
-        <div
-          className="lg:hidden fixed inset-0 bg-black/50 z-30"
-          onClick={() => setIsMobileOpen(false)}
-        />
-      )}
+      {/* Mobile Bottom Tab Bar - Only visible on mobile */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 safe-area-bottom">
+        <div className="flex items-center justify-around px-2 py-2 max-w-md mx-auto">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = pathname === item.href;
+            
+            return (
+              <Link
+                key={item.key}
+                href={item.href}
+                className={`
+                  flex flex-col items-center justify-center flex-1 py-2 px-1 rounded-xl
+                  transition-all duration-200 min-h-[66px]
+                  ${isActive 
+                    ? 'bg-[#ECFDF5] border border-[#0B8F55]/20' 
+                    : ''
+                  }
+                `}
+              >
+                <Icon 
+                  size={20} 
+                  strokeWidth={2.1}
+                  className={isActive ? 'text-[#0B8F55]' : 'text-gray-500'}
+                />
+                <span className={`
+                  text-[11px] font-bold mt-1
+                  ${isActive ? 'text-[#0B8F55]' : 'text-gray-700'}
+                `}>
+                  {item.label}
+                </span>
+              </Link>
+            );
+          })}
+        </div>
+      </nav>
     </>
   );
 }

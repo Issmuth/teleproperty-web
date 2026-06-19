@@ -36,3 +36,15 @@ html {
 * {
   @apply transition-colors duration-200;
 }
+
+/* Safe area for bottom navigation on mobile */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Prevent content from going under bottom tab bar on mobile */
+@media (max-width: 1023px) {
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}

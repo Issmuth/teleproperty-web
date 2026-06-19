@@ -26,8 +26,8 @@ export function ServiceBanner({
     <div
       onClick={onPress}
       className={`
-        relative overflow-hidden rounded-2xl cursor-pointer group
-        ${isHalf ? 'h-48' : 'h-56'}
+        relative overflow-hidden rounded-xl cursor-pointer group
+        ${isHalf ? 'h-36' : 'h-44'}
       `}
       style={{ backgroundColor }}
     >
@@ -40,12 +40,12 @@ export function ServiceBanner({
         />
       </div>
       
-      <div className="relative h-full p-6 flex flex-col justify-between text-white">
-        <Icon size={32} strokeWidth={2} />
+      <div className="relative h-full p-4 flex flex-col justify-between text-white">
+        <Icon size={24} strokeWidth={2} />
         
         <div>
-          <h3 className="font-black text-lg mb-1">{title}</h3>
-          <p className="text-sm font-semibold text-white/90">{subtitle}</p>
+          <h3 className="font-black text-base mb-0.5">{title}</h3>
+          <p className="text-xs font-semibold text-white/90">{subtitle}</p>
         </div>
       </div>
     </div>

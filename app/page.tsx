@@ -71,9 +71,9 @@ export default function Home() {
 
   return (
     <div className="flex-1 bg-gray-50">
-      <div className="max-w-5xl mx-auto px-4 lg:px-8 py-6 lg:py-8">
+      <div className="max-w-5xl mx-auto px-4 lg:px-8 py-4 lg:py-6">
         {/* Hero Section */}
-        <div className="mb-8">
+        <div className="mb-6">
           <HomeHero
             activeSegment={activeSegment}
             onSegmentChange={setActiveSegment}
@@ -87,8 +87,8 @@ export default function Home() {
         </div>
 
         {/* Featured Projects */}
-        <div className="mb-8">
-          <div className="mb-4">
+        <div className="mb-6">
+          <div className="mb-3">
             <SectionHeader
               title="Featured Projects"
               actionLabel="See all"
@@ -96,7 +96,7 @@ export default function Home() {
             />
           </div>
           
-          <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 lg:mx-0 lg:px-0 scrollbar-hide">
+          <div className="flex gap-3 overflow-x-auto pb-4 -mx-4 px-4 lg:mx-0 lg:px-0 scrollbar-hide">
             {featuredProjects.map((project) => (
               <ListingCard
                 key={project.id}
@@ -108,8 +108,8 @@ export default function Home() {
         </div>
 
         {/* Featured Properties */}
-        <div className="mb-8">
-          <div className="mb-4">
+        <div className="mb-6">
+          <div className="mb-3">
             <SectionHeader
               title="Featured Properties"
               actionLabel="Browse all"
@@ -117,7 +117,7 @@ export default function Home() {
             />
           </div>
           
-          <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 lg:mx-0 lg:px-0 scrollbar-hide">
+          <div className="flex gap-3 overflow-x-auto pb-4 -mx-4 px-4 lg:mx-0 lg:px-0 scrollbar-hide">
             {featuredProperties.map((property) => (
               <PropertyCard
                 key={property.id}
@@ -129,7 +129,7 @@ export default function Home() {
 
         {/* All Services */}
         <div>
-          <h2 className="text-lg lg:text-xl font-black text-gray-900 mb-4">
+          <h2 className="text-base font-black text-gray-900 mb-3">
             All Services
           </h2>
 

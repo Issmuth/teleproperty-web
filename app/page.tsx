@@ -1,65 +1,197 @@
-import Image from "next/image";
+'use client';
+
+import { useState } from 'react';
+import { HomeHero } from '@/components/home/home-hero';
+import { SectionHeader } from '@/components/home/section-header';
+import { ListingCard } from '@/components/home/listing-card';
+import { PropertyCard } from '@/components/home/property-card';
+import { ServiceBanner } from '@/components/home/service-banner';
+import { Search, Plus, Building2, Briefcase, ShieldCheck } from 'lucide-react';
+
+const segments = [
+  { key: 'buy', label: 'Buy' },
+  { key: 'rent', label: 'Rent' },
+  { key: 'projects', label: 'Projects' },
+];
+
+const featuredProjects = [
+  {
+    id: 'diamond-plaza',
+    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=80',
+    badge: 'Under construction',
+    title: 'Diamond Plaza Complex',
+    location: 'Addis Ababa, Kazanchis',
+    stats: '320+ units',
+    rating: '4.9',
+    price: 'From ETB 3.2M',
+    agency: 'Elite Builders',
+    accent: '#0B8F55',
+  },
+  {
+    id: 'skyline-residence',
+    image: 'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80',
+    badge: 'Launch soon',
+    title: 'Skyline Residence',
+    location: 'Bole, Addis Ababa',
+    stats: '180+ units',
+    rating: '4.8',
+    price: 'From ETB 2.7M',
+    agency: 'Urban Nest',
+    accent: '#1877F2',
+  },
+];
+
+const featuredProperties = [
+  {
+    id: 'featured-property-1',
+    image: 'https://images.unsplash.com/photo-1560185007-5f0bb1866cab?auto=format&fit=crop&w=900&q=80',
+    title: 'Modern family villa',
+    location: 'Megenagna, Addis Ababa',
+    price: 'ETB 8.4M',
+  },
+  {
+    id: 'featured-property-2',
+    image: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?auto=format&fit=crop&w=900&q=80',
+    title: 'Garden apartment',
+    location: 'CMC, Addis Ababa',
+    price: 'ETB 4.1M',
+  },
+  {
+    id: 'featured-property-3',
+    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=80',
+    title: 'Penthouse suite',
+    location: '22, Addis Ababa',
+    price: 'ETB 12.5M',
+  },
+];
 
 export default function Home() {
+  const [activeSegment, setActiveSegment] = useState('buy');
+  const [searchQuery, setSearchQuery] = useState('');
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="flex-1 bg-gray-50">
+      <div className="max-w-5xl mx-auto px-4 lg:px-8 py-6 lg:py-8">
+        {/* Hero Section */}
+        <div className="mb-8">
+          <HomeHero
+            activeSegment={activeSegment}
+            onSegmentChange={setActiveSegment}
+            segments={segments}
+            searchQuery={searchQuery}
+            onSearchQueryChange={setSearchQuery}
+            onFilterPress={() => console.log('Filters')}
+            onPostPress={() => console.log('Post property')}
+            onSearchPress={() => console.log('Search')}
+          />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+
+        {/* Featured Projects */}
+        <div className="mb-8">
+          <div className="mb-4">
+            <SectionHeader
+              title="Featured Projects"
+              actionLabel="See all"
+              onActionPress={() => console.log('See all projects')}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
+          
+          <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 lg:mx-0 lg:px-0 scrollbar-hide">
+            {featuredProjects.map((project) => (
+              <ListingCard
+                key={project.id}
+                {...project}
+                onPress={() => console.log('Project:', project.id)}
+              />
+            ))}
+          </div>
         </div>
-      </main>
+
+        {/* Featured Properties */}
+        <div className="mb-8">
+          <div className="mb-4">
+            <SectionHeader
+              title="Featured Properties"
+              actionLabel="Browse all"
+              onActionPress={() => console.log('Browse all properties')}
+            />
+          </div>
+          
+          <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 lg:mx-0 lg:px-0 scrollbar-hide">
+            {featuredProperties.map((property) => (
+              <PropertyCard
+                key={property.id}
+                {...property}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* All Services */}
+        <div>
+          <h2 className="text-lg lg:text-xl font-black text-gray-900 mb-4">
+            All Services
+          </h2>
+
+          <div className="space-y-3">
+            {/* Search Property - Full width */}
+            <ServiceBanner
+              backgroundColor="#0B3C2A"
+              icon={Search}
+              title="Search Property"
+              subtitle="Buy & Rent Effortlessly"
+              image="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=900&q=80"
+              size="full"
+              onPress={() => console.log('Search property')}
+            />
+
+            {/* Two columns on larger screens */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+              <ServiceBanner
+                backgroundColor="#0B3C2A"
+                icon={Plus}
+                title="Post your Property"
+                subtitle="Free & Easy Listing"
+                image="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=500&q=80"
+                size="half"
+                onPress={() => console.log('Post property')}
+              />
+              
+              <ServiceBanner
+                backgroundColor="#0B3C2A"
+                icon={Building2}
+                title="New Projects"
+                subtitle="Off-Plan Developments"
+                image="https://images.unsplash.com/photo-1541881451213-911293a9d905?auto=format&fit=crop&w=500&q=80"
+                size="half"
+                onPress={() => console.log('New projects')}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+              <ServiceBanner
+                backgroundColor="#0B3C2A"
+                icon={Briefcase}
+                title="Developer Hub"
+                subtitle="Build & Partner"
+                image="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80"
+                size="half"
+                onPress={() => console.log('Developer hub')}
+              />
+              
+              <ServiceBanner
+                backgroundColor="#0B3C2A"
+                icon={ShieldCheck}
+                title="Verified Brokers"
+                subtitle="Professional Agents"
+                image="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=500&q=80"
+                size="half"
+                onPress={() => console.log('Verified brokers')}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

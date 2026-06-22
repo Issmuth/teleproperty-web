@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useTheme } from '@/lib/theme/theme-provider';
 
 type ListingCardProps = {
   image: string;
@@ -25,10 +26,13 @@ export function ListingCard({
   accent,
   onPress,
 }: ListingCardProps) {
+  const { colors } = useTheme();
+
   return (
     <div
       onClick={onPress}
-      className="flex-shrink-0 w-64 bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-100"
+      className="flex-shrink-0 w-64 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer border"
+      style={{ backgroundColor: colors.surface, borderColor: colors.border }}
     >
       <div className="relative h-40">
         <Image
@@ -48,16 +52,16 @@ export function ListingCard({
       </div>
       
       <div className="p-3">
-        <h3 className="font-bold text-sm text-gray-900 mb-0.5 line-clamp-1">
+        <h3 className="font-bold text-sm mb-0.5 line-clamp-1" style={{ color: colors.text }}>
           {title}
         </h3>
-        <p className="text-xs text-gray-600 mb-0.5">{location}</p>
-        <p className="text-[10px] text-gray-500 mb-2">{stats}</p>
+        <p className="text-xs mb-0.5" style={{ color: colors.textMuted }}>{location}</p>
+        <p className="text-[10px] mb-2" style={{ color: colors.textMuted }}>{stats}</p>
         
-        <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+        <div className="flex items-center justify-between pt-2 border-t" style={{ borderColor: colors.border }}>
           <div>
-            <p className="text-[10px] text-gray-500 mb-0.5">by {agency}</p>
-            <p className="font-black text-sm text-gray-900">{price}</p>
+            <p className="text-[10px] mb-0.5" style={{ color: colors.textMuted }}>by {agency}</p>
+            <p className="font-black text-sm" style={{ color: colors.text }}>{price}</p>
           </div>
         </div>
       </div>

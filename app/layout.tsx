@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Sidebar } from "@/components/layout/sidebar";
-import { Header } from "@/components/layout/header";
+import { ThemeProvider } from "@/lib/theme/theme-provider";
+import { I18nProvider } from "@/lib/i18n/i18n-provider";
+import { LayoutWrapper } from "@/components/layout/layout-wrapper";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -20,15 +21,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-screen flex bg-gray-50 font-sans">
-        <Sidebar />
-        <div className="flex-1 flex flex-col overflow-x-hidden">
-          <Header />
-          <main className="flex-1 overflow-y-auto pb-20 lg:pb-0">
-            {children}
-          </main>
-        </div>
+    <html lang="en" className={`${inter.variable} h-full antialiased`} suppressHydrationWarning>
+      <body suppressHydrationWarning>
+        <ThemeProvider>
+          <I18nProvider>
+            <LayoutWrapper>
+              {children}
+            </LayoutWrapper>
+          </I18nProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

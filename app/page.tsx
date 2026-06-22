@@ -7,6 +7,8 @@ import { ListingCard } from '@/components/home/listing-card';
 import { PropertyCard } from '@/components/home/property-card';
 import { ServiceBanner } from '@/components/home/service-banner';
 import { Search, Plus, Building2, Briefcase, ShieldCheck } from 'lucide-react';
+import { useTheme } from '@/lib/theme/theme-provider';
+import { useI18n } from '@/lib/i18n/i18n-provider';
 
 const segments = [
   { key: 'buy', label: 'Buy' },
@@ -68,9 +70,17 @@ const featuredProperties = [
 export default function Home() {
   const [activeSegment, setActiveSegment] = useState('buy');
   const [searchQuery, setSearchQuery] = useState('');
+  const { colors } = useTheme();
+  const { t } = useI18n();
+
+  const segments = [
+    { key: 'buy', label: t('home.buy') },
+    { key: 'rent', label: t('home.rent') },
+    { key: 'projects', label: t('home.newProjects') },
+  ];
 
   return (
-    <div className="flex-1 bg-gray-50">
+    <div className="flex-1" style={{ backgroundColor: colors.background }}>
       <div className="max-w-5xl mx-auto px-4 lg:px-8 py-4 lg:py-6">
         {/* Hero Section */}
         <div className="mb-6">
@@ -90,8 +100,8 @@ export default function Home() {
         <div className="mb-6">
           <div className="mb-3">
             <SectionHeader
-              title="Featured Projects"
-              actionLabel="See all"
+              title={t('home.featuredProjects')}
+              actionLabel={t('home.seeAll')}
               onActionPress={() => console.log('See all projects')}
             />
           </div>
@@ -111,8 +121,8 @@ export default function Home() {
         <div className="mb-6">
           <div className="mb-3">
             <SectionHeader
-              title="Featured Properties"
-              actionLabel="Browse all"
+              title={t('home.featuredProperties')}
+              actionLabel={t('home.browseAll')}
               onActionPress={() => console.log('Browse all properties')}
             />
           </div>
@@ -129,8 +139,8 @@ export default function Home() {
 
         {/* All Services */}
         <div>
-          <h2 className="text-base font-black text-gray-900 mb-3">
-            All Services
+          <h2 className="text-base font-black mb-3" style={{ color: colors.text }}>
+            {t('home.allServices')}
           </h2>
 
           <div className="space-y-3">
@@ -138,20 +148,20 @@ export default function Home() {
             <ServiceBanner
               backgroundColor="#0B3C2A"
               icon={Search}
-              title="Search Property"
-              subtitle="Buy & Rent Effortlessly"
+              title={t('home.services.searchProperty.title')}
+              subtitle={t('home.services.searchProperty.subtitle')}
               image="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=900&q=80"
               size="full"
               onPress={() => console.log('Search property')}
             />
 
-            {/* Two columns on larger screens */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+            {/* Two columns grid - side by side on all screens */}
+            <div className="grid grid-cols-2 gap-3">
               <ServiceBanner
                 backgroundColor="#0B3C2A"
                 icon={Plus}
-                title="Post your Property"
-                subtitle="Free & Easy Listing"
+                title={t('home.services.postProperty.title')}
+                subtitle={t('home.services.postProperty.subtitle')}
                 image="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=500&q=80"
                 size="half"
                 onPress={() => console.log('Post property')}
@@ -160,20 +170,20 @@ export default function Home() {
               <ServiceBanner
                 backgroundColor="#0B3C2A"
                 icon={Building2}
-                title="New Projects"
-                subtitle="Off-Plan Developments"
+                title={t('home.services.newProjects.title')}
+                subtitle={t('home.services.newProjects.subtitle')}
                 image="https://images.unsplash.com/photo-1541881451213-911293a9d905?auto=format&fit=crop&w=500&q=80"
                 size="half"
                 onPress={() => console.log('New projects')}
               />
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-3">
               <ServiceBanner
                 backgroundColor="#0B3C2A"
                 icon={Briefcase}
-                title="Developer Hub"
-                subtitle="Build & Partner"
+                title={t('home.services.developerHub.title')}
+                subtitle={t('home.services.developerHub.subtitle')}
                 image="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80"
                 size="half"
                 onPress={() => console.log('Developer hub')}
@@ -182,8 +192,8 @@ export default function Home() {
               <ServiceBanner
                 backgroundColor="#0B3C2A"
                 icon={ShieldCheck}
-                title="Verified Brokers"
-                subtitle="Professional Agents"
+                title={t('home.services.verifiedBrokers.title')}
+                subtitle={t('home.services.verifiedBrokers.subtitle')}
                 image="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=500&q=80"
                 size="half"
                 onPress={() => console.log('Verified brokers')}

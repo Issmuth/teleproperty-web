@@ -1,10 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { Search } from 'lucide-react';
 import { PremiumBanner } from '@/components/property/premium-banner';
 import { PropertyCard } from '@/components/property/property-card';
+import { SearchBar } from '@/components/common/search-bar';
 import { X } from 'lucide-react';
+import { useTheme } from '@/lib/theme/theme-provider';
+import { useI18n } from '@/lib/i18n/i18n-provider';
 
 const segments = [
   { key: 'buy', label: 'Buy' },
@@ -60,42 +62,38 @@ export default function PropertyPage() {
   const [activeSegment, setActiveSegment] = useState('buy');
   const [searchQuery, setSearchQuery] = useState('');
   const [showPromoBanner, setShowPromoBanner] = useState(true);
+  const { t } = useI18n();
+  const { colors } = useTheme();
 
   return (
-    <div className="flex-1 bg-gray-50">
+    <div className="flex-1" style={{ backgroundColor: colors.background }}>
       <div className="max-w-5xl mx-auto">
         <PremiumBanner />
 
         {/* Search and Segment Control */}
-        <div className="sticky top-14 lg:top-16 bg-gray-50 z-30 px-4 lg:px-8 py-3">
+        <div className="sticky top-14 lg:top-16 z-30 px-4 lg:px-8 py-3 max-w-5xl mx-auto" style={{ backgroundColor: colors.background }}>
           {/* Search Bar */}
-          <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-3 py-2.5 shadow-sm mb-3">
-            <Search size={18} className="text-gray-400" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+          <div className="mb-3 w-full">
+            <SearchBar
               placeholder="Search city, area, property..."
-              className="flex-1 outline-none text-sm"
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+              onFilterPress={() => console.log('Filters')}
+              variant="muted"
             />
-            <button className="text-xs font-bold text-[#0B8F55] hover:text-[#0A7A4A]">
-              Filters
-            </button>
           </div>
 
           {/* Segmented Control */}
-          <div className="flex gap-1.5 bg-white p-1 rounded-lg shadow-sm border border-gray-200">
+          <div className="flex gap-1.5 p-1 rounded-lg shadow-sm border" style={{ backgroundColor: colors.surface, borderColor: colors.border }}>
             {segments.map((segment) => (
               <button
                 key={segment.key}
                 onClick={() => setActiveSegment(segment.key)}
-                className={`
-                  flex-1 py-2 px-3 rounded-md font-bold text-xs transition-all
-                  ${activeSegment === segment.key
-                    ? 'bg-[#0B8F55] text-white shadow-md'
-                    : 'text-gray-700 hover:bg-gray-100'
-                  }
-                `}
+                className="flex-1 py-2 px-3 rounded-md font-bold text-xs transition-all"
+                style={activeSegment === segment.key
+                  ? { backgroundColor: '#0B8F55', color: '#FFFFFF' }
+                  : { backgroundColor: 'transparent', color: colors.text }
+                }
               >
                 {segment.label}
               </button>
@@ -105,13 +103,13 @@ export default function PropertyPage() {
 
         {/* Results count */}
         <div className="px-4 lg:px-8 mb-3">
-          <p className="text-xs font-medium text-gray-600">
-            {sampleProperties.length} properties found
+          <p className="text-xs font-medium" style={{ color: colors.textMuted }}>
+            {t('property.resultsFound_other', { count: sampleProperties.length })}
           </p>
         </div>
 
         {/* Property Grid */}
-        <div className="px-4 lg:px-8 pb-8 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+        <div className="px-4 lg:px-8 pb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
           {sampleProperties.map((property) => (
             <PropertyCard key={property.id} {...property} />
           ))}

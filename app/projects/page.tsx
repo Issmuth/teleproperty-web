@@ -1,9 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { Search, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import Image from 'next/image';
 import { ProjectCard } from '@/components/projects/project-card';
+import { SearchBar } from '@/components/common/search-bar';
+import { useTheme } from '@/lib/theme/theme-provider';
+import { useI18n } from '@/lib/i18n/i18n-provider';
 
 const projectCards = [
   {
@@ -50,6 +53,8 @@ export default function ProjectsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showHero, setShowHero] = useState(true);
   const [showPromoBanner, setShowPromoBanner] = useState(true);
+  const { colors } = useTheme();
+  const { t } = useI18n();
 
   const filteredProjects = projectCards.filter((project) => {
     const needle = searchQuery.toLowerCase();
@@ -61,7 +66,7 @@ export default function ProjectsPage() {
   });
 
   return (
-    <div className="flex-1 bg-gray-50">
+    <div className="flex-1" style={{ backgroundColor: colors.background }}>
       <div className="max-w-5xl mx-auto px-4 lg:px-8 py-4 space-y-3">
         {/* Hero Card */}
         {showHero && (
@@ -101,41 +106,35 @@ export default function ProjectsPage() {
         )}
 
         {/* Search Bar */}
-        <div className="sticky top-14 lg:top-16 bg-gray-50 z-30 pb-3">
-          <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-3 py-2.5 shadow-sm">
-            <Search size={18} className="text-gray-400" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search project or developer..."
-              className="flex-1 outline-none text-sm"
-            />
-            <button className="text-xs font-bold text-[#0B8F55] hover:text-[#0A7A4A]">
-              Filters
-            </button>
-          </div>
+        <div className="sticky top-14 lg:top-16 z-30 pb-3 w-full" style={{ backgroundColor: colors.background }}>
+          <SearchBar
+            placeholder={t('projects.searchPlaceholder')}
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            onFilterPress={() => console.log('Filters')}
+            variant="muted"
+          />
         </div>
 
         {/* Stats Row */}
         <div className="grid grid-cols-3 gap-2">
-          <div className="flex flex-col items-center justify-center bg-white border border-gray-200 rounded-xl py-3">
+          <div className="flex flex-col items-center justify-center rounded-xl py-3 border" style={{ backgroundColor: colors.surface, borderColor: colors.border }}>
             <span className="text-base font-black text-[#0B8F55]">50+</span>
-            <span className="text-[10px] font-bold text-gray-600 mt-0.5">Projects</span>
+            <span className="text-[10px] font-bold mt-0.5" style={{ color: colors.textMuted }}>{t('projects.stats.projects')}</span>
           </div>
-          <div className="flex flex-col items-center justify-center bg-white border border-gray-200 rounded-xl py-3">
+          <div className="flex flex-col items-center justify-center rounded-xl py-3 border" style={{ backgroundColor: colors.surface, borderColor: colors.border }}>
             <span className="text-base font-black text-[#0B8F55]">30+</span>
-            <span className="text-[10px] font-bold text-gray-600 mt-0.5">Developers</span>
+            <span className="text-[10px] font-bold mt-0.5" style={{ color: colors.textMuted }}>{t('projects.stats.developers')}</span>
           </div>
-          <div className="flex flex-col items-center justify-center bg-white border border-gray-200 rounded-xl py-3">
+          <div className="flex flex-col items-center justify-center rounded-xl py-3 border" style={{ backgroundColor: colors.surface, borderColor: colors.border }}>
             <span className="text-base font-black text-[#0B8F55]">1000+</span>
-            <span className="text-[10px] font-bold text-gray-600 mt-0.5">Units</span>
+            <span className="text-[10px] font-bold mt-0.5" style={{ color: colors.textMuted }}>{t('projects.stats.units')}</span>
           </div>
         </div>
 
         {/* Featured Projects */}
         <div>
-          <h2 className="text-sm font-black text-gray-900 mb-2">Featured Projects</h2>
+          <h2 className="text-sm font-black mb-2" style={{ color: colors.text }}>{t('projects.featuredHeader')}</h2>
           <div className="flex gap-3 overflow-x-auto pb-4 -mx-4 px-4 lg:mx-0 lg:px-0 scrollbar-hide">
             {projectCards.filter(p => p.featured).map((project) => (
               <div key={project.id} className="w-64 flex-shrink-0">
@@ -147,10 +146,10 @@ export default function ProjectsPage() {
 
         {/* All Projects */}
         <div>
-          <h2 className="text-sm font-black text-gray-900 mb-2">
-            All Projects ({filteredProjects.length})
+          <h2 className="text-sm font-black mb-2" style={{ color: colors.text }}>
+            {t('projects.allProjects')} ({filteredProjects.length})
           </h2>
-          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
             {filteredProjects.map((project) => (
               <ProjectCard key={project.id} {...project} />
             ))}

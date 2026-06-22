@@ -1,5 +1,7 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { Heart, MapPin, Bed, Bath, Square, Lock, BadgeCheck, Star } from 'lucide-react';
+import { useTheme } from '@/lib/theme/theme-provider';
 
 type PropertyCardProps = {
   id: string;
@@ -17,6 +19,7 @@ type PropertyCardProps = {
 };
 
 export function PropertyCard({
+  id,
   title,
   location,
   age,
@@ -29,8 +32,14 @@ export function PropertyCard({
   verified,
   image,
 }: PropertyCardProps) {
+  const { colors } = useTheme();
+
   return (
-    <div className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
+    <Link 
+      href={`/property/${id}`}
+      className="rounded-lg border overflow-hidden hover:shadow-lg transition-shadow cursor-pointer block" 
+      style={{ backgroundColor: colors.surface, borderColor: colors.border }}
+    >
       <div className="relative h-36">
         <Image
           src={image}
@@ -72,28 +81,28 @@ export function PropertyCard({
       </div>
 
       <div className="p-3 space-y-2">
-        <h3 className="text-sm font-bold text-gray-900 line-clamp-1">{title}</h3>
+        <h3 className="text-sm font-bold line-clamp-1" style={{ color: colors.text }}>{title}</h3>
 
         <div className="flex items-center gap-1.5">
           <MapPin size={11} className="text-[#18C36A] flex-shrink-0" />
-          <span className="text-xs font-medium text-gray-600 flex-1 line-clamp-1">{location}</span>
-          <span className="px-1.5 py-0.5 bg-gray-100 rounded text-[10px] font-semibold text-gray-600 flex-shrink-0">
+          <span className="text-xs font-medium flex-1 line-clamp-1" style={{ color: colors.textMuted }}>{location}</span>
+          <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold flex-shrink-0" style={{ backgroundColor: colors.surfaceMuted, color: colors.textMuted }}>
             {age}
           </span>
         </div>
 
         <div className="flex items-center gap-2.5">
           <div className="flex items-center gap-1">
-            <Bed size={12} className="text-gray-500" />
-            <span className="text-xs font-semibold text-gray-600">{beds}</span>
+            <Bed size={12} style={{ color: colors.iconMuted }} />
+            <span className="text-xs font-semibold" style={{ color: colors.textMuted }}>{beds}</span>
           </div>
           <div className="flex items-center gap-1">
-            <Bath size={12} className="text-gray-500" />
-            <span className="text-xs font-semibold text-gray-600">{baths}</span>
+            <Bath size={12} style={{ color: colors.iconMuted }} />
+            <span className="text-xs font-semibold" style={{ color: colors.textMuted }}>{baths}</span>
           </div>
           <div className="flex items-center gap-1">
-            <Square size={12} className="text-gray-500" />
-            <span className="text-xs font-semibold text-gray-600">{area}m²</span>
+            <Square size={12} style={{ color: colors.iconMuted }} />
+            <span className="text-xs font-semibold" style={{ color: colors.textMuted }}>{area}m²</span>
           </div>
         </div>
 
@@ -102,6 +111,6 @@ export function PropertyCard({
           <span className="text-xs font-bold text-white">Subscribe to View</span>
         </button>
       </div>
-    </div>
+    </Link>
   );
 }

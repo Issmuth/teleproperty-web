@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
     ],
+    unoptimized: true, // Fallback for development
   },
 };
 

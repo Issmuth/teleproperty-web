@@ -109,19 +109,15 @@ export default function ProjectDetailsPage({ params }: { params: Promise<{ id: s
           <div className="space-y-4">
             
             {/* Hero Image */}
-            <div className="relative h-64 lg:h-96 lg:rounded-2xl overflow-hidden">
+            <div className="relative h-64 lg:h-96 lg:rounded-2xl overflow-hidden bg-gray-900">
               <Image
                 src={project.gallery[selectedImageIndex]}
                 alt={project.title}
                 fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 50vw"
                 className="object-cover"
                 priority
-                unoptimized
               />
-              
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-black bg-opacity-10" />
 
               {/* Top Actions Bar */}
               <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">

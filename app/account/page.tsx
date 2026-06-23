@@ -91,7 +91,7 @@ export default function AccountPage() {
 
   return (
     <div className="flex-1" style={{ backgroundColor: colors.background }}>
-      <div className="max-w-4xl mx-auto px-4 lg:px-8 py-6 lg:py-8 space-y-4">
+      <div className="max-w-6xl mx-auto px-4 lg:px-8 py-6 lg:py-8 space-y-4">
         
         {/* Profile Card */}
         <div className="bg-gradient-to-br from-[#0B8F55] to-[#0A7A4A] rounded-2xl p-6 text-white">

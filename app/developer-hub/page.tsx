@@ -88,7 +88,7 @@ export default function DeveloperHubPage() {
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 lg:px-8 pt-20 lg:pt-24 pb-32">
+      <div className="max-w-6xl mx-auto px-4 lg:px-8 pt-20 lg:pt-24 pb-32">
         {/* Hero Card */}
         <div
           className="relative rounded-3xl lg:rounded-[32px] p-6 lg:p-10 overflow-hidden mb-6 lg:mb-8"

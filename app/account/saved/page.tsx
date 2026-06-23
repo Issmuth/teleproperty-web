@@ -37,7 +37,7 @@ export default function SavedPropertiesPage() {
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 lg:px-8 pt-20 lg:pt-24 pb-32">
+      <div className="max-w-6xl mx-auto px-4 lg:px-8 pt-20 lg:pt-24 pb-32">
         {savedProperties.length === 0 ? (
           <div className="flex items-center justify-center pt-16 lg:pt-24">
             <div

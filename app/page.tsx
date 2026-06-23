@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { HomeHero } from '@/components/home/home-hero';
 import { SectionHeader } from '@/components/home/section-header';
 import { ListingCard } from '@/components/home/listing-card';
@@ -68,6 +69,7 @@ const featuredProperties = [
 ];
 
 export default function Home() {
+  const router = useRouter();
   const [activeSegment, setActiveSegment] = useState('buy');
   const [searchQuery, setSearchQuery] = useState('');
   const { colors } = useTheme();
@@ -79,9 +81,17 @@ export default function Home() {
     { key: 'projects', label: t('home.newProjects') },
   ];
 
+  const handleSearch = () => {
+    if (activeSegment === 'projects') {
+      router.push(searchQuery ? `/projects?q=${encodeURIComponent(searchQuery)}` : '/projects');
+    } else {
+      router.push(searchQuery ? `/property?q=${encodeURIComponent(searchQuery)}` : '/property');
+    }
+  };
+
   return (
     <div className="flex-1" style={{ backgroundColor: colors.background }}>
-      <div className="max-w-5xl mx-auto px-4 lg:px-8 py-4 lg:py-6">
+      <div className="max-w-7xl mx-auto px-4 lg:px-8 py-4 lg:py-6">
         {/* Hero Section */}
         <div className="mb-6">
           <HomeHero
@@ -91,8 +101,8 @@ export default function Home() {
             searchQuery={searchQuery}
             onSearchQueryChange={setSearchQuery}
             onFilterPress={() => console.log('Filters')}
-            onPostPress={() => console.log('Post property')}
-            onSearchPress={() => console.log('Search')}
+            onPostPress={() => router.push('/post-property')}
+            onSearchPress={handleSearch}
           />
         </div>
 
@@ -102,7 +112,7 @@ export default function Home() {
             <SectionHeader
               title={t('home.featuredProjects')}
               actionLabel={t('home.seeAll')}
-              onActionPress={() => console.log('See all projects')}
+              onActionPress={() => router.push('/projects')}
             />
           </div>
           
@@ -111,7 +121,7 @@ export default function Home() {
               <ListingCard
                 key={project.id}
                 {...project}
-                onPress={() => console.log('Project:', project.id)}
+                onPress={() => router.push(`/projects/${project.id}`)}
               />
             ))}
           </div>
@@ -123,7 +133,7 @@ export default function Home() {
             <SectionHeader
               title={t('home.featuredProperties')}
               actionLabel={t('home.browseAll')}
-              onActionPress={() => console.log('Browse all properties')}
+              onActionPress={() => router.push('/property')}
             />
           </div>
           
@@ -132,6 +142,7 @@ export default function Home() {
               <PropertyCard
                 key={property.id}
                 {...property}
+                onPress={() => router.push(`/property/${property.id}`)}
               />
             ))}
           </div>
@@ -152,7 +163,7 @@ export default function Home() {
               subtitle={t('home.services.searchProperty.subtitle')}
               image="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=900&q=80"
               size="full"
-              onPress={() => console.log('Search property')}
+              onPress={() => router.push('/property')}
             />
 
             {/* Two columns grid - side by side on all screens */}
@@ -164,7 +175,7 @@ export default function Home() {
                 subtitle={t('home.services.postProperty.subtitle')}
                 image="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=500&q=80"
                 size="half"
-                onPress={() => console.log('Post property')}
+                onPress={() => router.push('/post-property')}
               />
               
               <ServiceBanner
@@ -174,7 +185,7 @@ export default function Home() {
                 subtitle={t('home.services.newProjects.subtitle')}
                 image="https://images.unsplash.com/photo-1541881451213-911293a9d905?auto=format&fit=crop&w=500&q=80"
                 size="half"
-                onPress={() => console.log('New projects')}
+                onPress={() => router.push('/projects')}
               />
             </div>
 
@@ -186,7 +197,7 @@ export default function Home() {
                 subtitle={t('home.services.developerHub.subtitle')}
                 image="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80"
                 size="half"
-                onPress={() => window.location.href = '/developer-hub'}
+                onPress={() => router.push('/developer-hub')}
               />
               
               <ServiceBanner
@@ -196,7 +207,7 @@ export default function Home() {
                 subtitle={t('home.services.verifiedBrokers.subtitle')}
                 image="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=500&q=80"
                 size="half"
-                onPress={() => window.location.href = '/broker-hub'}
+                onPress={() => router.push('/broker-hub')}
               />
             </div>
           </div>

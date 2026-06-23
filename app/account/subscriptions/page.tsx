@@ -109,7 +109,7 @@ export default function SubscriptionsPage() {
               style={{
                 backgroundColor: colors.surface,
                 borderColor: plan.popular ? plan.color : colors.border,
-                ringColor: plan.popular ? plan.color : undefined,
+                ...(plan.popular && { '--tw-ring-color': plan.color } as React.CSSProperties),
               }}
             >
               {/* Popular Badge */}

@@ -44,7 +44,7 @@ export default function PaymentHistoryPage() {
         </h1>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 lg:px-8 pt-20 lg:pt-24 pb-32 space-y-4 lg:space-y-5">
+      <div className="max-w-5xl mx-auto px-4 lg:px-8 pt-20 lg:pt-24 pb-32 space-y-4 lg:space-y-5">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>

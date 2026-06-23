@@ -53,7 +53,7 @@ export default function MySubscriptionPage() {
         </h1>
       </div>
 
-      <div className="max-w-3xl mx-auto px-4 lg:px-8 pt-20 lg:pt-24 pb-32 space-y-4 lg:space-y-5">
+      <div className="max-w-4xl mx-auto px-4 lg:px-8 pt-20 lg:pt-24 pb-32 space-y-4 lg:space-y-5">
         <div>
           <h2 className="text-2xl lg:text-3xl font-black" style={{ color: colors.text }}>
             My Subscription

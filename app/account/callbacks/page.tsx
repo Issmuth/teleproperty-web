@@ -107,7 +107,7 @@ export default function CallbacksPage() {
         </button>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 lg:px-8 pt-20 lg:pt-24 pb-32 space-y-4">
+      <div className="max-w-5xl mx-auto px-4 lg:px-8 pt-20 lg:pt-24 pb-32 space-y-4">
         {/* Request Form */}
         {showForm && (
           <div

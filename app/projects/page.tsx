@@ -66,8 +66,8 @@ export default function ProjectsPage() {
   });
 
   return (
-    <div className="flex-1" style={{ backgroundColor: colors.background }}>
-      <div className="max-w-5xl mx-auto px-4 lg:px-8 py-4 space-y-3">
+    <div className="flex-1 relative" style={{ backgroundColor: colors.background }}>
+      <div className="max-w-7xl mx-auto px-4 lg:px-8 py-4 space-y-3 pb-32">
         {/* Hero Card */}
         {showHero && (
           <div className="relative h-32 rounded-xl overflow-hidden bg-[#EA580C]">
@@ -149,16 +149,18 @@ export default function ProjectsPage() {
           <h2 className="text-sm font-black mb-2" style={{ color: colors.text }}>
             {t('projects.allProjects')} ({filteredProjects.length})
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-4">
             {filteredProjects.map((project) => (
               <ProjectCard key={project.id} {...project} />
             ))}
           </div>
         </div>
+      </div>
 
-        {/* Promo Banner */}
-        {showPromoBanner && (
-          <div className="fixed bottom-20 lg:bottom-6 left-0 right-0 px-4 lg:px-8 max-w-5xl mx-auto z-20">
+      {/* Promo Banner - Fixed at bottom but aligned with content */}
+      {showPromoBanner && (
+        <div className="fixed bottom-20 lg:bottom-6 left-0 lg:left-64 right-0 z-20">
+          <div className="max-w-7xl mx-auto px-4 lg:px-8">
             <div className="bg-gradient-to-r from-[#14B37B] to-[#0F9D58] rounded-xl p-3 lg:p-4 shadow-xl relative">
               <button
                 onClick={() => setShowPromoBanner(false)}
@@ -185,8 +187,8 @@ export default function ProjectsPage() {
               </div>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

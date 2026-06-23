@@ -66,12 +66,12 @@ export default function PropertyPage() {
   const { colors } = useTheme();
 
   return (
-    <div className="flex-1" style={{ backgroundColor: colors.background }}>
-      <div className="max-w-5xl mx-auto">
+    <div className="flex-1 relative" style={{ backgroundColor: colors.background }}>
+      <div className="max-w-7xl mx-auto pb-32">
         <PremiumBanner />
 
         {/* Search and Segment Control */}
-        <div className="sticky top-14 lg:top-16 z-30 px-4 lg:px-8 py-3 max-w-5xl mx-auto" style={{ backgroundColor: colors.background }}>
+        <div className="sticky top-14 lg:top-16 z-30 px-4 lg:px-8 py-3 max-w-7xl mx-auto" style={{ backgroundColor: colors.background }}>
           {/* Search Bar */}
           <div className="mb-3 w-full">
             <SearchBar
@@ -114,10 +114,12 @@ export default function PropertyPage() {
             <PropertyCard key={property.id} {...property} />
           ))}
         </div>
+      </div>
 
-        {/* Promo Banner */}
-        {showPromoBanner && (
-          <div className="fixed bottom-20 lg:bottom-6 left-0 right-0 px-4 lg:px-8 max-w-5xl mx-auto z-20">
+      {/* Promo Banner - Fixed at bottom but aligned with content */}
+      {showPromoBanner && (
+        <div className="fixed bottom-20 lg:bottom-6 left-0 lg:left-64 right-0 z-20">
+          <div className="max-w-7xl mx-auto px-4 lg:px-8">
             <div className="bg-gradient-to-r from-[#14B37B] to-[#14B37B] rounded-xl p-3 lg:p-4 shadow-xl relative">
               <button
                 onClick={() => setShowPromoBanner(false)}
@@ -144,8 +146,8 @@ export default function PropertyPage() {
               </div>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

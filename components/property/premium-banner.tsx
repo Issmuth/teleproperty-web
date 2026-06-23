@@ -9,7 +9,8 @@ export function PremiumBanner() {
   if (!visible) return null;
 
   return (
-    <div className="mx-4 lg:mx-0 mt-4 rounded-xl overflow-hidden bg-gradient-to-br from-[#F97316] to-[#EA580C] relative">
+    <div className="px-4 lg:px-8 mt-4">
+      <div className="rounded-xl overflow-hidden bg-gradient-to-br from-[#F97316] to-[#EA580C] relative">
       <button
         onClick={() => setVisible(false)}
         className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors z-10"
@@ -30,6 +31,7 @@ export function PremiumBanner() {
         <button className="px-3 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors">
           <span className="text-xs font-black text-gray-900">Post Premium</span>
         </button>
+      </div>
       </div>
     </div>
   );

@@ -84,7 +84,7 @@ export default function DeveloperDashboardPage() {
         </h1>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 lg:px-8 pt-20 lg:pt-24 pb-32 space-y-6">
+      <div className="max-w-6xl mx-auto px-4 lg:px-8 pt-20 lg:pt-24 pb-32 space-y-6">
         {/* Profile Card */}
         <div
           className="relative rounded-3xl p-6 lg:p-8 overflow-hidden"

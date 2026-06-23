@@ -2,17 +2,23 @@ import Image from 'next/image';
 import { useTheme } from '@/lib/theme/theme-provider';
 
 type PropertyCardProps = {
+  id?: string;
   image: string;
   title: string;
   location: string;
   price: string;
+  onPress?: () => void;
 };
 
-export function PropertyCard({ image, title, location, price }: PropertyCardProps) {
+export function PropertyCard({ image, title, location, price, onPress }: PropertyCardProps) {
   const { colors } = useTheme();
 
   return (
-    <div className="flex-shrink-0 w-44 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer border" style={{ backgroundColor: colors.surface, borderColor: colors.border }}>
+    <div 
+      onClick={onPress}
+      className="flex-shrink-0 w-44 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer border" 
+      style={{ backgroundColor: colors.surface, borderColor: colors.border }}
+    >
       <div className="relative h-32">
         <Image
           src={image}

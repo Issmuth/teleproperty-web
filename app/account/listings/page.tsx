@@ -85,7 +85,7 @@ export default function MyListingsPage() {
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 lg:px-8 pt-20 lg:pt-24 pb-32 space-y-4">
+      <div className="max-w-6xl mx-auto px-4 lg:px-8 pt-20 lg:pt-24 pb-32 space-y-4">
         {listings.length === 0 ? (
           <div className="flex items-center justify-center pt-16">
             <div

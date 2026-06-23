@@ -186,7 +186,7 @@ export default function Home() {
                 subtitle={t('home.services.developerHub.subtitle')}
                 image="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80"
                 size="half"
-                onPress={() => console.log('Developer hub')}
+                onPress={() => window.location.href = '/developer-hub'}
               />
               
               <ServiceBanner
@@ -196,7 +196,7 @@ export default function Home() {
                 subtitle={t('home.services.verifiedBrokers.subtitle')}
                 image="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=500&q=80"
                 size="half"
-                onPress={() => console.log('Verified brokers')}
+                onPress={() => window.location.href = '/broker-hub'}
               />
             </div>
           </div>

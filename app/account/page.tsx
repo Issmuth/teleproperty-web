@@ -6,8 +6,10 @@ import {
 } from 'lucide-react';
 import { useTheme } from '@/lib/theme/theme-provider';
 import { useI18n } from '@/lib/i18n/i18n-provider';
+import { useRouter } from 'next/navigation';
 
 export default function AccountPage() {
+  const router = useRouter();
   const isAuthenticated = false; // Replace with actual auth state
   const { colors } = useTheme();
   const { t } = useI18n();
@@ -19,6 +21,7 @@ export default function AccountPage() {
       bgColor: '#FFF7E6',
       title: t('account.mySubscription.title'),
       subtitle: t('account.mySubscription.subtitle'),
+      href: '/account/my-subscription',
     },
     {
       icon: Heart,
@@ -26,6 +29,7 @@ export default function AccountPage() {
       bgColor: '#FFF1F2',
       title: t('account.savedProperties.title'),
       subtitle: t('account.savedProperties.subtitle_zero', { count: 0 }),
+      href: '/account/saved',
     },
     {
       icon: Building2,
@@ -33,6 +37,7 @@ export default function AccountPage() {
       bgColor: '#EFF6FF',
       title: t('account.myListings.title'),
       subtitle: t('account.myListings.subtitle_zero', { count: 0 }),
+      href: '/account/listings',
     },
     {
       icon: PhoneCall,
@@ -40,6 +45,7 @@ export default function AccountPage() {
       bgColor: '#ECFDF5',
       title: t('account.myCallbacks.title'),
       subtitle: t('account.myCallbacks.subtitle_other', { count: 2 }),
+      href: '/account/callbacks',
     },
     {
       icon: CreditCard,
@@ -47,6 +53,7 @@ export default function AccountPage() {
       bgColor: '#FFF7E6',
       title: t('account.myPayments.title'),
       subtitle: t('account.myPayments.subtitle'),
+      href: '/account/payment-history',
     },
     {
       icon: MessageSquareHeart,
@@ -54,6 +61,7 @@ export default function AccountPage() {
       bgColor: '#FFF7E6',
       title: t('account.myReviews.title'),
       subtitle: t('account.myReviews.subtitle', { count: 3 }),
+      href: '#',
     },
     {
       icon: Bell,
@@ -61,6 +69,7 @@ export default function AccountPage() {
       bgColor: '#F3E8FF',
       title: t('account.notifications.title'),
       subtitle: t('account.notifications.subtitle'),
+      href: '/account/notifications',
     },
     {
       icon: Shield,
@@ -68,6 +77,7 @@ export default function AccountPage() {
       bgColor: '#F8FAFC',
       title: t('account.privacy.title'),
       subtitle: t('account.privacy.subtitle'),
+      href: '#',
     },
     {
       icon: Headphones,
@@ -75,6 +85,7 @@ export default function AccountPage() {
       bgColor: '#ECFEFF',
       title: t('account.support.title'),
       subtitle: t('account.support.subtitle'),
+      href: '#',
     },
   ];
 
@@ -115,20 +126,21 @@ export default function AccountPage() {
             return (
               <div key={index}>
                 <button 
+                  onClick={() => item.href !== '#' && router.push(item.href)}
                   className="w-full flex items-center gap-3 p-3 rounded-xl transition-colors"
                   style={{ backgroundColor: 'transparent' }}
                   onMouseEnter={(e) => e.currentTarget.style.backgroundColor = colors.surfaceMuted}
                   onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                 >
                   <div 
-                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                    className="w-10 h-10 lg:w-11 lg:h-11 rounded-xl flex items-center justify-center flex-shrink-0"
                     style={{ backgroundColor: item.bgColor }}
                   >
                     <Icon size={18} style={{ color: item.iconColor }} />
                   </div>
                   <div className="flex-1 text-left">
-                    <h3 className="text-sm font-bold" style={{ color: colors.text }}>{item.title}</h3>
-                    <p className="text-xs font-medium" style={{ color: colors.textMuted }}>{item.subtitle}</p>
+                    <h3 className="text-sm lg:text-base font-bold" style={{ color: colors.text }}>{item.title}</h3>
+                    <p className="text-xs lg:text-sm font-medium" style={{ color: colors.textMuted }}>{item.subtitle}</p>
                   </div>
                   <ChevronRight size={18} className="flex-shrink-0" style={{ color: colors.iconMuted }} />
                 </button>

@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { useTheme } from '@/lib/theme/theme-provider';
 import { useI18n } from '@/lib/i18n/i18n-provider';
+import { usePropertySaved } from '@/lib/hooks/use-saved-properties';
 
 // Sample project data
 const projectData: Record<string, any> = {
@@ -80,7 +81,18 @@ export default function ProjectDetailsPage({ params }: { params: Promise<{ id: s
   const project = projectData[resolvedParams.id] || projectData['sunrise-residences'];
   
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [isSaved, setIsSaved] = useState(false);
+  const { isSaved, toggleSaved } = usePropertySaved(project.id);
+
+  const handleToggleSave = () => {
+    toggleSaved({
+      id: project.id,
+      title: project.title,
+      location: project.location,
+      price: project.price,
+      image: project.image,
+      type: 'project',
+    });
+  };
 
   const handleBack = () => {
     router.back();
@@ -130,7 +142,7 @@ export default function ProjectDetailsPage({ params }: { params: Promise<{ id: s
                 </button>
 
                 <button
-                  onClick={() => setIsSaved(!isSaved)}
+                  onClick={handleToggleSave}
                   className="w-9 h-9 rounded-full flex items-center justify-center transition-transform active:scale-95"
                   style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
                 >
@@ -291,11 +303,14 @@ export default function ProjectDetailsPage({ params }: { params: Promise<{ id: s
 
             {/* Developer Card */}
             <div className="p-5 rounded-2xl border" style={{ backgroundColor: colors.surface, borderColor: colors.border }}>
-              <div className="flex items-center gap-3">
+              <button
+                onClick={() => router.push('/agents/dev-1')}
+                className="w-full flex items-center gap-3 hover:opacity-80 transition-opacity"
+              >
                 <div className="w-11 h-11 rounded-xl flex items-center justify-center text-white font-black" style={{ backgroundColor: colors.activeText }}>
                   S
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 text-left">
                   <h4 className="text-sm font-black" style={{ color: colors.text }}>{project.developer}</h4>
                   <div className="flex items-center gap-2 mt-1">
                     <div className="flex gap-0.5">
@@ -309,7 +324,7 @@ export default function ProjectDetailsPage({ params }: { params: Promise<{ id: s
                   </div>
                 </div>
                 <ShieldCheck size={18} className="text-green-600" />
-              </div>
+              </button>
             </div>
 
             {/* Action Buttons */}
@@ -343,11 +358,14 @@ export default function ProjectDetailsPage({ params }: { params: Promise<{ id: s
           {/* Mobile: Developer & Actions (Below content) */}
           <div className="lg:hidden space-y-3 px-4 pb-24">
             <div className="p-4 rounded-2xl border" style={{ backgroundColor: colors.surface, borderColor: colors.border }}>
-              <div className="flex items-center gap-3">
+              <button
+                onClick={() => router.push('/agents/dev-1')}
+                className="w-full flex items-center gap-3 hover:opacity-80 transition-opacity"
+              >
                 <div className="w-11 h-11 rounded-xl flex items-center justify-center text-white font-black" style={{ backgroundColor: colors.activeText }}>
                   S
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 text-left">
                   <h4 className="text-sm font-black" style={{ color: colors.text }}>{project.developer}</h4>
                   <div className="flex items-center gap-2 mt-1">
                     <div className="flex gap-0.5">
@@ -361,7 +379,7 @@ export default function ProjectDetailsPage({ params }: { params: Promise<{ id: s
                   </div>
                 </div>
                 <ShieldCheck size={18} className="text-green-600" />
-              </div>
+              </button>
             </div>
 
             <div className="grid grid-cols-2 gap-3">

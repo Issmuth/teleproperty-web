@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { useTheme } from '@/lib/theme/theme-provider';
 import { useI18n } from '@/lib/i18n/i18n-provider';
+import { usePropertySaved } from '@/lib/hooks/use-saved-properties';
 
 // Sample property data
 const propertyData: Record<string, any> = {
@@ -75,9 +76,20 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
   const property = propertyData[resolvedParams.id] || propertyData['1'];
   
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [isSaved, setIsSaved] = useState(false);
+  const { isSaved, toggleSaved } = usePropertySaved(property.id);
   const [reviewText, setReviewText] = useState('');
   const [reviewRating, setReviewRating] = useState(0);
+
+  const handleToggleSave = () => {
+    toggleSaved({
+      id: property.id,
+      title: property.title,
+      location: property.location,
+      price: property.price,
+      image: property.image,
+      type: 'property',
+    });
+  };
 
   const handleBack = () => {
     router.back();
@@ -130,7 +142,7 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
                     <Share2 size={18} className="text-white" strokeWidth={2.5} />
                   </button>
                   <button
-                    onClick={() => setIsSaved(!isSaved)}
+                    onClick={handleToggleSave}
                     className="w-10 h-10 rounded-full flex items-center justify-center transition-transform active:scale-95"
                     style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
                   >
@@ -313,11 +325,14 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
             {/* Agent Card */}
             <div className="p-5 rounded-2xl border" style={{ backgroundColor: colors.surface, borderColor: colors.border }}>
               <h3 className="text-base font-black mb-4" style={{ color: colors.text }}>Agent</h3>
-              <div className="flex items-center gap-3">
+              <button
+                onClick={() => router.push('/agents/agent-1')}
+                className="w-full flex items-center gap-3 hover:opacity-80 transition-opacity"
+              >
                 <div className="w-14 h-14 rounded-xl flex items-center justify-center text-white font-black" style={{ backgroundColor: colors.activeText }}>
                   AG
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 text-left">
                   <h4 className="text-sm font-black" style={{ color: colors.text }}>{property.agentName}</h4>
                   <p className="text-xs font-medium mt-0.5" style={{ color: colors.textMuted }}>{property.agentLabel}</p>
                   <div className="flex items-center gap-2 mt-1.5">
@@ -331,7 +346,7 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
                     </span>
                   </div>
                 </div>
-              </div>
+              </button>
             </div>
 
             {/* Contact Locked */}
@@ -357,11 +372,14 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
           <div className="lg:hidden space-y-4 px-4 pb-24">
             <div className="p-4 rounded-2xl border" style={{ backgroundColor: colors.surface, borderColor: colors.border }}>
               <h3 className="text-base font-black mb-3" style={{ color: colors.text }}>Agent</h3>
-              <div className="flex items-center gap-3">
+              <button
+                onClick={() => router.push('/agents/agent-1')}
+                className="w-full flex items-center gap-3 hover:opacity-80 transition-opacity"
+              >
                 <div className="w-13 h-13 rounded-xl flex items-center justify-center text-white font-black text-base" style={{ backgroundColor: colors.activeText }}>
                   AG
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 text-left">
                   <h4 className="text-sm font-black" style={{ color: colors.text }}>{property.agentName}</h4>
                   <p className="text-xs font-medium mt-0.5" style={{ color: colors.textMuted }}>{property.agentLabel}</p>
                   <div className="flex items-center gap-2 mt-1">
@@ -375,7 +393,7 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
                     </span>
                   </div>
                 </div>
-              </div>
+              </button>
             </div>
 
             <div className="p-4 rounded-2xl border" style={{ backgroundColor: colors.surface, borderColor: colors.border }}>

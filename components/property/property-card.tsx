@@ -1,7 +1,10 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { Heart, MapPin, Bed, Bath, Square, Lock, BadgeCheck, Star } from 'lucide-react';
 import { useTheme } from '@/lib/theme/theme-provider';
+import { usePropertySaved } from '@/lib/hooks/use-saved-properties';
 
 type PropertyCardProps = {
   id: string;
@@ -33,6 +36,20 @@ export function PropertyCard({
   image,
 }: PropertyCardProps) {
   const { colors } = useTheme();
+  const { isSaved, toggleSaved } = usePropertySaved(id);
+
+  const handleToggleSave = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleSaved({
+      id,
+      title,
+      location,
+      price,
+      image,
+      type: 'property',
+    });
+  };
 
   return (
     <Link 
@@ -70,8 +87,14 @@ export function PropertyCard({
         </div>
 
         {/* Heart button */}
-        <button className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white flex items-center justify-center hover:bg-gray-100">
-          <Heart size={13} className="text-gray-500" />
+        <button 
+          onClick={handleToggleSave}
+          className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white flex items-center justify-center hover:bg-gray-100 transition-all active:scale-95"
+        >
+          <Heart 
+            size={13} 
+            className={isSaved ? "text-red-500 fill-red-500" : "text-gray-500"} 
+          />
         </button>
 
         {/* Price tag */}

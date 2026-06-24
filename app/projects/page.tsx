@@ -5,6 +5,8 @@ import { X } from 'lucide-react';
 import Image from 'next/image';
 import { ProjectCard } from '@/components/projects/project-card';
 import { SearchBar } from '@/components/common/search-bar';
+import { SearchFiltersModal } from '@/components/common/search-filters-modal';
+import { projectsSearchFiltersConfig } from '@/lib/data/search-filters';
 import { useTheme } from '@/lib/theme/theme-provider';
 import { useI18n } from '@/lib/i18n/i18n-provider';
 
@@ -53,6 +55,7 @@ export default function ProjectsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showHero, setShowHero] = useState(true);
   const [showPromoBanner, setShowPromoBanner] = useState(true);
+  const [filtersVisible, setFiltersVisible] = useState(false);
   const { colors } = useTheme();
   const { t } = useI18n();
 
@@ -111,7 +114,7 @@ export default function ProjectsPage() {
             placeholder={t('projects.searchPlaceholder')}
             value={searchQuery}
             onChangeText={setSearchQuery}
-            onFilterPress={() => console.log('Filters')}
+            onFilterPress={() => setFiltersVisible(true)}
             variant="muted"
           />
         </div>
@@ -189,6 +192,13 @@ export default function ProjectsPage() {
           </div>
         </div>
       )}
+
+      {/* Filters Modal */}
+      <SearchFiltersModal
+        visible={filtersVisible}
+        onClose={() => setFiltersVisible(false)}
+        config={projectsSearchFiltersConfig}
+      />
     </div>
   );
 }

@@ -1,21 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { HomeHero } from '@/components/home/home-hero';
 import { SectionHeader } from '@/components/home/section-header';
 import { ListingCard } from '@/components/home/listing-card';
 import { PropertyCard } from '@/components/home/property-card';
 import { ServiceBanner } from '@/components/home/service-banner';
+import { SearchFiltersModal } from '@/components/common/search-filters-modal';
+import { propertySearchFiltersConfig, projectsSearchFiltersConfig } from '@/lib/data/search-filters';
 import { Search, Plus, Building2, Briefcase, ShieldCheck } from 'lucide-react';
 import { useTheme } from '@/lib/theme/theme-provider';
 import { useI18n } from '@/lib/i18n/i18n-provider';
-
-const segments = [
-  { key: 'buy', label: 'Buy' },
-  { key: 'rent', label: 'Rent' },
-  { key: 'projects', label: 'Projects' },
-];
 
 const featuredProjects = [
   {
@@ -72,6 +68,7 @@ export default function Home() {
   const router = useRouter();
   const [activeSegment, setActiveSegment] = useState('buy');
   const [searchQuery, setSearchQuery] = useState('');
+  const [filtersVisible, setFiltersVisible] = useState(false);
   const { colors } = useTheme();
   const { t } = useI18n();
 
@@ -80,6 +77,13 @@ export default function Home() {
     { key: 'rent', label: t('home.rent') },
     { key: 'projects', label: t('home.newProjects') },
   ];
+
+  // Determine which filter config to use based on active segment
+  const filterConfig = useMemo(() => {
+    return activeSegment === 'projects' 
+      ? projectsSearchFiltersConfig 
+      : propertySearchFiltersConfig;
+  }, [activeSegment]);
 
   const handleSearch = () => {
     if (activeSegment === 'projects') {
@@ -100,7 +104,7 @@ export default function Home() {
             segments={segments}
             searchQuery={searchQuery}
             onSearchQueryChange={setSearchQuery}
-            onFilterPress={() => console.log('Filters')}
+            onFilterPress={() => setFiltersVisible(true)}
             onPostPress={() => router.push('/post-property')}
             onSearchPress={handleSearch}
           />
@@ -213,6 +217,15 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* Filters Modal - switches config based on active segment */}
+      <SearchFiltersModal
+        visible={filtersVisible}
+        onClose={() => setFiltersVisible(false)}
+        config={filterConfig}
+        minFieldLabel={t('home.filters.min')}
+        maxFieldLabel={t('home.filters.max')}
+      />
     </div>
   );
 }

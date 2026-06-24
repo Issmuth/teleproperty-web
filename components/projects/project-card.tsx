@@ -1,7 +1,10 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
-import { CircleCheckBig, Sparkles, MapPin, ArrowRight } from 'lucide-react';
+import { CircleCheckBig, Sparkles, MapPin, ArrowRight, Heart } from 'lucide-react';
 import { useTheme } from '@/lib/theme/theme-provider';
+import { usePropertySaved } from '@/lib/hooks/use-saved-properties';
 
 type ProjectCardProps = {
   id: string;
@@ -25,6 +28,20 @@ export function ProjectCard({
   featured = false,
 }: ProjectCardProps) {
   const { colors } = useTheme();
+  const { isSaved, toggleSaved } = usePropertySaved(id);
+
+  const handleToggleSave = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleSaved({
+      id,
+      title,
+      location,
+      price,
+      image,
+      type: 'project',
+    });
+  };
 
   return (
     <Link 
@@ -52,6 +69,17 @@ export function ProjectCard({
             </div>
           )}
         </div>
+
+        {/* Heart button */}
+        <button 
+          onClick={handleToggleSave}
+          className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white flex items-center justify-center hover:bg-gray-100 transition-all active:scale-95"
+        >
+          <Heart 
+            size={13} 
+            className={isSaved ? "text-red-500 fill-red-500" : "text-gray-500"} 
+          />
+        </button>
       </div>
 
       <div className="p-3 space-y-2">

@@ -143,6 +143,7 @@ export function Header() {
 
             {/* Notifications */}
             <button
+              onClick={() => router.push('/account/notifications')}
               className="p-2 rounded-lg transition-colors relative"
               style={{ backgroundColor: 'transparent' }}
               onMouseEnter={(e) => e.currentTarget.style.backgroundColor = colors.iconButtonBackground}

@@ -4,14 +4,15 @@ import { useRouter } from 'next/navigation';
 import { ArrowLeft, Heart } from 'lucide-react';
 import { useTheme } from '@/lib/theme/theme-provider';
 import { useI18n } from '@/lib/i18n/i18n-provider';
+import { useSavedProperties } from '@/lib/hooks/use-saved-properties';
+import { PropertyCard } from '@/components/property/property-card';
+import { ProjectCard } from '@/components/projects/project-card';
 
 export default function SavedPropertiesPage() {
   const router = useRouter();
   const { colors } = useTheme();
   const { t } = useI18n();
-
-  // Mock data - replace with actual saved properties
-  const savedProperties: any[] = [];
+  const { savedProperties, loading } = useSavedProperties();
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: colors.background }}>
@@ -32,13 +33,17 @@ export default function SavedPropertiesPage() {
             {t("nav.saved")}
           </h1>
           <p className="text-xs lg:text-sm font-semibold mt-0.5" style={{ color: colors.textMuted }}>
-            {savedProperties.length} {savedProperties.length === 1 ? 'property' : 'properties'}
+            {loading ? 'Loading...' : `${savedProperties.length} ${savedProperties.length === 1 ? 'property' : 'properties'}`}
           </p>
         </div>
       </div>
 
       <div className="max-w-6xl mx-auto px-4 lg:px-8 pt-20 lg:pt-24 pb-32">
-        {savedProperties.length === 0 ? (
+        {loading ? (
+          <div className="flex items-center justify-center pt-16">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2" style={{ borderColor: colors.activeText }} />
+          </div>
+        ) : savedProperties.length === 0 ? (
           <div className="flex items-center justify-center pt-16 lg:pt-24">
             <div
               className="border rounded-3xl p-8 lg:p-12 max-w-md text-center space-y-4"
@@ -59,13 +64,43 @@ export default function SavedPropertiesPage() {
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {/* Property cards will go here */}
-            {savedProperties.map((property) => (
-              <div key={property.id}>
-                {/* Property card component */}
-              </div>
-            ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-4">
+            {savedProperties.map((property) => {
+              // Render based on type
+              if (property.type === 'project') {
+                return (
+                  <ProjectCard
+                    key={property.id}
+                    id={property.id}
+                    badge="Verified"
+                    title={property.title}
+                    developer="Developer"
+                    price={property.price}
+                    location={property.location}
+                    image={property.image}
+                  />
+                );
+              }
+              
+              // Default to property card
+              return (
+                <PropertyCard
+                  key={property.id}
+                  id={property.id}
+                  title={property.title}
+                  location={property.location}
+                  age="N/A"
+                  price={property.price}
+                  beds={0}
+                  baths={0}
+                  area={0}
+                  featured={false}
+                  forSale={true}
+                  verified={false}
+                  image={property.image}
+                />
+              );
+            })}
           </div>
         )}
       </div>

@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { PremiumBanner } from '@/components/property/premium-banner';
 import { PropertyCard } from '@/components/property/property-card';
 import { SearchBar } from '@/components/common/search-bar';
+import { SearchFiltersModal } from '@/components/common/search-filters-modal';
+import { propertySearchFiltersConfig } from '@/lib/data/search-filters';
 import { X } from 'lucide-react';
 import { useTheme } from '@/lib/theme/theme-provider';
 import { useI18n } from '@/lib/i18n/i18n-provider';
@@ -62,6 +64,7 @@ export default function PropertyPage() {
   const [activeSegment, setActiveSegment] = useState('buy');
   const [searchQuery, setSearchQuery] = useState('');
   const [showPromoBanner, setShowPromoBanner] = useState(true);
+  const [filtersVisible, setFiltersVisible] = useState(false);
   const { t } = useI18n();
   const { colors } = useTheme();
 
@@ -78,7 +81,7 @@ export default function PropertyPage() {
               placeholder="Search city, area, property..."
               value={searchQuery}
               onChangeText={setSearchQuery}
-              onFilterPress={() => console.log('Filters')}
+              onFilterPress={() => setFiltersVisible(true)}
               variant="muted"
             />
           </div>
@@ -148,6 +151,15 @@ export default function PropertyPage() {
           </div>
         </div>
       )}
+
+      {/* Filters Modal */}
+      <SearchFiltersModal
+        visible={filtersVisible}
+        onClose={() => setFiltersVisible(false)}
+        config={propertySearchFiltersConfig}
+        minFieldLabel="Min"
+        maxFieldLabel="Max"
+      />
     </div>
   );
 }

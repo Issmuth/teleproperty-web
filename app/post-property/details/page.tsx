@@ -46,18 +46,20 @@ export default function PostPropertyStep2() {
   ];
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: colors.background }}>
-      {/* Back Button FAB */}
-      <button
-        onClick={() => router.back()}
-        className="fixed left-4 lg:left-6 top-4 lg:top-6 z-50 w-9 h-9 lg:w-10 lg:h-10 rounded-full border flex items-center justify-center shadow-lg hover:opacity-80 transition-opacity"
-        style={{ backgroundColor: colors.surface, borderColor: colors.border }}
-      >
-        <ChevronLeft size={20} style={{ color: colors.text }} />
-      </button>
+    <div className="flex-1 min-h-screen" style={{ backgroundColor: colors.background }}>
+      {/* Back Button - Positioned relative to main content */}
+      <div className="max-w-5xl mx-auto px-4 lg:px-8 pt-4 lg:pt-6">
+        <button
+          onClick={() => router.back()}
+          className="w-9 h-9 lg:w-10 lg:h-10 rounded-full border flex items-center justify-center shadow-sm hover:opacity-80 transition-opacity"
+          style={{ backgroundColor: colors.surface, borderColor: colors.border }}
+        >
+          <ChevronLeft size={20} style={{ color: colors.text }} />
+        </button>
+      </div>
 
       {/* Header */}
-      <div className="max-w-3xl mx-auto px-4 lg:px-8 pt-20 lg:pt-24 pb-6 space-y-4">
+      <div className="max-w-5xl mx-auto px-4 lg:px-8 pt-4 pb-6 space-y-4">
         {/* Progress Steps */}
         <div className="flex gap-2">
           {[1, 2, 3].map((step) => (
@@ -108,7 +110,7 @@ export default function PostPropertyStep2() {
       </div>
 
       {/* Content */}
-      <div className="max-w-3xl mx-auto px-4 lg:px-8 pb-32">
+      <div className="max-w-5xl mx-auto px-4 lg:px-8 pb-32">
         <div
           className="rounded-3xl p-4 lg:p-5 border space-y-4"
           style={{ backgroundColor: colors.surface, borderColor: colors.border }}
@@ -296,8 +298,8 @@ export default function PostPropertyStep2() {
       </div>
 
       {/* Footer */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 lg:p-6" style={{ backgroundColor: colors.background }}>
-        <div className="max-w-3xl mx-auto">
+      <div className="fixed bottom-0 left-0 lg:left-64 right-0 p-4 lg:p-6 z-20" style={{ backgroundColor: colors.background }}>
+        <div className="max-w-5xl mx-auto">
           <button
             onClick={() => router.push('/post-property/contact')}
             className="w-full min-h-[48px] lg:min-h-[52px] rounded-2xl font-black text-sm lg:text-base flex items-center justify-center gap-2 transition-all hover:opacity-90"

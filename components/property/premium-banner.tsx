@@ -2,6 +2,7 @@
 
 import { X } from 'lucide-react';
 import { useState } from 'react';
+import { Tag } from '@/components/common/tag';
 
 export function PremiumBanner() {
   const [visible, setVisible] = useState(true);
@@ -19,9 +20,15 @@ export function PremiumBanner() {
       </button>
 
       <div className="p-4">
-        <p className="text-white/90 text-[10px] font-black tracking-wide uppercase mb-1">
-          TELEPROPERTY PREMIUM
-        </p>
+        <Tag 
+          variant="custom" 
+          customBg="rgba(255, 255, 255, 0.2)" 
+          customColor="rgba(255, 255, 255, 0.9)"
+          size="sm"
+          className="uppercase tracking-wide mb-1"
+        >
+          Teleproperty Premium
+        </Tag>
         <h3 className="text-white text-base font-black mb-1">
           Premium Property Listings
         </h3>

@@ -20,6 +20,7 @@ import {
 import { useTheme } from '@/lib/theme/theme-provider';
 import { useI18n } from '@/lib/i18n/i18n-provider';
 import { usePropertySaved } from '@/lib/hooks/use-saved-properties';
+import { Tag } from '@/components/common/tag';
 
 // Sample property data
 const propertyData: Record<string, any> = {
@@ -239,10 +240,9 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
             <div className="mx-4 lg:mx-0 p-4 rounded-2xl border space-y-4" style={{ backgroundColor: colors.surface, borderColor: colors.border }}>
               <div className="flex items-center justify-between">
                 <h2 className="text-base font-black" style={{ color: colors.text }}>Reviews</h2>
-                <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg" style={{ backgroundColor: 'rgba(245, 158, 11, 0.1)' }}>
-                  <Star size={16} className="text-amber-500 fill-amber-500" />
-                  <span className="text-sm font-black" style={{ color: colors.text }}>{property.rating}</span>
-                </div>
+                <Tag variant="amber" size="sm" icon={Star} iconSize={16}>
+                  {property.rating}
+                </Tag>
               </div>
 
               {/* Write Review */}

@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ChevronRight, House, LayoutGrid, MapPin, Plus, Sparkles, ChevronLeft, ChevronDown } from 'lucide-react';
 import { useTheme } from '@/lib/theme/theme-provider';
+import { Tag } from '@/components/common/tag';
+import { iconSize, iconButtonClasses, buttonClasses, inputClasses } from '@/lib/design-system/dimensions';
 
 type PropertyType = 'residential' | 'commercial' | 'land' | 'hotel' | '';
 type Purpose = 'rent' | 'sale' | 'new-project' | 'short-term' | '';
@@ -51,10 +53,10 @@ export default function PostPropertyStep2() {
       <div className="max-w-5xl mx-auto px-4 lg:px-8 pt-4 lg:pt-6">
         <button
           onClick={() => router.back()}
-          className="w-9 h-9 lg:w-10 lg:h-10 rounded-full border flex items-center justify-center shadow-sm hover:opacity-80 transition-opacity"
+          className={`${iconButtonClasses.md} lg:${iconButtonClasses.lg} rounded-full border flex items-center justify-center shadow-sm hover:opacity-80 transition-opacity`}
           style={{ backgroundColor: colors.surface, borderColor: colors.border }}
         >
-          <ChevronLeft size={20} style={{ color: colors.text }} />
+          <ChevronLeft size={iconSize.xl} style={{ color: colors.text }} />
         </button>
       </div>
 
@@ -79,23 +81,12 @@ export default function PostPropertyStep2() {
           style={{ backgroundColor: colors.surface, borderColor: colors.border }}
         >
           <div className="flex items-center justify-between">
-            <div
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full"
-              style={{ backgroundColor: colors.activeSurface }}
-            >
-              <LayoutGrid size={14} style={{ color: colors.activeText }} />
-              <span className="text-xs font-black" style={{ color: colors.activeText }}>
-                Property Details
-              </span>
-            </div>
-            <div
-              className="px-3 py-1.5 rounded-full border"
-              style={{ backgroundColor: colors.surfaceMuted, borderColor: colors.border }}
-            >
-              <span className="text-xs font-black" style={{ color: colors.textMuted }}>
-                Step 2 of 3
-              </span>
-            </div>
+            <Tag variant="primary" size="sm" icon={LayoutGrid} iconSize={14}>
+              Property Details
+            </Tag>
+            <Tag variant="muted" size="sm">
+              Step 2 of 3
+            </Tag>
           </div>
 
           <div>
@@ -135,12 +126,12 @@ export default function PostPropertyStep2() {
                     }}
                   >
                     <div
-                      className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                      className={`${iconButtonClasses.sm} rounded-lg flex items-center justify-center flex-shrink-0`}
                       style={{
                         backgroundColor: isSelected ? colors.activeText : colors.surfaceMuted,
                       }}
                     >
-                      <Icon size={14} color={isSelected ? '#FFFFFF' : colors.textMuted} />
+                      <Icon size={iconSize.sm} color={isSelected ? '#FFFFFF' : colors.textMuted} />
                     </div>
                     <span className="text-xs font-black" style={{ color: colors.text }}>
                       {option.label}
@@ -171,12 +162,12 @@ export default function PostPropertyStep2() {
                     }}
                   >
                     <div
-                      className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                      className={`${iconButtonClasses.sm} rounded-lg flex items-center justify-center flex-shrink-0`}
                       style={{
                         backgroundColor: isSelected ? colors.activeText : colors.surfaceMuted,
                       }}
                     >
-                      <Icon size={14} color={isSelected ? '#FFFFFF' : colors.textMuted} />
+                      <Icon size={iconSize.sm} color={isSelected ? '#FFFFFF' : colors.textMuted} />
                     </div>
                     <span className="text-xs font-black" style={{ color: colors.text }}>
                       {option.label}
@@ -194,16 +185,16 @@ export default function PostPropertyStep2() {
             </label>
             <button
               onClick={() => setCitySheetVisible(!citySheetVisible)}
-              className="w-full min-h-[48px] px-4 rounded-xl border flex items-center justify-between hover:opacity-80 transition-opacity"
+              className={`w-full ${inputClasses.lg} flex items-center justify-between hover:opacity-80 transition-opacity border`}
               style={{ backgroundColor: colors.surface, borderColor: colors.border }}
             >
               <div className="flex items-center gap-3">
-                <MapPin size={16} style={{ color: colors.textMuted }} />
+                <MapPin size={iconSize.md} style={{ color: colors.textMuted }} />
                 <span className="text-sm font-bold" style={{ color: colors.text }}>
                   {city}
                 </span>
               </div>
-              <ChevronDown size={16} style={{ color: colors.textMuted }} />
+              <ChevronDown size={iconSize.md} style={{ color: colors.textMuted }} />
             </button>
 
             {/* City Dropdown */}
@@ -221,13 +212,13 @@ export default function PostPropertyStep2() {
                         setCity(cityOption);
                         setCitySheetVisible(false);
                       }}
-                      className="w-full min-h-[44px] px-3 rounded-lg border flex items-center gap-3 hover:opacity-80 transition-all"
+                      className={`w-full ${inputClasses.lg} flex items-center gap-3 hover:opacity-80 transition-all border`}
                       style={{
                         backgroundColor: isSelected ? colors.activeSurface : colors.surface,
                         borderColor: isSelected ? colors.activeText : colors.border,
                       }}
                     >
-                      <MapPin size={14} style={{ color: isSelected ? colors.activeText : colors.textMuted }} />
+                      <MapPin size={iconSize.sm} style={{ color: isSelected ? colors.activeText : colors.textMuted }} />
                       <span className="text-sm font-bold" style={{ color: colors.text }}>
                         {cityOption}
                       </span>
@@ -248,7 +239,7 @@ export default function PostPropertyStep2() {
               value={areaLocation}
               onChange={(e) => setAreaLocation(e.target.value)}
               placeholder="e.g. Bole, Summit"
-              className="w-full min-h-[48px] px-4 rounded-xl border text-sm font-semibold focus:outline-none focus:ring-2"
+              className={`w-full ${inputClasses.lg} border focus:outline-none focus:ring-2`}
               style={{
                 backgroundColor: colors.surface,
                 borderColor: colors.border,
@@ -268,7 +259,7 @@ export default function PostPropertyStep2() {
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 placeholder="ETB 2,500,000"
-                className="w-full min-h-[48px] px-4 rounded-xl border text-sm font-semibold focus:outline-none focus:ring-2"
+                className={`w-full ${inputClasses.lg} border focus:outline-none focus:ring-2`}
                 style={{
                   backgroundColor: colors.surface,
                   borderColor: colors.border,
@@ -285,7 +276,7 @@ export default function PostPropertyStep2() {
                 value={size}
                 onChange={(e) => setSize(e.target.value)}
                 placeholder="3BR or 150m²"
-                className="w-full min-h-[48px] px-4 rounded-xl border text-sm font-semibold focus:outline-none focus:ring-2"
+                className={`w-full ${inputClasses.lg} border focus:outline-none focus:ring-2`}
                 style={{
                   backgroundColor: colors.surface,
                   borderColor: colors.border,
@@ -302,14 +293,14 @@ export default function PostPropertyStep2() {
         <div className="max-w-5xl mx-auto">
           <button
             onClick={() => router.push('/post-property/contact')}
-            className="w-full min-h-[48px] lg:min-h-[52px] rounded-2xl font-black text-sm lg:text-base flex items-center justify-center gap-2 transition-all hover:opacity-90"
+            className={`w-full ${buttonClasses.lg} lg:h-14 font-black flex items-center justify-center gap-2 transition-all hover:opacity-90`}
             style={{
               backgroundColor: colors.activeText,
               color: '#FFFFFF',
             }}
           >
             <span>Continue</span>
-            <ChevronRight size={16} />
+            <ChevronRight size={iconSize.md} />
           </button>
         </div>
       </div>

@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { useTheme } from '@/lib/theme/theme-provider';
 import { useI18n } from '@/lib/i18n/i18n-provider';
+import { Tag } from '@/components/common/tag';
 
 const metrics = [
   { value: '4', labelKey: 'account.brokerDashboard.metrics.myListings', icon: Building2, color: '#6366F1', bg: '#EEF2FF' },
@@ -239,12 +240,17 @@ export default function BrokerDashboardPage() {
                 {t('account.brokerDashboard.subscription.title')}
               </h3>
             </div>
-            <div className="flex items-center gap-2 bg-green-100 dark:bg-green-900/30 px-3 py-1.5 rounded-full">
-              <div className="w-1.5 h-1.5 rounded-full bg-green-600" />
-              <span className="text-xs font-black text-green-600">
-                {t('account.brokerDashboard.subscription.status')}
-              </span>
-            </div>
+            <Tag 
+              variant="custom" 
+              customBg={isDark ? 'rgba(22, 163, 74, 0.3)' : '#DCFCE7'} 
+              customColor="#16A34A"
+              size="sm"
+            >
+              <div className="flex items-center gap-1.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-green-600" />
+                <span>{t('account.brokerDashboard.subscription.status')}</span>
+              </div>
+            </Tag>
           </div>
 
           <div className="grid grid-cols-3 gap-3">
@@ -331,14 +337,14 @@ export default function BrokerDashboardPage() {
                   </p>
                 </div>
                 {item.badge && (
-                  <div
-                    className="px-2.5 py-1 rounded-full"
-                    style={{ backgroundColor: item.badgeBg }}
+                  <Tag 
+                    variant="custom" 
+                    customBg={item.badgeBg} 
+                    customColor={item.badgeColor}
+                    size="sm"
                   >
-                    <span className="text-xs font-black" style={{ color: item.badgeColor }}>
-                      {item.badge}
-                    </span>
-                  </div>
+                    {item.badge}
+                  </Tag>
                 )}
                 <ArrowRight size={15} style={{ color: colors.textMuted }} />
               </button>

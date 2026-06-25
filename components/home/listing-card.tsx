@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { useTheme } from '@/lib/theme/theme-provider';
+import { Tag } from '@/components/common/tag';
 
 type ListingCardProps = {
   image: string;
@@ -42,12 +43,16 @@ export function ListingCard({
           className="object-cover"
         />
         {badge && (
-          <div className="absolute top-2 left-2 px-2 py-1 bg-white/95 backdrop-blur-sm rounded-full">
-            <span className="text-[10px] font-bold text-gray-800">{badge}</span>
+          <div className="absolute top-2 left-2">
+            <Tag variant="custom" customBg="rgba(255, 255, 255, 0.95)" customColor="#1F2937" size="sm">
+              {badge}
+            </Tag>
           </div>
         )}
-        <div className="absolute top-2 right-2 px-2 py-0.5 bg-black/70 backdrop-blur-sm rounded-full flex items-center gap-1">
-          <span className="text-[10px] font-bold text-white">★ {rating}</span>
+        <div className="absolute top-2 right-2">
+          <Tag variant="custom" customBg="rgba(0, 0, 0, 0.7)" customColor="#FFFFFF" size="sm">
+            ★ {rating}
+          </Tag>
         </div>
       </div>
       

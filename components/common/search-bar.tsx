@@ -3,6 +3,7 @@
 import { ReactNode } from 'react';
 import { Search, SlidersHorizontal } from 'lucide-react';
 import { useTheme } from '@/lib/theme/theme-provider';
+import { iconSize, iconButtonClasses } from '@/lib/design-system/dimensions';
 
 type SearchBarProps = {
   placeholder: string;
@@ -36,7 +37,7 @@ export function SearchBar({
         className={`
           flex flex-1 items-center gap-2.5 border min-w-0
           ${isElevated 
-            ? 'min-h-[44px] rounded-2xl px-3.5' 
+            ? 'h-11 rounded-2xl px-3.5' 
             : 'h-12 rounded-xl px-4'
           }
         `}
@@ -45,7 +46,7 @@ export function SearchBar({
           : { backgroundColor: colors.surfaceMuted, borderColor: colors.border }
         }
       >
-        <Search size={18} className="flex-shrink-0" style={{ color: colors.textMuted }} strokeWidth={2.1} />
+        <Search size={iconSize.lg} className="flex-shrink-0" style={{ color: colors.textMuted }} strokeWidth={2.1} />
         <input
           type="text"
           value={value}
@@ -64,8 +65,8 @@ export function SearchBar({
             flex items-center justify-center flex-shrink-0
             transition-transform active:scale-95
             ${isElevated 
-              ? 'w-11 h-11 rounded-[14px]' 
-              : 'w-12 h-12 rounded-xl border'
+              ? iconButtonClasses.lg
+              : `${iconButtonClasses.xl} border`
             }
           `}
           style={isElevated
@@ -73,7 +74,7 @@ export function SearchBar({
             : { backgroundColor: colors.surfaceMuted, borderColor: colors.border }
           }
         >
-          <SlidersHorizontal size={18} style={{ color: colors.textMuted }} strokeWidth={2.2} />
+          <SlidersHorizontal size={iconSize.lg} style={{ color: colors.textMuted }} strokeWidth={2.2} />
         </button>
       )}
 

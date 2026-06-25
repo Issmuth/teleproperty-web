@@ -12,6 +12,7 @@ import {
   Phone,
 } from 'lucide-react';
 import { useTheme } from '@/lib/theme/theme-provider';
+import { Tag } from '@/components/common/tag';
 
 const tabs = ['Projects', 'Leads', 'Campaigns'] as const;
 type TabKey = typeof tabs[number];
@@ -196,9 +197,7 @@ export default function DeveloperDashboardPage() {
                       </span>
                     </div>
                   </div>
-                  <div className="bg-green-100 dark:bg-green-900/30 px-3 py-1.5 rounded-full">
-                    <span className="text-xs font-black text-green-600">{p.status}</span>
-                  </div>
+                  <Tag variant="status" size="sm">{p.status}</Tag>
                 </div>
 
                 <div className="flex items-center gap-4">
@@ -290,9 +289,14 @@ export default function DeveloperDashboardPage() {
                   </div>
                   <div className="text-right space-y-2">
                     {lead.status === 'New' && (
-                      <div className="bg-rose-100 dark:bg-rose-900/30 px-3 py-1 rounded-full">
-                        <span className="text-xs font-black text-rose-600">New</span>
-                      </div>
+                      <Tag 
+                        variant="custom" 
+                        customBg={isDark ? 'rgba(220, 38, 38, 0.3)' : '#FEE2E2'} 
+                        customColor="#DC2626"
+                        size="sm"
+                      >
+                        New
+                      </Tag>
                     )}
                     <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-green-600 hover:bg-green-700 transition-colors">
                       <Phone size={13} className="text-white" />

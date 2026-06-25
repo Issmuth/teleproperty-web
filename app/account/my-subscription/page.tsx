@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { Shield, CheckCircle2, RefreshCw, ArrowLeft } from 'lucide-react';
 import { useTheme } from '@/lib/theme/theme-provider';
 import { useI18n } from '@/lib/i18n/i18n-provider';
+import { Tag } from '@/components/common/tag';
 
 const activePlan = {
   name: "Professional Broker Plan",
@@ -121,10 +122,16 @@ export default function MySubscriptionPage() {
                 {row.label}
               </span>
               {row.isToggle ? (
-                <div className="flex items-center gap-1.5 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg px-2.5 py-1.5">
-                  <RefreshCw size={11} color="#6366F1" />
-                  <span className="text-xs font-black text-indigo-600 dark:text-indigo-400">ON</span>
-                </div>
+                <Tag
+                  variant="custom"
+                  customBg="rgba(238, 242, 255, 1)"
+                  customColor="#6366F1"
+                  size="sm"
+                  icon={RefreshCw}
+                  iconSize={11}
+                >
+                  ON
+                </Tag>
               ) : (
                 <span
                   className={`text-sm lg:text-base ${row.bold ? 'font-black' : 'font-bold'}`}

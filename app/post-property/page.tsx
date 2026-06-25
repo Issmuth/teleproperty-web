@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { ChevronRight, House, LayoutGrid, Sparkles, UserRound, ChevronLeft } from 'lucide-react';
 import { useTheme } from '@/lib/theme/theme-provider';
 import { useI18n } from '@/lib/i18n/i18n-provider';
+import { Tag } from '@/components/common/tag';
+import { buttonClasses, iconButtonClasses, iconSize } from '@/lib/design-system/dimensions';
 
 type Role = 'owner' | 'broker-agent' | 'developer' | 'property-manager' | '';
 
@@ -46,10 +48,10 @@ export default function PostPropertyStep1() {
       <div className="max-w-5xl mx-auto px-4 lg:px-8 pt-4 lg:pt-6">
         <button
           onClick={() => router.back()}
-          className="w-9 h-9 lg:w-10 lg:h-10 rounded-full border flex items-center justify-center shadow-sm hover:opacity-80 transition-opacity"
+          className={`${iconButtonClasses.lg} border flex items-center justify-center shadow-sm hover:opacity-80 transition-opacity`}
           style={{ backgroundColor: colors.surface, borderColor: colors.border }}
         >
-          <ChevronLeft size={20} style={{ color: colors.text }} />
+          <ChevronLeft size={iconSize.lg} style={{ color: colors.text }} />
         </button>
       </div>
 
@@ -74,23 +76,12 @@ export default function PostPropertyStep1() {
           style={{ backgroundColor: colors.surface, borderColor: colors.border }}
         >
           <div className="flex items-center justify-between">
-            <div
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full"
-              style={{ backgroundColor: colors.activeSurface }}
-            >
-              <Sparkles size={14} style={{ color: colors.activeText }} />
-              <span className="text-xs font-black" style={{ color: colors.activeText }}>
-                Listing Wizard
-              </span>
-            </div>
-            <div
-              className="px-3 py-1.5 rounded-full border"
-              style={{ backgroundColor: colors.surfaceMuted, borderColor: colors.border }}
-            >
-              <span className="text-xs font-black" style={{ color: colors.textMuted }}>
-                Step 1 of 3
-              </span>
-            </div>
+            <Tag variant="primary" size="sm" icon={Sparkles} iconSize={14}>
+              Listing Wizard
+            </Tag>
+            <Tag variant="muted" size="sm">
+              Step 1 of 3
+            </Tag>
           </div>
 
           <div>
@@ -153,7 +144,7 @@ export default function PostPropertyStep1() {
           <button
             onClick={() => selectedRole && router.push('/post-property/details')}
             disabled={!selectedRole}
-            className={`w-full min-h-[48px] lg:min-h-[52px] rounded-2xl font-black text-sm lg:text-base flex items-center justify-center gap-2 transition-all ${
+            className={`w-full ${buttonClasses.lg} flex items-center justify-center gap-2 transition-all ${
               !selectedRole ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-90'
             }`}
             style={{
@@ -162,7 +153,7 @@ export default function PostPropertyStep1() {
             }}
           >
             <span>Continue</span>
-            <ChevronRight size={16} />
+            <ChevronRight size={iconSize.md} />
           </button>
         </div>
       </div>

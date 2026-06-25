@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { ArrowLeft, Bell, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { useTheme } from '@/lib/theme/theme-provider';
+import { Tag } from '@/components/common/tag';
 
 type NotifCategory = 'All' | 'Property Alerts' | 'Government/News' | 'Rewards & Lottery' | 'Subscription';
 
@@ -224,19 +225,14 @@ export default function NotificationsPage() {
                         {notif.body}
                       </p>
                       <div className="flex items-center gap-2 mt-2">
-                        <div
-                          className="inline-block px-2 py-1 rounded-full"
-                          style={{
-                            backgroundColor: isDark ? colors.surfaceMuted : meta?.bg ?? '#F8FAFC',
-                          }}
+                        <Tag 
+                          variant="custom" 
+                          customBg={isDark ? colors.surfaceMuted : meta?.bg ?? '#F8FAFC'} 
+                          customColor={meta?.color ?? colors.textMuted}
+                          size="sm"
                         >
-                          <span
-                            className="text-xs font-black"
-                            style={{ color: meta?.color ?? colors.textMuted }}
-                          >
-                            {notif.category}
-                          </span>
-                        </div>
+                          {notif.category}
+                        </Tag>
                         <span className="text-xs font-semibold" style={{ color: colors.textMuted }}>
                           {notif.time}
                         </span>

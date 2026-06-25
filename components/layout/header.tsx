@@ -7,6 +7,7 @@ import { ThemeToggle } from '@/components/common/theme-toggle';
 import { useTheme } from '@/lib/theme/theme-provider';
 import { useI18n } from '@/lib/i18n/i18n-provider';
 import { useAuth } from '@/lib/auth/auth-store';
+import { iconSize, iconButtonClasses, buttonClasses } from '@/lib/design-system/dimensions';
 
 const languages = [
   { code: null, labelKey: 'languages.useDevice' },
@@ -55,8 +56,8 @@ export function Header() {
           {/* Logo */}
           <div className="flex items-center gap-2.5">
             <a href="/" className="flex items-center gap-2.5">
-              <div className="w-9 h-9 lg:w-10 lg:h-10 rounded-xl bg-[#0B8F55] flex items-center justify-center">
-                <House className="text-white" size={18} strokeWidth={2.5} />
+              <div className={`${iconButtonClasses.md} lg:${iconButtonClasses.lg} rounded-xl bg-[#0B8F55] flex items-center justify-center`}>
+                <House className="text-white" size={iconSize.lg} strokeWidth={2.5} />
               </div>
               <div className="hidden sm:block">
                 <h1 
@@ -78,7 +79,7 @@ export function Header() {
             <div className="relative">
               <button
                 onClick={() => setIsLanguageOpen(!isLanguageOpen)}
-                className="p-2 rounded-lg transition-colors"
+                className={`${iconButtonClasses.sm} flex items-center justify-center transition-colors`}
                 style={{ 
                   backgroundColor: isLanguageOpen ? colors.iconButtonBackground : 'transparent' 
                 }}
@@ -88,7 +89,7 @@ export function Header() {
                 }}
                 aria-label="Change language"
               >
-                <Globe className="text-[#0B8F55]" size={20} strokeWidth={2} />
+                <Globe className="text-[#0B8F55]" size={iconSize.xl} strokeWidth={2} />
               </button>
 
               {isLanguageOpen && (
@@ -144,42 +145,42 @@ export function Header() {
             {/* Notifications */}
             <button
               onClick={() => router.push('/account/notifications')}
-              className="p-2 rounded-lg transition-colors relative"
+              className={`${iconButtonClasses.sm} flex items-center justify-center transition-colors relative`}
               style={{ backgroundColor: 'transparent' }}
               onMouseEnter={(e) => e.currentTarget.style.backgroundColor = colors.iconButtonBackground}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
               aria-label="Notifications"
             >
-              <Bell size={20} strokeWidth={2} style={{ color: colors.icon }} />
+              <Bell size={iconSize.xl} strokeWidth={2} style={{ color: colors.icon }} />
               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full" />
             </button>
 
             {/* Menu Button - Hidden on desktop */}
             <button
               onClick={() => setIsDrawerOpen(true)}
-              className="lg:hidden p-2 rounded-lg transition-colors"
+              className={`lg:hidden ${iconButtonClasses.sm} flex items-center justify-center transition-colors`}
               style={{ backgroundColor: 'transparent' }}
               onMouseEnter={(e) => e.currentTarget.style.backgroundColor = colors.iconButtonBackground}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
               aria-label="Open menu"
             >
-              <Menu size={20} strokeWidth={2} style={{ color: colors.icon }} />
+              <Menu size={iconSize.xl} strokeWidth={2} style={{ color: colors.icon }} />
             </button>
 
             {/* Auth Button / User Menu - Desktop only, rightmost */}
             {!isAuthenticated ? (
               <button
                 onClick={() => router.push('/auth')}
-                className="hidden lg:flex items-center gap-2 px-4 py-2 rounded-lg bg-[#22C55E] hover:bg-[#1EA952] text-white font-bold text-sm transition-colors"
+                className={`hidden lg:flex items-center gap-2 ${buttonClasses.md} bg-[#22C55E] hover:bg-[#1EA952] text-white font-bold transition-colors`}
               >
-                <User size={16} strokeWidth={2.5} />
+                <User size={iconSize.md} strokeWidth={2.5} />
                 Sign In
               </button>
             ) : (
               <div className="relative hidden lg:block">
                 <button
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  className="flex items-center gap-2 px-3 py-2 rounded-lg transition-colors"
+                  className={`flex items-center gap-2 ${buttonClasses.md} transition-colors`}
                   style={{ 
                     backgroundColor: isUserMenuOpen ? colors.iconButtonBackground : 'transparent' 
                   }}
@@ -188,7 +189,7 @@ export function Header() {
                     if (!isUserMenuOpen) e.currentTarget.style.backgroundColor = 'transparent';
                   }}
                 >
-                  <div className="w-8 h-8 rounded-full bg-[#22C55E] flex items-center justify-center">
+                  <div className={`${iconButtonClasses.sm} rounded-full bg-[#22C55E] flex items-center justify-center`}>
                     <span className="text-white text-sm font-bold">
                       {session?.displayName.charAt(0).toUpperCase()}
                     </span>
@@ -217,7 +218,7 @@ export function Header() {
                             router.push('/account');
                             setIsUserMenuOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors flex items-center gap-2"
+                          className={`w-full text-left ${buttonClasses.md} justify-start transition-colors flex items-center gap-2`}
                           style={{ 
                             backgroundColor: colors.surface, 
                             color: colors.text 
@@ -225,7 +226,7 @@ export function Header() {
                           onMouseEnter={(e) => e.currentTarget.style.backgroundColor = colors.iconButtonBackground}
                           onMouseLeave={(e) => e.currentTarget.style.backgroundColor = colors.surface}
                         >
-                          <User size={16} />
+                          <User size={iconSize.md} />
                           Account
                         </button>
                         <button
@@ -234,7 +235,7 @@ export function Header() {
                             setIsUserMenuOpen(false);
                             router.push('/');
                           }}
-                          className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors flex items-center gap-2"
+                          className={`w-full text-left ${buttonClasses.md} justify-start transition-colors flex items-center gap-2`}
                           style={{ 
                             backgroundColor: colors.surface, 
                             color: colors.text 
@@ -242,7 +243,7 @@ export function Header() {
                           onMouseEnter={(e) => e.currentTarget.style.backgroundColor = colors.iconButtonBackground}
                           onMouseLeave={(e) => e.currentTarget.style.backgroundColor = colors.surface}
                         >
-                          <LogOut size={16} />
+                          <LogOut size={iconSize.md} />
                           Sign Out
                         </button>
                       </div>
@@ -277,12 +278,12 @@ export function Header() {
                 </h2>
                 <button
                   onClick={() => setIsDrawerOpen(false)}
-                  className="p-2 rounded-lg transition-colors"
+                  className={`${iconButtonClasses.sm} flex items-center justify-center transition-colors`}
                   style={{ backgroundColor: 'transparent' }}
                   onMouseEnter={(e) => e.currentTarget.style.backgroundColor = colors.iconButtonBackground}
                   onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                 >
-                  <X size={20} style={{ color: colors.icon }} />
+                  <X size={iconSize.xl} style={{ color: colors.icon }} />
                 </button>
               </div>
 
@@ -295,15 +296,15 @@ export function Header() {
                       router.push('/auth');
                       setIsDrawerOpen(false);
                     }}
-                    className="w-full flex items-center justify-center gap-2 mx-5 mb-4 px-4 py-3 rounded-xl bg-[#22C55E] hover:bg-[#1EA952] text-white font-bold transition-colors"
+                    className={`w-full flex items-center justify-center gap-2 mx-5 mb-4 ${buttonClasses.lg} bg-[#22C55E] hover:bg-[#1EA952] text-white font-bold transition-colors`}
                   >
-                    <User size={18} strokeWidth={2.5} />
+                    <User size={iconSize.lg} strokeWidth={2.5} />
                     Sign In / Register
                   </button>
                 ) : (
                   <div className="px-5 py-4 mb-2 border-b" style={{ borderColor: colors.border }}>
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-full bg-[#22C55E] flex items-center justify-center flex-shrink-0">
+                      <div className={`${iconButtonClasses.xl} rounded-full bg-[#22C55E] flex items-center justify-center flex-shrink-0`}>
                         <span className="text-white text-lg font-bold">
                           {session?.displayName.charAt(0).toUpperCase()}
                         </span>
@@ -353,7 +354,7 @@ export function Header() {
                     onMouseEnter={(e) => e.currentTarget.style.backgroundColor = colors.iconButtonBackground}
                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                   >
-                    <LogOut size={18} strokeWidth={2} style={{ color: colors.icon }} />
+                    <LogOut size={iconSize.lg} strokeWidth={2} style={{ color: colors.icon }} />
                     <span className="text-base font-medium" style={{ color: colors.text }}>
                       {t('account.signOut')}
                     </span>

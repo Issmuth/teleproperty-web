@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ChevronRight, Camera, CheckCircle2, ChevronLeft, Mail } from 'lucide-react';
 import { useTheme } from '@/lib/theme/theme-provider';
+import { Tag } from '@/components/common/tag';
+import { iconSize, iconButtonClasses, buttonClasses, inputClasses } from '@/lib/design-system/dimensions';
 
 type VerificationType = 'owner-id' | 'broker-license' | 'developer-document' | '';
 
@@ -28,10 +30,10 @@ export default function PostPropertyStep3() {
       <div className="max-w-5xl mx-auto px-4 lg:px-8 pt-4 lg:pt-6">
         <button
           onClick={() => router.back()}
-          className="w-9 h-9 lg:w-10 lg:h-10 rounded-full border flex items-center justify-center shadow-sm hover:opacity-80 transition-opacity"
+          className={`${iconButtonClasses.md} lg:${iconButtonClasses.lg} rounded-full border flex items-center justify-center shadow-sm hover:opacity-80 transition-opacity`}
           style={{ backgroundColor: colors.surface, borderColor: colors.border }}
         >
-          <ChevronLeft size={20} style={{ color: colors.text }} />
+          <ChevronLeft size={iconSize.xl} style={{ color: colors.text }} />
         </button>
       </div>
 
@@ -56,23 +58,12 @@ export default function PostPropertyStep3() {
           style={{ backgroundColor: colors.surface, borderColor: colors.border }}
         >
           <div className="flex items-center justify-between">
-            <div
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full"
-              style={{ backgroundColor: colors.activeSurface }}
-            >
-              <Mail size={14} style={{ color: colors.activeText }} />
-              <span className="text-xs font-black" style={{ color: colors.activeText }}>
-                Contact & Verify
-              </span>
-            </div>
-            <div
-              className="px-3 py-1.5 rounded-full border"
-              style={{ backgroundColor: colors.surfaceMuted, borderColor: colors.border }}
-            >
-              <span className="text-xs font-black" style={{ color: colors.textMuted }}>
-                Step 3 of 3
-              </span>
-            </div>
+            <Tag variant="primary" size="sm" icon={Mail} iconSize={14}>
+              Contact & Verify
+            </Tag>
+            <Tag variant="muted" size="sm">
+              Step 3 of 3
+            </Tag>
           </div>
 
           <div>
@@ -103,17 +94,12 @@ export default function PostPropertyStep3() {
               WhatsApp Number
             </label>
             <div
-              className="flex items-center gap-2 min-h-[48px] px-3 rounded-xl border"
+              className={`flex items-center gap-2 ${inputClasses.lg} border`}
               style={{ backgroundColor: colors.surface, borderColor: colors.border }}
             >
-              <div
-                className="px-2 py-1 rounded-lg"
-                style={{ backgroundColor: colors.activeSurface }}
-              >
-                <span className="text-xs font-black" style={{ color: colors.activeText }}>
-                  WA
-                </span>
-              </div>
+              <Tag variant="primary" size="xs">
+                WA
+              </Tag>
               <input
                 type="tel"
                 value={whatsapp}
@@ -131,17 +117,12 @@ export default function PostPropertyStep3() {
               Telegram
             </label>
             <div
-              className="flex items-center gap-2 min-h-[48px] px-3 rounded-xl border"
+              className={`flex items-center gap-2 ${inputClasses.lg} border`}
               style={{ backgroundColor: colors.surface, borderColor: colors.border }}
             >
-              <div
-                className="px-2 py-1 rounded-lg"
-                style={{ backgroundColor: colors.activeSurface }}
-              >
-                <span className="text-xs font-black" style={{ color: colors.activeText }}>
-                  TG
-                </span>
-              </div>
+              <Tag variant="primary" size="xs">
+                TG
+              </Tag>
               <input
                 type="text"
                 value={telegram}
@@ -159,7 +140,7 @@ export default function PostPropertyStep3() {
               Contact Email
             </label>
             <div
-              className="flex items-center gap-2 min-h-[48px] px-4 rounded-xl border"
+              className={`flex items-center gap-2 ${inputClasses.lg} border`}
               style={{ backgroundColor: colors.surface, borderColor: colors.border }}
             >
               <input
@@ -205,13 +186,13 @@ export default function PostPropertyStep3() {
             Upload Photos
           </label>
           <button
-            className="w-full min-h-[140px] rounded-2xl border-2 border-dashed flex flex-col items-center justify-center gap-2 hover:opacity-80 transition-opacity"
+            className="w-full h-36 rounded-2xl border-2 border-dashed flex flex-col items-center justify-center gap-2 hover:opacity-80 transition-opacity"
             style={{
               borderColor: colors.border,
               backgroundColor: colors.surfaceMuted,
             }}
           >
-            <Camera size={24} style={{ color: colors.textMuted }} />
+            <Camera size={iconSize['2xl']} style={{ color: colors.textMuted }} />
             <div className="text-center">
               <p className="text-sm font-black" style={{ color: colors.text }}>
                 Tap to Upload
@@ -238,7 +219,7 @@ export default function PostPropertyStep3() {
                 <button
                   key={option.key}
                   onClick={() => setVerificationType(option.key)}
-                  className="w-full min-h-[48px] px-4 rounded-xl border flex items-center gap-3 transition-all hover:opacity-80"
+                  className={`w-full ${inputClasses.lg} flex items-center gap-3 transition-all hover:opacity-80 border`}
                   style={{
                     backgroundColor: isSelected ? colors.activeSurface : colors.surface,
                     borderColor: isSelected ? colors.activeText : colors.border,
@@ -267,14 +248,14 @@ export default function PostPropertyStep3() {
         <div className="max-w-5xl mx-auto">
           <button
             onClick={() => router.push('/')}
-            className="w-full min-h-[48px] lg:min-h-[52px] rounded-2xl font-black text-sm lg:text-base flex items-center justify-center gap-2 transition-all hover:opacity-90"
+            className={`w-full ${buttonClasses.lg} lg:h-14 font-black flex items-center justify-center gap-2 transition-all hover:opacity-90`}
             style={{
               backgroundColor: colors.activeText,
               color: '#FFFFFF',
             }}
           >
             <span>Review Packages</span>
-            <ChevronRight size={16} />
+            <ChevronRight size={iconSize.md} />
           </button>
         </div>
       </div>

@@ -9,6 +9,7 @@ import {
   SearchFilterOption,
   citySubcityMap,
 } from '@/lib/data/search-filters';
+import { iconSize, iconButtonClasses, buttonClasses, inputClasses } from '@/lib/design-system/dimensions';
 
 type FilterState = Record<string, string | string[] | boolean>;
 
@@ -139,10 +140,10 @@ export function SearchFiltersModal({
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-opacity-80 transition-colors"
+            className={`${iconButtonClasses.sm} flex items-center justify-center hover:bg-opacity-80 transition-colors`}
             style={{ backgroundColor: colors.surfaceMuted }}
           >
-            <X size={18} style={{ color: colors.textMuted }} />
+            <X size={iconSize.lg} style={{ color: colors.textMuted }} />
           </button>
         </div>
 
@@ -254,7 +255,7 @@ function FilterSectionView({
               </label>
               <button
                 onClick={() => onSelectPress(field.id)}
-                className="w-full min-h-[48px] rounded-xl border px-4 flex items-center justify-between transition-colors hover:bg-opacity-80"
+                className={`w-full ${inputClasses.lg} flex items-center justify-between transition-colors hover:bg-opacity-80 border`}
                 style={{
                   backgroundColor: colors.surface,
                   borderColor: colors.border,
@@ -263,7 +264,7 @@ function FilterSectionView({
                 <span className="text-sm font-bold truncate" style={{ color: colors.text }}>
                   {selectedValue}
                 </span>
-                <ChevronDown size={16} style={{ color: colors.textMuted }} />
+                <ChevronDown size={iconSize.md} style={{ color: colors.textMuted }} />
               </button>
 
               {isExpanded && (
@@ -452,7 +453,7 @@ function FilterChip({
   return (
     <button
       onClick={onPress}
-      className="min-h-[34px] px-3 rounded-full border font-bold text-sm transition-all hover:opacity-80"
+      className={`${buttonClasses.sm} rounded-full border transition-all hover:opacity-80`}
       style={
         selected
           ? { backgroundColor: colors.activeText, borderColor: colors.activeText, color: '#FFFFFF' }

@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { ArrowLeft, Download } from 'lucide-react';
 import { useState } from 'react';
 import { useTheme } from '@/lib/theme/theme-provider';
+import { Tag } from '@/components/common/tag';
 
 type Filter = 'All' | 'Subscription' | 'Listing' | 'Service' | 'Booking';
 
@@ -123,10 +124,15 @@ export default function PaymentHistoryPage() {
                 <p className="text-sm lg:text-base font-black" style={{ color: colors.text }}>
                   {tx.amount}
                 </p>
-                <div className="inline-block bg-green-100 dark:bg-green-900/20 rounded-full px-2 py-0.5 mt-1">
-                  <span className="text-xs font-black text-green-700 dark:text-green-400">
+                <div className="mt-1">
+                  <Tag 
+                    variant="custom" 
+                    customBg={isDark ? 'rgba(22, 163, 74, 0.2)' : '#DCFCE7'} 
+                    customColor={isDark ? '#4ADE80' : '#15803D'}
+                    size="sm"
+                  >
                     {tx.status}
-                  </span>
+                  </Tag>
                 </div>
               </div>
             </div>

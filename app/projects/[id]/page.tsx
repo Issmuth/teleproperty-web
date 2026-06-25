@@ -21,6 +21,7 @@ import {
 import { useTheme } from '@/lib/theme/theme-provider';
 import { useI18n } from '@/lib/i18n/i18n-provider';
 import { usePropertySaved } from '@/lib/hooks/use-saved-properties';
+import { Tag } from '@/components/common/tag';
 
 // Sample project data
 const projectData: Record<string, any> = {
@@ -240,15 +241,9 @@ export default function ProjectDetailsPage({ params }: { params: Promise<{ id: s
               <h2 className="text-sm font-black mb-3" style={{ color: colors.text }}>Unit Types</h2>
               <div className="flex flex-wrap gap-2">
                 {project.unitTypes.map((type: string) => (
-                  <div
-                    key={type}
-                    className="px-3 py-1.5 rounded-full"
-                    style={{ backgroundColor: colors.activeSurface }}
-                  >
-                    <span className="text-xs font-black" style={{ color: colors.activeText }}>
-                      {type}
-                    </span>
-                  </div>
+                  <Tag key={type} variant="primary" size="md">
+                    {type}
+                  </Tag>
                 ))}
               </div>
             </div>

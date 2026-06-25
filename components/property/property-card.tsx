@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { Heart, MapPin, Bed, Bath, Square, Lock, BadgeCheck, Star } from 'lucide-react';
 import { useTheme } from '@/lib/theme/theme-provider';
 import { usePropertySaved } from '@/lib/hooks/use-saved-properties';
+import { iconButtonClasses, iconSize } from '@/lib/design-system/dimensions';
+import { Tag } from '@/components/common/tag';
 
 type PropertyCardProps = {
   id: string;
@@ -67,29 +69,15 @@ export function PropertyCard({
         
         {/* Top left badges */}
         <div className="absolute top-2 left-2 flex gap-1">
-          {featured && (
-            <div className="flex items-center gap-0.5 px-1.5 py-0.5 bg-[#FBA100] rounded-md">
-              <Star size={9} className="text-white fill-white" />
-              <span className="text-[9px] font-bold text-white">Featured</span>
-            </div>
-          )}
-          {forSale && (
-            <div className="px-1.5 py-0.5 bg-[#10B981] rounded-md">
-              <span className="text-[9px] font-bold text-white">For Sale</span>
-            </div>
-          )}
-          {verified && (
-            <div className="flex items-center gap-0.5 px-1.5 py-0.5 bg-white rounded-md">
-              <BadgeCheck size={10} className="text-[#0B8F55]" />
-              <span className="text-[9px] font-bold text-[#0A7A4A]">Verified</span>
-            </div>
-          )}
+          {featured && <Tag variant="featured" icon={Star}>Featured</Tag>}
+          {forSale && <Tag variant="forSale">For Sale</Tag>}
+          {verified && <Tag variant="verified" icon={BadgeCheck} iconSize={10}>Verified</Tag>}
         </div>
 
         {/* Heart button */}
         <button 
           onClick={handleToggleSave}
-          className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white flex items-center justify-center hover:bg-gray-100 transition-all active:scale-95"
+          className={`absolute top-2 right-2 ${iconButtonClasses.xs} bg-white flex items-center justify-center hover:bg-gray-100 transition-all active:scale-95`}
         >
           <Heart 
             size={13} 
@@ -109,9 +97,7 @@ export function PropertyCard({
         <div className="flex items-center gap-1.5">
           <MapPin size={11} className="text-[#18C36A] flex-shrink-0" />
           <span className="text-xs font-medium flex-1 line-clamp-1" style={{ color: colors.textMuted }}>{location}</span>
-          <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold flex-shrink-0" style={{ backgroundColor: colors.surfaceMuted, color: colors.textMuted }}>
-            {age}
-          </span>
+          <Tag variant="muted" size="sm" className="flex-shrink-0">{age}</Tag>
         </div>
 
         <div className="flex items-center gap-2.5">

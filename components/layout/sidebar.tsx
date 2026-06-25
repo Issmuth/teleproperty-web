@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { useTheme } from '@/lib/theme/theme-provider';
 import { useI18n } from '@/lib/i18n/i18n-provider';
+import { iconSize } from '@/lib/design-system/dimensions';
 
 const navItems = [
   { key: 'home', translationKey: 'nav.home', icon: Home, href: '/' },
@@ -67,7 +68,7 @@ export function Sidebar() {
                       }
                   }
                 >
-                  <Icon size={20} strokeWidth={2.1} />
+                  <Icon size={iconSize.xl} strokeWidth={2.1} />
                   <span>{t(item.translationKey)}</span>
                 </Link>
               );
@@ -97,7 +98,7 @@ export function Sidebar() {
               <Link
                 key={item.key}
                 href={item.href}
-                className="flex flex-col items-center justify-center flex-1 py-2 px-1 rounded-xl transition-all duration-200 min-h-[66px] border"
+                className="flex flex-col items-center justify-center flex-1 py-2 px-1 rounded-xl transition-all duration-200 h-16 border"
                 style={isActive 
                   ? { 
                       backgroundColor: colors.activeSurface,
@@ -110,7 +111,7 @@ export function Sidebar() {
                 }
               >
                 <Icon 
-                  size={20} 
+                  size={iconSize.xl} 
                   strokeWidth={2.1}
                   style={{ color: isActive ? colors.activeText : colors.iconMuted }}
                 />

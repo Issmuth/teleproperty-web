@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Building2, Mail, Phone, UserRound, ChevronLeft } from 'lucide-react';
 import { useTheme } from '@/lib/theme/theme-provider';
 import { useI18n } from '@/lib/i18n/i18n-provider';
+import { iconSize, iconButtonClasses, buttonClasses, inputClasses } from '@/lib/design-system/dimensions';
 
 export default function BrokerRegisterPage() {
   const router = useRouter();
@@ -33,12 +34,12 @@ export default function BrokerRegisterPage() {
       >
         <button
           onClick={() => router.back()}
-          className="w-9 h-9 rounded-xl flex items-center justify-center transition-colors"
+          className={`${iconButtonClasses.md} flex items-center justify-center transition-colors`}
           style={{ backgroundColor: colors.surface }}
           onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = colors.iconButtonBackground)}
           onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = colors.surface)}
         >
-          <ChevronLeft size={20} style={{ color: colors.text }} />
+          <ChevronLeft size={iconSize.xl} style={{ color: colors.text }} />
         </button>
         <div>
           <h1 className="text-lg font-black" style={{ color: colors.text }}>
@@ -64,13 +65,13 @@ export default function BrokerRegisterPage() {
               {t('account.brokerRegister.brokerName')}
             </label>
             <div
-              className="flex items-center gap-3 min-h-[46px] lg:min-h-[50px] px-4 rounded-2xl border"
+              className={`flex items-center gap-3 ${inputClasses.lg} border`}
               style={{
                 backgroundColor: colors.background,
                 borderColor: colors.border,
               }}
             >
-              <UserRound size={16} style={{ color: colors.textMuted }} />
+              <UserRound size={iconSize.md} style={{ color: colors.textMuted }} />
               <input
                 type="text"
                 value={brokerName}
@@ -88,13 +89,13 @@ export default function BrokerRegisterPage() {
               {t('account.brokerRegister.companyName')}
             </label>
             <div
-              className="flex items-center gap-3 min-h-[46px] lg:min-h-[50px] px-4 rounded-2xl border"
+              className={`flex items-center gap-3 ${inputClasses.lg} border`}
               style={{
                 backgroundColor: colors.background,
                 borderColor: colors.border,
               }}
             >
-              <Building2 size={16} style={{ color: colors.textMuted }} />
+              <Building2 size={iconSize.md} style={{ color: colors.textMuted }} />
               <input
                 type="text"
                 value={companyName}
@@ -112,13 +113,13 @@ export default function BrokerRegisterPage() {
               {t('account.brokerRegister.phoneNumber')}
             </label>
             <div
-              className="flex items-center gap-3 min-h-[46px] lg:min-h-[50px] px-4 rounded-2xl border"
+              className={`flex items-center gap-3 ${inputClasses.lg} border`}
               style={{
                 backgroundColor: colors.background,
                 borderColor: colors.border,
               }}
             >
-              <Phone size={16} style={{ color: colors.textMuted }} />
+              <Phone size={iconSize.md} style={{ color: colors.textMuted }} />
               <input
                 type="tel"
                 value={phoneNumber}
@@ -136,13 +137,13 @@ export default function BrokerRegisterPage() {
               {t('account.brokerRegister.emailAddress')}
             </label>
             <div
-              className="flex items-center gap-3 min-h-[46px] lg:min-h-[50px] px-4 rounded-2xl border"
+              className={`flex items-center gap-3 ${inputClasses.lg} border`}
               style={{
                 backgroundColor: colors.background,
                 borderColor: colors.border,
               }}
             >
-              <Mail size={16} style={{ color: colors.textMuted }} />
+              <Mail size={iconSize.md} style={{ color: colors.textMuted }} />
               <input
                 type="email"
                 value={email}
@@ -158,7 +159,7 @@ export default function BrokerRegisterPage() {
           <button
             onClick={handleSubmit}
             disabled={isSubmitDisabled}
-            className={`w-full min-h-[46px] lg:min-h-[50px] rounded-2xl font-black text-sm transition-all mt-2 ${
+            className={`w-full ${buttonClasses.lg} font-black transition-all mt-2 ${
               isSubmitDisabled
                 ? 'cursor-not-allowed'
                 : 'hover:opacity-90'

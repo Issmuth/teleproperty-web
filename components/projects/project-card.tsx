@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { CircleCheckBig, Sparkles, MapPin, ArrowRight, Heart } from 'lucide-react';
 import { useTheme } from '@/lib/theme/theme-provider';
 import { usePropertySaved } from '@/lib/hooks/use-saved-properties';
+import { Tag } from '@/components/common/tag';
 
 type ProjectCardProps = {
   id: string;
@@ -58,15 +59,27 @@ export function ProjectCard({
         />
         
         <div className="absolute top-2 left-2 flex gap-1">
-          <div className="flex items-center gap-0.5 px-2 py-0.5 bg-white/98 backdrop-blur-sm rounded-full shadow-md">
-            <CircleCheckBig size={9} className="text-[#0F9D58]" />
-            <span className="text-[9px] font-black text-[#0F9D58]">{badge}</span>
-          </div>
+          <Tag 
+            variant="custom" 
+            customBg="rgba(255, 255, 255, 0.98)" 
+            customColor="#0F9D58"
+            size="sm"
+            icon={CircleCheckBig}
+            className="shadow-md"
+          >
+            {badge}
+          </Tag>
           {featured && (
-            <div className="flex items-center gap-0.5 px-2 py-0.5 bg-[#FFEDD5]/98 backdrop-blur-sm rounded-full shadow-md">
-              <Sparkles size={9} className="text-[#B45309]" />
-              <span className="text-[9px] font-black text-[#B45309]">Featured</span>
-            </div>
+            <Tag 
+              variant="custom" 
+              customBg="rgba(255, 237, 213, 0.98)" 
+              customColor="#B45309"
+              size="sm"
+              icon={Sparkles}
+              className="shadow-md"
+            >
+              Featured
+            </Tag>
           )}
         </div>
 

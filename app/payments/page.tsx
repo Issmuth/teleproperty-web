@@ -3,6 +3,7 @@
 import { CreditCard, Gift, Zap } from 'lucide-react';
 import { useTheme } from '@/lib/theme/theme-provider';
 import { useI18n } from '@/lib/i18n/i18n-provider';
+import { Tag } from '@/components/common/tag';
 
 const paymentOptions = [
   {
@@ -63,9 +64,15 @@ export default function PaymentsPage() {
         <div className="bg-gradient-to-br from-[#7C3AED] to-[#6D28D9] rounded-2xl p-6 text-white">
           <div className="flex items-start justify-between mb-4">
             <div>
-              <p className="text-sm font-bold text-white/90 uppercase tracking-wide mb-1">
+              <Tag
+                variant="custom"
+                customBg="rgba(255, 255, 255, 0.2)"
+                customColor="rgba(255, 255, 255, 0.9)"
+                size="sm"
+                className="uppercase tracking-wide mb-2"
+              >
                 {t('payments.rewards.kicker')}
-              </p>
+              </Tag>
               <div className="flex items-baseline gap-2">
                 <span className="text-4xl font-black">1,250</span>
                 <span className="text-lg font-bold text-white/90">{t('payments.rewards.points')}</span>
@@ -93,6 +100,17 @@ export default function PaymentsPage() {
               <h3 className="text-base font-black" style={{ color: colors.text }}>{t('payments.payWith')}</h3>
               <p className="text-sm font-medium" style={{ color: colors.textMuted }}>{t('payments.payWithSubtitle')}</p>
             </div>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Tag variant="custom" customBg="#DCFCE7" customColor="#15803D" size="sm">
+              Fast
+            </Tag>
+            <Tag variant="custom" customBg="#DBEAFE" customColor="#1E40AF" size="sm">
+              Secure
+            </Tag>
+            <Tag variant="custom" customBg="#FEF3C7" customColor="#92400E" size="sm">
+              Cashback Eligible
+            </Tag>
           </div>
         </div>
 
@@ -131,15 +149,14 @@ export default function PaymentsPage() {
                   </div>
                   <div className="text-right">
                     <p className="text-sm font-black" style={{ color: colors.text }}>{item.amount}</p>
-                    <span className={`
-                      inline-block px-2 py-0.5 text-[10px] font-bold rounded-full
-                      ${item.status === 'Paid' 
-                        ? 'bg-green-100 text-green-700' 
-                        : 'bg-blue-100 text-blue-700'
-                      }
-                    `}>
+                    <Tag 
+                      variant="custom" 
+                      customBg={item.status === 'Paid' ? '#DCFCE7' : '#DBEAFE'} 
+                      customColor={item.status === 'Paid' ? '#15803D' : '#1E40AF'}
+                      size="xs"
+                    >
                       {item.status}
-                    </span>
+                    </Tag>
                   </div>
                 </div>
                 {item.id !== paymentHistory[paymentHistory.length - 1].id && (

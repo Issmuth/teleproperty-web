@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Check } from 'lucide-react';
 import { useTheme } from '@/lib/theme/theme-provider';
+import { Tag } from '@/components/common/tag';
 
 interface Plan {
   name: string;
@@ -114,19 +115,28 @@ export default function SubscriptionsPage() {
             >
               {/* Popular Badge */}
               {plan.popular && (
-                <div
-                  className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full"
-                  style={{ backgroundColor: plan.color }}
+                <Tag
+                  variant="custom"
+                  customBg={plan.color}
+                  customColor="#FFFFFF"
+                  size="sm"
+                  className="absolute -top-3 left-1/2 -translate-x-1/2"
                 >
-                  <span className="text-xs font-black text-white">MOST POPULAR</span>
-                </div>
+                  MOST POPULAR
+                </Tag>
               )}
 
               {/* Current Plan Badge */}
               {plan.current && (
-                <div className="absolute top-4 right-4 bg-green-100 dark:bg-green-900/20 px-3 py-1 rounded-full">
-                  <span className="text-xs font-black text-green-700 dark:text-green-400">CURRENT</span>
-                </div>
+                <Tag
+                  variant="custom"
+                  customBg="rgba(220, 252, 231, 1)"
+                  customColor="#15803D"
+                  size="sm"
+                  className="absolute top-4 right-4"
+                >
+                  CURRENT
+                </Tag>
               )}
 
               {/* Plan Header */}

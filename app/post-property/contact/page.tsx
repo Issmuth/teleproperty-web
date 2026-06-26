@@ -32,15 +32,16 @@ export default function PostPropertyStep3() {
           onClick={() => router.back()}
           className={`${iconButtonClasses.md} lg:${iconButtonClasses.lg} rounded-full border flex items-center justify-center shadow-sm hover:opacity-80 transition-opacity`}
           style={{ backgroundColor: colors.surface, borderColor: colors.border }}
+          aria-label="Go back to previous step"
         >
-          <ChevronLeft size={iconSize.xl} style={{ color: colors.text }} />
+          <ChevronLeft size={iconSize.xl} style={{ color: colors.text }} aria-hidden="true" />
         </button>
       </div>
 
       {/* Header */}
-      <div className="max-w-5xl mx-auto px-4 lg:px-8 pt-4 pb-6 space-y-4">
+      <header className="max-w-5xl mx-auto px-4 lg:px-8 pt-4 pb-6 space-y-4">
         {/* Progress Steps */}
-        <div className="flex gap-2">
+        <div className="flex gap-2" role="progressbar" aria-valuenow={3} aria-valuemin={1} aria-valuemax={3} aria-label="Step 3 of 3">
           {[1, 2, 3].map((step) => (
             <div
               key={step}
@@ -48,6 +49,7 @@ export default function PostPropertyStep3() {
               style={{
                 backgroundColor: colors.activeText,
               }}
+              aria-hidden="true"
             />
           ))}
         </div>
@@ -75,68 +77,74 @@ export default function PostPropertyStep3() {
             </p>
           </div>
         </div>
-      </div>
+      </header>
 
       {/* Content */}
-      <div className="max-w-5xl mx-auto px-4 lg:px-8 pb-32 space-y-4">
+      <main className="max-w-5xl mx-auto px-4 lg:px-8 pb-32 space-y-4">
+        <form aria-label="Property contact and verification form">
         {/* Contact Options */}
-        <div
+        <section
           className="rounded-3xl p-4 lg:p-5 border space-y-4"
           style={{ backgroundColor: colors.surface, borderColor: colors.border }}
+          aria-labelledby="contact-options-heading"
         >
-          <h3 className="text-xs font-black" style={{ color: colors.text }}>
+          <h2 id="contact-options-heading" className="text-xs font-black" style={{ color: colors.text }}>
             Contact Options
-          </h3>
+          </h2>
 
           {/* WhatsApp */}
           <div className="space-y-2">
-            <label className="text-xs font-black" style={{ color: colors.text }}>
+            <label htmlFor="whatsapp" className="text-xs font-black" style={{ color: colors.text }}>
               WhatsApp Number
             </label>
             <div
               className={`flex items-center gap-2 ${inputClasses.lg} border`}
               style={{ backgroundColor: colors.surface, borderColor: colors.border }}
             >
-              <Tag variant="primary" size="xs">
+              <Tag variant="primary" size="xs" aria-hidden="true">
                 WA
               </Tag>
               <input
+                id="whatsapp"
                 type="tel"
                 value={whatsapp}
                 onChange={(e) => setWhatsapp(e.target.value)}
                 placeholder="+251 911 234 567"
                 className="flex-1 text-sm font-semibold bg-transparent focus:outline-none"
                 style={{ color: colors.text }}
+                aria-label="WhatsApp number"
               />
             </div>
           </div>
 
           {/* Telegram */}
           <div className="space-y-2">
-            <label className="text-xs font-black" style={{ color: colors.text }}>
+            <label htmlFor="telegram" className="text-xs font-black" style={{ color: colors.text }}>
               Telegram
             </label>
             <div
               className={`flex items-center gap-2 ${inputClasses.lg} border`}
               style={{ backgroundColor: colors.surface, borderColor: colors.border }}
             >
-              <Tag variant="primary" size="xs">
+              <Tag variant="primary" size="xs" aria-hidden="true">
                 TG
               </Tag>
               <input
+                id="telegram"
                 type="text"
                 value={telegram}
                 onChange={(e) => setTelegram(e.target.value)}
                 placeholder="@username"
                 className="flex-1 text-sm font-semibold bg-transparent focus:outline-none"
                 style={{ color: colors.text }}
+                aria-label="Telegram username"
               />
             </div>
           </div>
 
           {/* Email */}
           <div className="space-y-2">
-            <label className="text-xs font-black" style={{ color: colors.text }}>
+            <label htmlFor="contact-email" className="text-xs font-black" style={{ color: colors.text }}>
               Contact Email
             </label>
             <div
@@ -144,26 +152,30 @@ export default function PostPropertyStep3() {
               style={{ backgroundColor: colors.surface, borderColor: colors.border }}
             >
               <input
+                id="contact-email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="contact@example.com"
                 className="flex-1 text-sm font-semibold bg-transparent focus:outline-none"
                 style={{ color: colors.text }}
+                aria-label="Contact email address"
               />
             </div>
           </div>
-        </div>
+        </section>
 
         {/* Description */}
-        <div
+        <section
           className="rounded-3xl p-4 lg:p-5 border space-y-3"
           style={{ backgroundColor: colors.surface, borderColor: colors.border }}
+          aria-labelledby="description-heading"
         >
-          <label className="text-xs font-black" style={{ color: colors.text }}>
+          <label htmlFor="description" id="description-heading" className="text-xs font-black" style={{ color: colors.text }}>
             Description
           </label>
           <textarea
+            id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Describe your property, include unique features, nearby amenities..."
@@ -174,25 +186,29 @@ export default function PostPropertyStep3() {
               borderColor: colors.border,
               color: colors.text,
             }}
+            aria-label="Property description"
           />
-        </div>
+        </section>
 
         {/* Upload Photos */}
-        <div
+        <section
           className="rounded-3xl p-4 lg:p-5 border space-y-3"
           style={{ backgroundColor: colors.surface, borderColor: colors.border }}
+          aria-labelledby="photos-heading"
         >
-          <label className="text-xs font-black" style={{ color: colors.text }}>
+          <h2 id="photos-heading" className="text-xs font-black" style={{ color: colors.text }}>
             Upload Photos
-          </label>
+          </h2>
           <button
+            type="button"
             className="w-full h-36 rounded-2xl border-2 border-dashed flex flex-col items-center justify-center gap-2 hover:opacity-80 transition-opacity"
             style={{
               borderColor: colors.border,
               backgroundColor: colors.surfaceMuted,
             }}
+            aria-label="Upload property photos - Maximum 10 photos in JPG or PNG format"
           >
-            <Camera size={iconSize['2xl']} style={{ color: colors.textMuted }} />
+            <Camera size={iconSize['2xl']} style={{ color: colors.textMuted }} aria-hidden="true" />
             <div className="text-center">
               <p className="text-sm font-black" style={{ color: colors.text }}>
                 Tap to Upload
@@ -202,34 +218,41 @@ export default function PostPropertyStep3() {
               </p>
             </div>
           </button>
-        </div>
+        </section>
 
         {/* Verification */}
-        <div
+        <section
           className="rounded-3xl p-4 lg:p-5 border space-y-3"
           style={{ backgroundColor: colors.surface, borderColor: colors.border }}
+          aria-labelledby="verification-heading"
         >
-          <label className="text-xs font-black" style={{ color: colors.text }}>
+          <h2 id="verification-heading" className="text-xs font-black" style={{ color: colors.text }}>
             Verification (Optional)
-          </label>
-          <div className="space-y-2">
+          </h2>
+          <fieldset className="space-y-2">
+            <legend className="sr-only">Choose verification document type</legend>
             {verificationOptions.map((option) => {
               const isSelected = verificationType === option.key;
               return (
                 <button
                   key={option.key}
+                  type="button"
                   onClick={() => setVerificationType(option.key)}
                   className={`w-full ${inputClasses.lg} flex items-center gap-3 transition-all hover:opacity-80 border`}
                   style={{
                     backgroundColor: isSelected ? colors.activeSurface : colors.surface,
                     borderColor: isSelected ? colors.activeText : colors.border,
                   }}
+                  role="radio"
+                  aria-checked={isSelected}
+                  aria-label={option.label}
                 >
                   <div
                     className="w-5 h-5 rounded-full border-2 flex items-center justify-center"
                     style={{
                       borderColor: isSelected ? colors.activeText : colors.textMuted,
                     }}
+                    aria-hidden="true"
                   >
                     {isSelected && <CheckCircle2 size={13} style={{ color: colors.activeText }} />}
                   </div>
@@ -239,23 +262,26 @@ export default function PostPropertyStep3() {
                 </button>
               );
             })}
-          </div>
-        </div>
-      </div>
+          </fieldset>
+        </section>
+        </form>
+      </main>
 
       {/* Footer */}
       <div className="fixed bottom-0 left-0 lg:left-64 right-0 p-4 lg:p-6 z-20" style={{ backgroundColor: colors.background }}>
         <div className="max-w-5xl mx-auto">
           <button
+            type="button"
             onClick={() => router.push('/')}
             className={`w-full ${buttonClasses.lg} lg:h-14 font-black flex items-center justify-center gap-2 transition-all hover:opacity-90`}
             style={{
               backgroundColor: colors.activeText,
               color: '#FFFFFF',
             }}
+            aria-label="Continue to review subscription packages"
           >
             <span>Review Packages</span>
-            <ChevronRight size={iconSize.md} />
+            <ChevronRight size={iconSize.md} aria-hidden="true" />
           </button>
         </div>
       </div>

@@ -55,15 +55,16 @@ export default function PostPropertyStep2() {
           onClick={() => router.back()}
           className={`${iconButtonClasses.md} lg:${iconButtonClasses.lg} rounded-full border flex items-center justify-center shadow-sm hover:opacity-80 transition-opacity`}
           style={{ backgroundColor: colors.surface, borderColor: colors.border }}
+          aria-label="Go back to previous step"
         >
-          <ChevronLeft size={iconSize.xl} style={{ color: colors.text }} />
+          <ChevronLeft size={iconSize.xl} style={{ color: colors.text }} aria-hidden="true" />
         </button>
       </div>
 
       {/* Header */}
-      <div className="max-w-5xl mx-auto px-4 lg:px-8 pt-4 pb-6 space-y-4">
+      <header className="max-w-5xl mx-auto px-4 lg:px-8 pt-4 pb-6 space-y-4">
         {/* Progress Steps */}
-        <div className="flex gap-2">
+        <div className="flex gap-2" role="progressbar" aria-valuenow={2} aria-valuemin={1} aria-valuemax={3} aria-label="Step 2 of 3">
           {[1, 2, 3].map((step) => (
             <div
               key={step}
@@ -71,6 +72,7 @@ export default function PostPropertyStep2() {
               style={{
                 backgroundColor: step <= 2 ? colors.activeText : colors.surfaceMuted,
               }}
+              aria-hidden="true"
             />
           ))}
         </div>
@@ -98,38 +100,44 @@ export default function PostPropertyStep2() {
             </p>
           </div>
         </div>
-      </div>
+      </header>
 
       {/* Content */}
-      <div className="max-w-5xl mx-auto px-4 lg:px-8 pb-32">
+      <main className="max-w-5xl mx-auto px-4 lg:px-8 pb-32">
+        <form aria-label="Property details form">
         <div
           className="rounded-3xl p-4 lg:p-5 border space-y-4"
           style={{ backgroundColor: colors.surface, borderColor: colors.border }}
         >
           {/* Property Type */}
-          <div className="space-y-3">
-            <label className="text-xs font-black" style={{ color: colors.text }}>
+          <fieldset className="space-y-3">
+            <legend className="text-xs font-black" style={{ color: colors.text }}>
               Property Type (Required)
-            </label>
-            <div className="grid grid-cols-2 gap-2">
+            </legend>
+            <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-required="true">
               {propertyTypeOptions.map((option) => {
                 const Icon = option.icon;
                 const isSelected = propertyType === option.key;
                 return (
                   <button
                     key={option.key}
+                    type="button"
                     onClick={() => setPropertyType(option.key)}
                     className="flex items-center gap-2 p-3 rounded-xl border-2 transition-all hover:opacity-80"
                     style={{
                       backgroundColor: isSelected ? colors.activeSurface : colors.background,
                       borderColor: isSelected ? colors.activeText : colors.border,
                     }}
+                    role="radio"
+                    aria-checked={isSelected}
+                    aria-label={option.label}
                   >
                     <div
                       className={`${iconButtonClasses.sm} rounded-lg flex items-center justify-center flex-shrink-0`}
                       style={{
                         backgroundColor: isSelected ? colors.activeText : colors.surfaceMuted,
                       }}
+                      aria-hidden="true"
                     >
                       <Icon size={iconSize.sm} color={isSelected ? '#FFFFFF' : colors.textMuted} />
                     </div>
@@ -140,32 +148,37 @@ export default function PostPropertyStep2() {
                 );
               })}
             </div>
-          </div>
+          </fieldset>
 
           {/* Purpose */}
-          <div className="space-y-3">
-            <label className="text-xs font-black" style={{ color: colors.text }}>
+          <fieldset className="space-y-3">
+            <legend className="text-xs font-black" style={{ color: colors.text }}>
               Purpose (Required)
-            </label>
-            <div className="grid grid-cols-2 gap-2">
+            </legend>
+            <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-required="true">
               {purposeOptions.map((option) => {
                 const Icon = option.icon;
                 const isSelected = purpose === option.key;
                 return (
                   <button
                     key={option.key}
+                    type="button"
                     onClick={() => setPurpose(option.key)}
                     className="flex items-center gap-2 p-3 rounded-xl border-2 transition-all hover:opacity-80"
                     style={{
                       backgroundColor: isSelected ? colors.activeSurface : colors.background,
                       borderColor: isSelected ? colors.activeText : colors.border,
                     }}
+                    role="radio"
+                    aria-checked={isSelected}
+                    aria-label={option.label}
                   >
                     <div
                       className={`${iconButtonClasses.sm} rounded-lg flex items-center justify-center flex-shrink-0`}
                       style={{
                         backgroundColor: isSelected ? colors.activeText : colors.surfaceMuted,
                       }}
+                      aria-hidden="true"
                     >
                       <Icon size={iconSize.sm} color={isSelected ? '#FFFFFF' : colors.textMuted} />
                     </div>
@@ -176,25 +189,30 @@ export default function PostPropertyStep2() {
                 );
               })}
             </div>
-          </div>
+          </fieldset>
 
           {/* City */}
           <div className="space-y-3">
-            <label className="text-xs font-black" style={{ color: colors.text }}>
+            <label htmlFor="city-selector" className="text-xs font-black" style={{ color: colors.text }}>
               City (Required)
             </label>
             <button
+              id="city-selector"
+              type="button"
               onClick={() => setCitySheetVisible(!citySheetVisible)}
               className={`w-full ${inputClasses.lg} flex items-center justify-between hover:opacity-80 transition-opacity border`}
               style={{ backgroundColor: colors.surface, borderColor: colors.border }}
+              aria-label={`Select city, currently ${city}`}
+              aria-expanded={citySheetVisible}
+              aria-haspopup="listbox"
             >
               <div className="flex items-center gap-3">
-                <MapPin size={iconSize.md} style={{ color: colors.textMuted }} />
+                <MapPin size={iconSize.md} style={{ color: colors.textMuted }} aria-hidden="true" />
                 <span className="text-sm font-bold" style={{ color: colors.text }}>
                   {city}
                 </span>
               </div>
-              <ChevronDown size={iconSize.md} style={{ color: colors.textMuted }} />
+              <ChevronDown size={iconSize.md} style={{ color: colors.textMuted }} aria-hidden="true" />
             </button>
 
             {/* City Dropdown */}
@@ -202,12 +220,15 @@ export default function PostPropertyStep2() {
               <div
                 className="rounded-xl border p-2 space-y-1 max-h-64 overflow-y-auto"
                 style={{ backgroundColor: colors.surface, borderColor: colors.border }}
+                role="listbox"
+                aria-label="City selection"
               >
                 {ethiopianCities.map((cityOption) => {
                   const isSelected = city === cityOption;
                   return (
                     <button
                       key={cityOption}
+                      type="button"
                       onClick={() => {
                         setCity(cityOption);
                         setCitySheetVisible(false);
@@ -217,8 +238,10 @@ export default function PostPropertyStep2() {
                         backgroundColor: isSelected ? colors.activeSurface : colors.surface,
                         borderColor: isSelected ? colors.activeText : colors.border,
                       }}
+                      role="option"
+                      aria-selected={isSelected}
                     >
-                      <MapPin size={iconSize.sm} style={{ color: isSelected ? colors.activeText : colors.textMuted }} />
+                      <MapPin size={iconSize.sm} style={{ color: isSelected ? colors.activeText : colors.textMuted }} aria-hidden="true" />
                       <span className="text-sm font-bold" style={{ color: colors.text }}>
                         {cityOption}
                       </span>
@@ -231,10 +254,11 @@ export default function PostPropertyStep2() {
 
           {/* Area/Location */}
           <div className="space-y-3">
-            <label className="text-xs font-black" style={{ color: colors.text }}>
+            <label htmlFor="area-location" className="text-xs font-black" style={{ color: colors.text }}>
               Area / Location
             </label>
             <input
+              id="area-location"
               type="text"
               value={areaLocation}
               onChange={(e) => setAreaLocation(e.target.value)}
@@ -245,16 +269,18 @@ export default function PostPropertyStep2() {
                 borderColor: colors.border,
                 color: colors.text,
               }}
+              aria-label="Area or location within the city"
             />
           </div>
 
           {/* Price & Size */}
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-3">
-              <label className="text-xs font-black" style={{ color: colors.text }}>
+              <label htmlFor="price" className="text-xs font-black" style={{ color: colors.text }}>
                 Price
               </label>
               <input
+                id="price"
                 type="text"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
@@ -265,13 +291,15 @@ export default function PostPropertyStep2() {
                   borderColor: colors.border,
                   color: colors.text,
                 }}
+                aria-label="Property price in Ethiopian Birr"
               />
             </div>
             <div className="space-y-3">
-              <label className="text-xs font-black" style={{ color: colors.text }}>
+              <label htmlFor="size" className="text-xs font-black" style={{ color: colors.text }}>
                 Bedrooms / Size
               </label>
               <input
+                id="size"
                 type="text"
                 value={size}
                 onChange={(e) => setSize(e.target.value)}
@@ -282,25 +310,29 @@ export default function PostPropertyStep2() {
                   borderColor: colors.border,
                   color: colors.text,
                 }}
+                aria-label="Number of bedrooms or property size"
               />
             </div>
           </div>
         </div>
-      </div>
+        </form>
+      </main>
 
       {/* Footer */}
       <div className="fixed bottom-0 left-0 lg:left-64 right-0 p-4 lg:p-6 z-20" style={{ backgroundColor: colors.background }}>
         <div className="max-w-5xl mx-auto">
           <button
             onClick={() => router.push('/post-property/contact')}
+            type="submit"
             className={`w-full ${buttonClasses.lg} lg:h-14 font-black flex items-center justify-center gap-2 transition-all hover:opacity-90`}
             style={{
               backgroundColor: colors.activeText,
               color: '#FFFFFF',
             }}
+            aria-label="Continue to contact information"
           >
             <span>Continue</span>
-            <ChevronRight size={iconSize.md} />
+            <ChevronRight size={iconSize.md} aria-hidden="true" />
           </button>
         </div>
       </div>

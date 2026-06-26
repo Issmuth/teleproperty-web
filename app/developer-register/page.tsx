@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Building2, Mail, Phone, UserRound, ChevronLeft } from 'lucide-react';
 import { useTheme } from '@/lib/theme/theme-provider';
-import { iconSize, iconButtonClasses, buttonClasses, inputClasses } from '@/lib/design-system/dimensions';
+import { iconSize, iconButtonClasses, buttonClasses } from '@/lib/design-system/dimensions';
+import { AccessibleInput } from '@/components/common/accessible-input';
 
 export default function DeveloperRegisterPage() {
   const router = useRouter();
@@ -14,6 +15,7 @@ export default function DeveloperRegisterPage() {
   const [contactName, setContactName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const isSubmitDisabled = !companyName.trim() || !contactName.trim() || !phoneNumber.trim();
 
@@ -36,8 +38,9 @@ export default function DeveloperRegisterPage() {
           style={{ backgroundColor: colors.surface }}
           onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = colors.iconButtonBackground)}
           onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = colors.surface)}
+          aria-label="Go back"
         >
-          <ChevronLeft size={iconSize.xl} style={{ color: colors.text }} />
+          <ChevronLeft size={iconSize.xl} style={{ color: colors.text }} aria-hidden="true" />
         </button>
         <div>
           <h1 className="text-lg font-black" style={{ color: colors.text }}>
@@ -49,128 +52,87 @@ export default function DeveloperRegisterPage() {
         </div>
       </div>
 
-      <div className="max-w-2xl mx-auto px-4 lg:px-8 pt-20 lg:pt-24 pb-32">
-        <div
-          className="rounded-3xl lg:rounded-[32px] p-6 lg:p-8 border space-y-5 lg:space-y-6"
-          style={{
-            backgroundColor: colors.surface,
-            borderColor: colors.border,
+      <main className="max-w-2xl mx-auto px-4 lg:px-8 pt-20 lg:pt-24 pb-32">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit();
           }}
+          aria-label="Developer registration form"
         >
-          {/* Company Name */}
-          <div className="space-y-2">
-            <label className="text-sm font-black" style={{ color: colors.text }}>
-              Company Name
-            </label>
-            <div
-              className={`flex items-center gap-3 ${inputClasses.lg} border`}
-              style={{
-                backgroundColor: colors.background,
-                borderColor: colors.border,
-              }}
-            >
-              <Building2 size={iconSize.md} style={{ color: colors.textMuted }} />
-              <input
-                type="text"
-                value={companyName}
-                onChange={(e) => setCompanyName(e.target.value)}
-                placeholder="Your company or development brand"
-                className="flex-1 bg-transparent text-sm font-semibold outline-none"
-                style={{ color: colors.text }}
-              />
-            </div>
-          </div>
-
-          {/* Contact Name */}
-          <div className="space-y-2">
-            <label className="text-sm font-black" style={{ color: colors.text }}>
-              Contact Name
-            </label>
-            <div
-              className={`flex items-center gap-3 ${inputClasses.lg} border`}
-              style={{
-                backgroundColor: colors.background,
-                borderColor: colors.border,
-              }}
-            >
-              <UserRound size={iconSize.md} style={{ color: colors.textMuted }} />
-              <input
-                type="text"
-                value={contactName}
-                onChange={(e) => setContactName(e.target.value)}
-                placeholder="Primary contact person"
-                className="flex-1 bg-transparent text-sm font-semibold outline-none"
-                style={{ color: colors.text }}
-              />
-            </div>
-          </div>
-
-          {/* Phone Number */}
-          <div className="space-y-2">
-            <label className="text-sm font-black" style={{ color: colors.text }}>
-              Phone Number
-            </label>
-            <div
-              className={`flex items-center gap-3 ${inputClasses.lg} border`}
-              style={{
-                backgroundColor: colors.background,
-                borderColor: colors.border,
-              }}
-            >
-              <Phone size={iconSize.md} style={{ color: colors.textMuted }} />
-              <input
-                type="tel"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                placeholder="09XXXXXXXX"
-                className="flex-1 bg-transparent text-sm font-semibold outline-none"
-                style={{ color: colors.text }}
-              />
-            </div>
-          </div>
-
-          {/* Email */}
-          <div className="space-y-2">
-            <label className="text-sm font-black" style={{ color: colors.text }}>
-              Email Address
-            </label>
-            <div
-              className={`flex items-center gap-3 ${inputClasses.lg} border`}
-              style={{
-                backgroundColor: colors.background,
-                borderColor: colors.border,
-              }}
-            >
-              <Mail size={iconSize.md} style={{ color: colors.textMuted }} />
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="contact@company.com"
-                className="flex-1 bg-transparent text-sm font-semibold outline-none"
-                style={{ color: colors.text }}
-              />
-            </div>
-          </div>
-
-          {/* Submit Button */}
-          <button
-            onClick={handleSubmit}
-            disabled={isSubmitDisabled}
-            className={`w-full ${buttonClasses.lg} font-black transition-all mt-2 ${
-              isSubmitDisabled
-                ? 'cursor-not-allowed'
-                : 'hover:opacity-90'
-            }`}
+          <div
+            className="rounded-3xl lg:rounded-[32px] p-6 lg:p-8 border space-y-5 lg:space-y-6"
             style={{
-              backgroundColor: isSubmitDisabled ? colors.surfaceMuted : colors.activeText,
-              color: isSubmitDisabled ? colors.textMuted : '#FFFFFF',
+              backgroundColor: colors.surface,
+              borderColor: colors.border,
             }}
           >
-            Submit Application
-          </button>
-        </div>
-      </div>
+            <AccessibleInput
+              label="Company Name"
+              value={companyName}
+              onChange={(e) => setCompanyName(e.target.value)}
+              placeholder="Your company or development brand"
+              icon={<Building2 size={iconSize.md} />}
+              required
+              error={errors.companyName}
+              size="lg"
+            />
+
+            <AccessibleInput
+              label="Contact Name"
+              value={contactName}
+              onChange={(e) => setContactName(e.target.value)}
+              placeholder="Primary contact person"
+              icon={<UserRound size={iconSize.md} />}
+              required
+              error={errors.contactName}
+              size="lg"
+            />
+
+            <AccessibleInput
+              label="Phone Number"
+              type="tel"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              placeholder="09XXXXXXXX"
+              icon={<Phone size={iconSize.md} />}
+              required
+              error={errors.phoneNumber}
+              size="lg"
+            />
+
+            <AccessibleInput
+              label="Email Address"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="contact@company.com"
+              icon={<Mail size={iconSize.md} />}
+              error={errors.email}
+              helperText="Optional - We'll use this for updates"
+              size="lg"
+            />
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={isSubmitDisabled}
+              className={`w-full ${buttonClasses.lg} font-black transition-all mt-2 ${
+                isSubmitDisabled
+                  ? 'cursor-not-allowed'
+                  : 'hover:opacity-90'
+              }`}
+              style={{
+                backgroundColor: isSubmitDisabled ? colors.surfaceMuted : colors.activeText,
+                color: isSubmitDisabled ? colors.textMuted : '#FFFFFF',
+              }}
+              aria-disabled={isSubmitDisabled}
+            >
+              Submit Application
+            </button>
+          </div>
+        </form>
+      </main>
     </div>
   );
 }

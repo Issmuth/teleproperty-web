@@ -58,12 +58,14 @@ export function PropertyCard({
       href={`/property/${id}`}
       className="rounded-lg border overflow-hidden hover:shadow-lg transition-shadow cursor-pointer block" 
       style={{ backgroundColor: colors.surface, borderColor: colors.border }}
+      aria-label={`${title} in ${location}, ${beds} beds, ${baths} baths, ${area} square meters, ${price}${featured ? ', Featured property' : ''}${verified ? ', Verified listing' : ''}`}
     >
       <div className="relative h-36">
         <Image
           src={image}
-          alt={title}
+          alt={`${title} - ${beds} bedroom property in ${location}`}
           fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-cover"
         />
         
@@ -77,11 +79,14 @@ export function PropertyCard({
         {/* Heart button */}
         <button 
           onClick={handleToggleSave}
+          type="button"
+          aria-label={isSaved ? `Remove ${title} from saved properties` : `Save ${title} to favorites`}
           className={`absolute top-2 right-2 ${iconButtonClasses.xs} bg-white flex items-center justify-center hover:bg-gray-100 transition-all active:scale-95`}
         >
           <Heart 
             size={13} 
-            className={isSaved ? "text-red-500 fill-red-500" : "text-gray-500"} 
+            className={isSaved ? "text-red-500 fill-red-500" : "text-gray-500"}
+            aria-hidden="true"
           />
         </button>
 
@@ -95,28 +100,32 @@ export function PropertyCard({
         <h3 className="text-sm font-bold line-clamp-1" style={{ color: colors.text }}>{title}</h3>
 
         <div className="flex items-center gap-1.5">
-          <MapPin size={11} className="text-[#18C36A] flex-shrink-0" />
+          <MapPin size={11} className="text-[#18C36A] flex-shrink-0" aria-hidden="true" />
           <span className="text-xs font-medium flex-1 line-clamp-1" style={{ color: colors.textMuted }}>{location}</span>
           <Tag variant="muted" size="sm" className="flex-shrink-0">{age}</Tag>
         </div>
 
         <div className="flex items-center gap-2.5">
           <div className="flex items-center gap-1">
-            <Bed size={12} style={{ color: colors.iconMuted }} />
+            <Bed size={12} style={{ color: colors.iconMuted }} aria-hidden="true" />
             <span className="text-xs font-semibold" style={{ color: colors.textMuted }}>{beds}</span>
           </div>
           <div className="flex items-center gap-1">
-            <Bath size={12} style={{ color: colors.iconMuted }} />
+            <Bath size={12} style={{ color: colors.iconMuted }} aria-hidden="true" />
             <span className="text-xs font-semibold" style={{ color: colors.textMuted }}>{baths}</span>
           </div>
           <div className="flex items-center gap-1">
-            <Square size={12} style={{ color: colors.iconMuted }} />
+            <Square size={12} style={{ color: colors.iconMuted }} aria-hidden="true" />
             <span className="text-xs font-semibold" style={{ color: colors.textMuted }}>{area}m²</span>
           </div>
         </div>
 
-        <button className="w-full flex items-center justify-center gap-1 py-2 bg-[#0B8F55] rounded-lg hover:bg-[#0A7A4A] transition-colors">
-          <Lock size={12} className="text-white" />
+        <button 
+          type="button"
+          className="w-full flex items-center justify-center gap-1 py-2 bg-[#0B8F55] rounded-lg hover:bg-[#0A7A4A] transition-colors"
+          aria-label="Subscribe to view contact details"
+        >
+          <Lock size={12} className="text-white" aria-hidden="true" />
           <span className="text-xs font-bold text-white">Subscribe to View</span>
         </button>
       </div>

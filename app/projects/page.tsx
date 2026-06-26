@@ -71,41 +71,50 @@ export default function ProjectsPage() {
   return (
     <div className="flex-1 relative" style={{ backgroundColor: colors.background }}>
       <div className="max-w-7xl mx-auto px-4 lg:px-8 py-4 space-y-3 pb-32">
+        {/* Hidden h1 for SEO and screen readers */}
+        <h1 className="sr-only">New Property Projects in Ethiopia</h1>
+
         {/* Hero Card */}
         {showHero && (
-          <div className="relative h-32 rounded-xl overflow-hidden bg-[#EA580C]">
-            <Image
-              src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80"
-              alt="Capital Towers"
-              fill
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-[#D77700]/60" />
-            
-            <div className="relative h-full flex items-center p-3 lg:p-4 max-w-xs">
-              <div className="space-y-0.5">
-                <p className="text-[10px] font-black text-white/90 uppercase tracking-wide">
-                  Capital Real Estate
-                </p>
-                <h2 className="text-base font-black text-white">
-                  New Project Launch
-                </h2>
-                <p className="text-[10px] font-semibold text-white/95">
-                  Capital Towers · Limited units available
-                </p>
-                <button className="mt-2 px-3 py-1.5 bg-white rounded-lg hover:bg-gray-100 transition-colors">
-                  <span className="text-[10px] font-black text-[#8A4B00]">View Project</span>
-                </button>
+          <aside aria-label="Featured project promotion">
+            <div className="relative h-32 rounded-xl overflow-hidden bg-[#EA580C]">
+              <Image
+                src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80"
+                alt="Capital Towers project"
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-[#D77700]/60" />
+              
+              <div className="relative h-full flex items-center p-3 lg:p-4 max-w-xs">
+                <div className="space-y-0.5">
+                  <p className="text-[10px] font-black text-white/90 uppercase tracking-wide">
+                    Capital Real Estate
+                  </p>
+                  <h2 className="text-base font-black text-white">
+                    New Project Launch
+                  </h2>
+                  <p className="text-[10px] font-semibold text-white/95">
+                    Capital Towers · Limited units available
+                  </p>
+                  <button 
+                    className="mt-2 px-3 py-1.5 bg-white rounded-lg hover:bg-gray-100 transition-colors"
+                    aria-label="View Capital Towers project details"
+                  >
+                    <span className="text-[10px] font-black text-[#8A4B00]">View Project</span>
+                  </button>
+                </div>
               </div>
-            </div>
 
-            <button
-              onClick={() => setShowHero(false)}
-              className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors"
-            >
-              <X size={14} className="text-white" />
-            </button>
-          </div>
+              <button
+                onClick={() => setShowHero(false)}
+                aria-label="Close featured project banner"
+                className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors"
+              >
+                <X size={14} className="text-white" aria-hidden="true" />
+              </button>
+            </div>
+          </aside>
         )}
 
         {/* Search Bar */}
@@ -120,77 +129,90 @@ export default function ProjectsPage() {
         </div>
 
         {/* Stats Row */}
-        <div className="grid grid-cols-3 gap-2">
-          <div className="flex flex-col items-center justify-center rounded-xl py-3 border" style={{ backgroundColor: colors.surface, borderColor: colors.border }}>
-            <span className="text-base font-black text-[#0B8F55]">50+</span>
-            <span className="text-[10px] font-bold mt-0.5" style={{ color: colors.textMuted }}>{t('projects.stats.projects')}</span>
+        <section aria-labelledby="projects-stats">
+          <h2 id="projects-stats" className="sr-only">Projects statistics</h2>
+          <div className="grid grid-cols-3 gap-2">
+            <div className="flex flex-col items-center justify-center rounded-xl py-3 border" style={{ backgroundColor: colors.surface, borderColor: colors.border }}>
+              <span className="text-base font-black text-[#0B8F55]">50+</span>
+              <span className="text-[10px] font-bold mt-0.5" style={{ color: colors.textMuted }}>{t('projects.stats.projects')}</span>
+            </div>
+            <div className="flex flex-col items-center justify-center rounded-xl py-3 border" style={{ backgroundColor: colors.surface, borderColor: colors.border }}>
+              <span className="text-base font-black text-[#0B8F55]">30+</span>
+              <span className="text-[10px] font-bold mt-0.5" style={{ color: colors.textMuted }}>{t('projects.stats.developers')}</span>
+            </div>
+            <div className="flex flex-col items-center justify-center rounded-xl py-3 border" style={{ backgroundColor: colors.surface, borderColor: colors.border }}>
+              <span className="text-base font-black text-[#0B8F55]">1000+</span>
+              <span className="text-[10px] font-bold mt-0.5" style={{ color: colors.textMuted }}>{t('projects.stats.units')}</span>
+            </div>
           </div>
-          <div className="flex flex-col items-center justify-center rounded-xl py-3 border" style={{ backgroundColor: colors.surface, borderColor: colors.border }}>
-            <span className="text-base font-black text-[#0B8F55]">30+</span>
-            <span className="text-[10px] font-bold mt-0.5" style={{ color: colors.textMuted }}>{t('projects.stats.developers')}</span>
-          </div>
-          <div className="flex flex-col items-center justify-center rounded-xl py-3 border" style={{ backgroundColor: colors.surface, borderColor: colors.border }}>
-            <span className="text-base font-black text-[#0B8F55]">1000+</span>
-            <span className="text-[10px] font-bold mt-0.5" style={{ color: colors.textMuted }}>{t('projects.stats.units')}</span>
-          </div>
-        </div>
+        </section>
 
         {/* Featured Projects */}
-        <div>
-          <h2 className="text-sm font-black mb-2" style={{ color: colors.text }}>{t('projects.featuredHeader')}</h2>
-          <div className="flex gap-3 overflow-x-auto pb-4 -mx-4 px-4 lg:mx-0 lg:px-0 scrollbar-hide">
-            {projectCards.filter(p => p.featured).map((project) => (
-              <div key={project.id} className="w-64 flex-shrink-0">
-                <ProjectCard {...project} />
-              </div>
-            ))}
+        <section aria-labelledby="featured-projects">
+          <div>
+            <h2 id="featured-projects" className="text-sm font-black mb-2" style={{ color: colors.text }}>{t('projects.featuredHeader')}</h2>
+            <div className="flex gap-3 overflow-x-auto pb-4 -mx-4 px-4 lg:mx-0 lg:px-0 scrollbar-hide">
+              {projectCards.filter(p => p.featured).map((project) => (
+                <div key={project.id} className="w-64 flex-shrink-0">
+                  <ProjectCard {...project} />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        </section>
 
         {/* All Projects */}
-        <div>
-          <h2 className="text-sm font-black mb-2" style={{ color: colors.text }}>
-            {t('projects.allProjects')} ({filteredProjects.length})
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-4">
-            {filteredProjects.map((project) => (
-              <ProjectCard key={project.id} {...project} />
-            ))}
+        <section aria-labelledby="all-projects">
+          <div>
+            <h2 id="all-projects" className="text-sm font-black mb-2" style={{ color: colors.text }}>
+              {t('projects.allProjects')} ({filteredProjects.length})
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-4">
+              {filteredProjects.map((project) => (
+                <ProjectCard key={project.id} {...project} />
+              ))}
+            </div>
           </div>
-        </div>
+        </section>
       </div>
 
       {/* Promo Banner - Fixed at bottom but aligned with content */}
       {showPromoBanner && (
-        <div className="fixed bottom-20 lg:bottom-6 left-0 lg:left-64 right-0 z-20">
-          <div className="max-w-7xl mx-auto px-4 lg:px-8">
-            <div className="bg-gradient-to-r from-[#14B37B] to-[#0F9D58] rounded-xl p-3 lg:p-4 shadow-xl relative">
-              <button
-                onClick={() => setShowPromoBanner(false)}
-                className="absolute top-2 right-2 w-5 h-5 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors"
-              >
-                <X size={12} className="text-white" />
-              </button>
-              
-              <div className="flex items-center justify-between gap-3 pr-6">
-                <div className="flex-1">
-                  <p className="text-[10px] font-bold text-white/90 uppercase tracking-wide mb-0.5">
-                    Project Valuation
-                  </p>
-                  <h3 className="text-sm font-black text-white mb-0.5">
-                    Book a site visit
-                  </h3>
-                  <p className="text-xs font-medium text-white/90">
-                    Free consultation with a project manager
-                  </p>
-                </div>
-                <button className="px-3 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors whitespace-nowrap flex-shrink-0">
-                  <span className="text-xs font-black text-gray-900">Book Now</span>
+        <aside aria-label="Site visit promotion">
+          <div className="fixed bottom-20 lg:bottom-6 left-0 lg:left-64 right-0 z-20">
+            <div className="max-w-7xl mx-auto px-4 lg:px-8">
+              <div className="bg-gradient-to-r from-[#14B37B] to-[#0F9D58] rounded-xl p-3 lg:p-4 shadow-xl relative">
+                <button
+                  onClick={() => setShowPromoBanner(false)}
+                  aria-label="Close promotion banner"
+                  className="absolute top-2 right-2 w-5 h-5 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors"
+                >
+                  <X size={12} className="text-white" aria-hidden="true" />
                 </button>
+                
+                <div className="flex items-center justify-between gap-3 pr-6">
+                  <div className="flex-1">
+                    <p className="text-[10px] font-bold text-white/90 uppercase tracking-wide mb-0.5">
+                      Project Valuation
+                    </p>
+                    <h3 className="text-sm font-black text-white mb-0.5">
+                      Book a site visit
+                    </h3>
+                    <p className="text-xs font-medium text-white/90">
+                      Free consultation with a project manager
+                    </p>
+                  </div>
+                  <button 
+                    className="px-3 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors whitespace-nowrap flex-shrink-0"
+                    aria-label="Book site visit now"
+                  >
+                    <span className="text-xs font-black text-gray-900">Book Now</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </aside>
       )}
 
       {/* Filters Modal */}

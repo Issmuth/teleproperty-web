@@ -93,91 +93,117 @@ export default function AccountPage() {
     <div className="flex-1" style={{ backgroundColor: colors.background }}>
       <div className="max-w-6xl mx-auto px-4 lg:px-8 py-6 lg:py-8 space-y-4">
         
+        {/* Hidden h1 for SEO and screen readers */}
+        <h1 className="sr-only">Account Settings and Profile</h1>
+        
         {/* Profile Card */}
-        <div className="bg-gradient-to-br from-[#0B8F55] to-[#0A7A4A] rounded-2xl p-6 text-white">
-          <div className="flex items-start gap-4">
-            <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
-              <User size={32} className="text-white" />
-            </div>
-            <div className="flex-1">
-              {isAuthenticated ? (
-                <>
-                  <h2 className="text-xl font-black mb-1">John Doe</h2>
-                  <p className="text-sm font-medium text-white/90 mb-0.5">+251 912 345 678</p>
-                  <p className="text-xs font-semibold text-white/80">Basic Plan</p>
-                </>
-              ) : (
-                <>
-                  <h2 className="text-xl font-black mb-1">{t('account.welcome')}</h2>
-                  <p className="text-sm font-medium text-white/90 mb-3">{t('account.signInMessage')}</p>
-                  <button className="px-4 py-2 bg-white rounded-xl hover:bg-gray-100 transition-colors">
-                    <span className="text-sm font-bold text-[#0B8F55]">{t('account.signInButton')}</span>
-                  </button>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Account Items */}
-        <div className="border rounded-2xl p-2 space-y-0" style={{ backgroundColor: colors.surface, borderColor: colors.border }}>
-          {accountItems.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <div key={index}>
-                <button 
-                  onClick={() => item.href !== '#' && router.push(item.href)}
-                  className="w-full flex items-center gap-3 p-3 rounded-xl transition-colors"
-                  style={{ backgroundColor: 'transparent' }}
-                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = colors.surfaceMuted}
-                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                >
-                  <div 
-                    className="w-10 h-10 lg:w-11 lg:h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: item.bgColor }}
-                  >
-                    <Icon size={18} style={{ color: item.iconColor }} />
-                  </div>
-                  <div className="flex-1 text-left">
-                    <h3 className="text-sm lg:text-base font-bold" style={{ color: colors.text }}>{item.title}</h3>
-                    <p className="text-xs lg:text-sm font-medium" style={{ color: colors.textMuted }}>{item.subtitle}</p>
-                  </div>
-                  <ChevronRight size={18} className="flex-shrink-0" style={{ color: colors.iconMuted }} />
-                </button>
-                {index < accountItems.length - 1 && (
-                  <div className="h-2" />
+        <section aria-labelledby="profile-heading">
+          <h2 id="profile-heading" className="sr-only">Profile Information</h2>
+          <div className="bg-gradient-to-br from-[#0B8F55] to-[#0A7A4A] rounded-2xl p-6 text-white">
+            <div className="flex items-start gap-4">
+              <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center" aria-hidden="true">
+                <User size={32} className="text-white" />
+              </div>
+              <div className="flex-1">
+                {isAuthenticated ? (
+                  <>
+                    <h3 className="text-xl font-black mb-1">John Doe</h3>
+                    <p className="text-sm font-medium text-white/90 mb-0.5">+251 912 345 678</p>
+                    <p className="text-xs font-semibold text-white/80">Basic Plan</p>
+                  </>
+                ) : (
+                  <>
+                    <h3 className="text-xl font-black mb-1">{t('account.welcome')}</h3>
+                    <p className="text-sm font-medium text-white/90 mb-3">{t('account.signInMessage')}</p>
+                    <button 
+                      type="button"
+                      className="px-4 py-2 bg-white rounded-xl hover:bg-gray-100 transition-colors"
+                      aria-label="Sign in to your account"
+                    >
+                      <span className="text-sm font-bold text-[#0B8F55]">{t('account.signInButton')}</span>
+                    </button>
+                  </>
                 )}
               </div>
-            );
-          })}
-        </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Account Items */}
+        <nav aria-labelledby="account-menu-heading">
+          <h2 id="account-menu-heading" className="sr-only">Account Menu</h2>
+          <div className="border rounded-2xl p-2 space-y-0" style={{ backgroundColor: colors.surface, borderColor: colors.border }}>
+            {accountItems.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <div key={index}>
+                  <button 
+                    onClick={() => item.href !== '#' && router.push(item.href)}
+                    type="button"
+                    aria-label={`${item.title}: ${item.subtitle}`}
+                    className="w-full flex items-center gap-3 p-3 rounded-xl transition-colors"
+                    style={{ backgroundColor: 'transparent' }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = colors.surfaceMuted}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                  >
+                    <div 
+                      className="w-10 h-10 lg:w-11 lg:h-11 rounded-xl flex items-center justify-center flex-shrink-0"
+                      style={{ backgroundColor: item.bgColor }}
+                      aria-hidden="true"
+                    >
+                      <Icon size={18} style={{ color: item.iconColor }} />
+                    </div>
+                    <div className="flex-1 text-left">
+                      <h3 className="text-sm lg:text-base font-bold" style={{ color: colors.text }}>{item.title}</h3>
+                      <p className="text-xs lg:text-sm font-medium" style={{ color: colors.textMuted }}>{item.subtitle}</p>
+                    </div>
+                    <ChevronRight size={18} className="flex-shrink-0" style={{ color: colors.iconMuted }} aria-hidden="true" />
+                  </button>
+                  {index < accountItems.length - 1 && (
+                    <div className="h-2" />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </nav>
 
         {/* Language */}
         <div className="border rounded-2xl p-2" style={{ backgroundColor: colors.surface, borderColor: colors.border }}>
           <button 
+            type="button"
+            aria-label="Change app language, currently English"
             className="w-full flex items-center gap-3 p-3 rounded-xl transition-colors"
             style={{ backgroundColor: 'transparent' }}
             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = colors.surfaceMuted}
             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
           >
-            <div className="w-10 h-10 bg-[#ECFDF5] rounded-xl flex items-center justify-center">
+            <div className="w-10 h-10 bg-[#ECFDF5] rounded-xl flex items-center justify-center" aria-hidden="true">
               <Globe size={18} className="text-[#22C55E]" />
             </div>
             <div className="flex-1 text-left">
               <h3 className="text-sm font-bold" style={{ color: colors.text }}>{t('account.appLanguage.title')}</h3>
               <p className="text-xs font-medium" style={{ color: colors.textMuted }}>{t('languages.en')}</p>
             </div>
-            <ChevronRight size={18} style={{ color: colors.iconMuted }} />
+            <ChevronRight size={18} style={{ color: colors.iconMuted }} aria-hidden="true" />
           </button>
         </div>
 
         {/* Sign Out / Sign In Button */}
         {isAuthenticated ? (
-          <button className="w-full py-3 bg-[#0B8F55] text-white font-black rounded-xl hover:bg-[#0A7A4A] transition-colors">
+          <button 
+            type="button"
+            className="w-full py-3 bg-[#0B8F55] text-white font-black rounded-xl hover:bg-[#0A7A4A] transition-colors"
+            aria-label="Sign out of your account"
+          >
             {t('account.signOut')}
           </button>
         ) : (
-          <button className="w-full py-3 bg-[#0B8F55] text-white font-black rounded-xl hover:bg-[#0A7A4A] transition-colors">
+          <button 
+            type="button"
+            className="w-full py-3 bg-[#0B8F55] text-white font-black rounded-xl hover:bg-[#0A7A4A] transition-colors"
+            aria-label="Sign in to your account"
+          >
             {t('account.signInButton')}
           </button>
         )}

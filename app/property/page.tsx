@@ -71,6 +71,9 @@ export default function PropertyPage() {
   return (
     <div className="flex-1 relative" style={{ backgroundColor: colors.background }}>
       <div className="max-w-7xl mx-auto pb-32">
+        {/* Hidden h1 for SEO and screen readers */}
+        <h1 className="sr-only">Property Listings - Buy and Rent Properties in Ethiopia</h1>
+
         <PremiumBanner />
 
         {/* Search and Segment Control */}
@@ -97,6 +100,7 @@ export default function PropertyPage() {
                   ? { backgroundColor: '#0B8F55', color: '#FFFFFF' }
                   : { backgroundColor: 'transparent', color: colors.text }
                 }
+                aria-pressed={activeSegment === segment.key}
               >
                 {segment.label}
               </button>
@@ -106,50 +110,59 @@ export default function PropertyPage() {
 
         {/* Results count */}
         <div className="px-4 lg:px-8 mb-3">
-          <p className="text-xs font-medium" style={{ color: colors.textMuted }}>
+          <h2 className="text-xs font-medium" style={{ color: colors.textMuted }}>
             {t('property.resultsFound_other', { count: sampleProperties.length })}
-          </p>
+          </h2>
         </div>
 
         {/* Property Grid */}
-        <div className="px-4 lg:px-8 pb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-          {sampleProperties.map((property) => (
-            <PropertyCard key={property.id} {...property} />
-          ))}
-        </div>
+        <section aria-labelledby="property-results">
+          <h2 id="property-results" className="sr-only">Property search results</h2>
+          <div className="px-4 lg:px-8 pb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+            {sampleProperties.map((property) => (
+              <PropertyCard key={property.id} {...property} />
+            ))}
+          </div>
+        </section>
       </div>
 
       {/* Promo Banner - Fixed at bottom but aligned with content */}
       {showPromoBanner && (
-        <div className="fixed bottom-20 lg:bottom-6 left-0 lg:left-64 right-0 z-20">
-          <div className="max-w-7xl mx-auto px-4 lg:px-8">
-            <div className="bg-gradient-to-r from-[#14B37B] to-[#14B37B] rounded-xl p-3 lg:p-4 shadow-xl relative">
-              <button
-                onClick={() => setShowPromoBanner(false)}
-                className="absolute top-2 right-2 w-5 h-5 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors"
-              >
-                <X size={12} className="text-white" />
-              </button>
-              
-              <div className="flex items-center justify-between gap-3 pr-6">
-                <div className="flex-1">
-                  <p className="text-[10px] font-bold text-white/90 uppercase tracking-wide mb-0.5">
-                    Property Valuation
-                  </p>
-                  <h3 className="text-sm font-black text-white mb-0.5">
-                    Property Valuation Free
-                  </h3>
-                  <p className="text-xs font-medium text-white/90">
-                    Know your property worth in 2 minutes
-                  </p>
-                </div>
-                <button className="px-3 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors whitespace-nowrap flex-shrink-0">
-                  <span className="text-xs font-black text-gray-900">Free Assessment</span>
+        <aside aria-label="Property valuation promotion">
+          <div className="fixed bottom-20 lg:bottom-6 left-0 lg:left-64 right-0 z-20">
+            <div className="max-w-7xl mx-auto px-4 lg:px-8">
+              <div className="bg-gradient-to-r from-[#14B37B] to-[#14B37B] rounded-xl p-3 lg:p-4 shadow-xl relative">
+                <button
+                  onClick={() => setShowPromoBanner(false)}
+                  aria-label="Close promotion banner"
+                  className="absolute top-2 right-2 w-5 h-5 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors"
+                >
+                  <X size={12} className="text-white" aria-hidden="true" />
                 </button>
+                
+                <div className="flex items-center justify-between gap-3 pr-6">
+                  <div className="flex-1">
+                    <p className="text-[10px] font-bold text-white/90 uppercase tracking-wide mb-0.5">
+                      Property Valuation
+                    </p>
+                    <h3 className="text-sm font-black text-white mb-0.5">
+                      Property Valuation Free
+                    </h3>
+                    <p className="text-xs font-medium text-white/90">
+                      Know your property worth in 2 minutes
+                    </p>
+                  </div>
+                  <button 
+                    className="px-3 py-2 bg-white rounded-lg hover:bg-gray-100 transition-colors whitespace-nowrap flex-shrink-0"
+                    aria-label="Start free property assessment"
+                  >
+                    <span className="text-xs font-black text-gray-900">Free Assessment</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </aside>
       )}
 
       {/* Filters Modal */}

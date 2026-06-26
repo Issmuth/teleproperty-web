@@ -30,16 +30,26 @@ export function ListingCard({
   const { colors } = useTheme();
 
   return (
-    <div
+    <article
       onClick={onPress}
       className="flex-shrink-0 w-64 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer border"
       style={{ backgroundColor: colors.surface, borderColor: colors.border }}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onPress?.();
+        }
+      }}
+      aria-label={`${title} in ${location}, ${stats}, ${price}, ${badge || ''} project by ${agency}, rated ${rating} stars`}
     >
       <div className="relative h-40">
         <Image
           src={image}
-          alt={title}
+          alt={`${title} - project development rendering`}
           fill
+          sizes="256px"
           className="object-cover"
         />
         {badge && (
@@ -70,6 +80,6 @@ export function ListingCard({
           </div>
         </div>
       </div>
-    </div>
+    </article>
   );
 }

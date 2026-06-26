@@ -49,12 +49,14 @@ export function ProjectCard({
       href={`/projects/${id}`}
       className="block rounded-lg border overflow-hidden hover:shadow-lg transition-all" 
       style={{ backgroundColor: colors.surface, borderColor: colors.border }}
+      aria-label={`${title} by ${developer} in ${location}, starting from ${price}${featured ? ', Featured project' : ''}`}
     >
       <div className="relative h-36">
         <Image
           src={image}
-          alt={title}
+          alt={`${title} - ${developer} development project in ${location}`}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover"
         />
         
@@ -86,11 +88,14 @@ export function ProjectCard({
         {/* Heart button */}
         <button 
           onClick={handleToggleSave}
+          type="button"
+          aria-label={isSaved ? `Remove ${title} from saved projects` : `Save ${title} to favorites`}
           className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white flex items-center justify-center hover:bg-gray-100 transition-all active:scale-95"
         >
           <Heart 
             size={13} 
-            className={isSaved ? "text-red-500 fill-red-500" : "text-gray-500"} 
+            className={isSaved ? "text-red-500 fill-red-500" : "text-gray-500"}
+            aria-hidden="true"
           />
         </button>
       </div>

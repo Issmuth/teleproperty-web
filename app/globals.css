@@ -17,6 +17,78 @@ body {
   font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
 }
 
+/* ============================================================================
+   ACCESSIBILITY STYLES
+   ============================================================================ */
+
+/* Screen Reader Only - Hide visually but keep accessible to screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Focus Visible - Modern focus indicator styles */
+*:focus-visible {
+  outline: 2px solid #22C55E;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Remove default focus outline when focus-visible is supported */
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* High contrast focus for keyboard navigation */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #22C55E;
+  outline-offset: 2px;
+}
+
+/* Focus within - Show focus state for containers with focused children */
+.focus-within-indicator:focus-within {
+  outline: 2px solid #22C55E;
+  outline-offset: 2px;
+}
+
+/* Reduced Motion - Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    border: 2px solid currentColor;
+  }
+}
+
+/* ============================================================================
+   EXISTING STYLES
+   ============================================================================ */
+
 /* Hide scrollbar for horizontal scroll sections */
 .scrollbar-hide {
   -ms-overflow-style: none;
@@ -32,9 +104,11 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Smooth transitions */
-* {
-  @apply transition-colors duration-200;
+/* Smooth transitions - Only apply when user hasn't requested reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    @apply transition-colors duration-200;
+  }
 }
 
 /* Safe area for bottom navigation on mobile */

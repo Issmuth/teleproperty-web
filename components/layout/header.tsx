@@ -51,6 +51,7 @@ export function Header() {
           backgroundColor: colors.headerBackground, 
           borderColor: colors.border 
         }}
+        role="banner"
       >
         <div className="flex items-center justify-between px-4 lg:px-6 h-14 lg:h-16">
           {/* Logo */}
@@ -88,8 +89,10 @@ export function Header() {
                   if (!isLanguageOpen) e.currentTarget.style.backgroundColor = 'transparent';
                 }}
                 aria-label="Change language"
+                aria-expanded={isLanguageOpen}
+                aria-haspopup="true"
               >
-                <Globe className="text-[#0B8F55]" size={iconSize.xl} strokeWidth={2} />
+                <Globe className="text-[#0B8F55]" size={iconSize.xl} strokeWidth={2} aria-hidden="true" />
               </button>
 
               {isLanguageOpen && (
@@ -104,6 +107,8 @@ export function Header() {
                       backgroundColor: colors.surface, 
                       borderColor: colors.border 
                     }}
+                    role="menu"
+                    aria-label="Language selection"
                   >
                     <p 
                       className="text-xs font-bold uppercase tracking-wide px-3 pb-2"
@@ -129,6 +134,8 @@ export function Header() {
                                 color: colors.text 
                               }
                           }
+                          role="menuitem"
+                          aria-current={selectedLocale === lang.code ? 'true' : undefined}
                         >
                           {t(lang.labelKey)}
                         </button>
@@ -188,6 +195,9 @@ export function Header() {
                   onMouseLeave={(e) => {
                     if (!isUserMenuOpen) e.currentTarget.style.backgroundColor = 'transparent';
                   }}
+                  aria-label={`User menu for ${session?.displayName}`}
+                  aria-expanded={isUserMenuOpen}
+                  aria-haspopup="true"
                 >
                   <div className={`${iconButtonClasses.sm} rounded-full bg-[#22C55E] flex items-center justify-center`}>
                     <span className="text-white text-sm font-bold">
@@ -211,6 +221,8 @@ export function Header() {
                         backgroundColor: colors.surface, 
                         borderColor: colors.border 
                       }}
+                      role="menu"
+                      aria-label="User account menu"
                     >
                       <div className="space-y-2">
                         <button
@@ -225,8 +237,9 @@ export function Header() {
                           }}
                           onMouseEnter={(e) => e.currentTarget.style.backgroundColor = colors.iconButtonBackground}
                           onMouseLeave={(e) => e.currentTarget.style.backgroundColor = colors.surface}
+                          role="menuitem"
                         >
-                          <User size={iconSize.md} />
+                          <User size={iconSize.md} aria-hidden="true" />
                           Account
                         </button>
                         <button
@@ -242,8 +255,9 @@ export function Header() {
                           }}
                           onMouseEnter={(e) => e.currentTarget.style.backgroundColor = colors.iconButtonBackground}
                           onMouseLeave={(e) => e.currentTarget.style.backgroundColor = colors.surface}
+                          role="menuitem"
                         >
-                          <LogOut size={iconSize.md} />
+                          <LogOut size={iconSize.md} aria-hidden="true" />
                           Sign Out
                         </button>
                       </div>
@@ -262,10 +276,14 @@ export function Header() {
           <div
             className="fixed inset-0 bg-black/50 z-50 transition-opacity"
             onClick={() => setIsDrawerOpen(false)}
+            aria-hidden="true"
           />
-          <div 
+          <nav
             className="fixed top-0 right-0 bottom-0 w-72 shadow-2xl z-50 transform transition-transform"
             style={{ backgroundColor: colors.drawerBackground }}
+            role="navigation"
+            aria-label="Mobile menu"
+            id="main-navigation"
           >
             <div className="flex flex-col h-full">
               {/* Drawer Header */}
@@ -288,7 +306,7 @@ export function Header() {
               </div>
 
               {/* Drawer Content */}
-              <div className="flex-1 overflow-y-auto py-2">
+              <div className="flex-1 overflow-y-auto py-2" role="menu">
                 {/* Auth Section - Show at top */}
                 {!isAuthenticated ? (
                   <button
@@ -297,8 +315,9 @@ export function Header() {
                       setIsDrawerOpen(false);
                     }}
                     className={`w-full flex items-center justify-center gap-2 mx-5 mb-4 ${buttonClasses.lg} bg-[#22C55E] hover:bg-[#1EA952] text-white font-bold transition-colors`}
+                    aria-label="Sign in or register"
                   >
-                    <User size={iconSize.lg} strokeWidth={2.5} />
+                    <User size={iconSize.lg} strokeWidth={2.5} aria-hidden="true" />
                     Sign In / Register
                   </button>
                 ) : (
@@ -362,7 +381,7 @@ export function Header() {
                 )}
               </div>
             </div>
-          </div>
+          </nav>
         </>
       )}
     </>

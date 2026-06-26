@@ -96,126 +96,140 @@ export default function Home() {
   return (
     <div className="flex-1" style={{ backgroundColor: colors.background }}>
       <div className="max-w-7xl mx-auto px-4 lg:px-8 py-4 lg:py-6">
+        {/* Hidden h1 for SEO and screen readers */}
+        <h1 className="sr-only">TeleProperty - Ethiopia's #1 Property Platform</h1>
+
         {/* Hero Section */}
-        <div className="mb-6">
-          <HomeHero
-            activeSegment={activeSegment}
-            onSegmentChange={setActiveSegment}
-            segments={segments}
-            searchQuery={searchQuery}
-            onSearchQueryChange={setSearchQuery}
-            onFilterPress={() => setFiltersVisible(true)}
-            onPostPress={() => router.push('/post-property')}
-            onSearchPress={handleSearch}
-          />
-        </div>
+        <section aria-labelledby="hero-heading">
+          <h2 id="hero-heading" className="sr-only">Search Properties</h2>
+          <div className="mb-6">
+            <HomeHero
+              activeSegment={activeSegment}
+              onSegmentChange={setActiveSegment}
+              segments={segments}
+              searchQuery={searchQuery}
+              onSearchQueryChange={setSearchQuery}
+              onFilterPress={() => setFiltersVisible(true)}
+              onPostPress={() => router.push('/post-property')}
+              onSearchPress={handleSearch}
+            />
+          </div>
+        </section>
 
         {/* Featured Projects */}
-        <div className="mb-6">
-          <div className="mb-3">
-            <SectionHeader
-              title={t('home.featuredProjects')}
-              actionLabel={t('home.seeAll')}
-              onActionPress={() => router.push('/projects')}
-            />
-          </div>
-          
-          <div className="flex gap-3 overflow-x-auto pb-4 -mx-4 px-4 lg:mx-0 lg:px-0 scrollbar-hide">
-            {featuredProjects.map((project) => (
-              <ListingCard
-                key={project.id}
-                {...project}
-                onPress={() => router.push(`/projects/${project.id}`)}
+        <section aria-labelledby="featured-projects-heading">
+          <div className="mb-6">
+            <div className="mb-3">
+              <SectionHeader
+                title={t('home.featuredProjects')}
+                actionLabel={t('home.seeAll')}
+                onActionPress={() => router.push('/projects')}
               />
-            ))}
+              <h2 id="featured-projects-heading" className="sr-only">{t('home.featuredProjects')}</h2>
+            </div>
+            
+            <div className="flex gap-3 overflow-x-auto pb-4 -mx-4 px-4 lg:mx-0 lg:px-0 scrollbar-hide">
+              {featuredProjects.map((project) => (
+                <ListingCard
+                  key={project.id}
+                  {...project}
+                  onPress={() => router.push(`/projects/${project.id}`)}
+                />
+              ))}
+            </div>
           </div>
-        </div>
+        </section>
 
         {/* Featured Properties */}
-        <div className="mb-6">
-          <div className="mb-3">
-            <SectionHeader
-              title={t('home.featuredProperties')}
-              actionLabel={t('home.browseAll')}
-              onActionPress={() => router.push('/property')}
-            />
-          </div>
-          
-          <div className="flex gap-3 overflow-x-auto pb-4 -mx-4 px-4 lg:mx-0 lg:px-0 scrollbar-hide">
-            {featuredProperties.map((property) => (
-              <PropertyCard
-                key={property.id}
-                {...property}
-                onPress={() => router.push(`/property/${property.id}`)}
+        <section aria-labelledby="featured-properties-heading">
+          <div className="mb-6">
+            <div className="mb-3">
+              <SectionHeader
+                title={t('home.featuredProperties')}
+                actionLabel={t('home.browseAll')}
+                onActionPress={() => router.push('/property')}
               />
-            ))}
+              <h2 id="featured-properties-heading" className="sr-only">{t('home.featuredProperties')}</h2>
+            </div>
+            
+            <div className="flex gap-3 overflow-x-auto pb-4 -mx-4 px-4 lg:mx-0 lg:px-0 scrollbar-hide">
+              {featuredProperties.map((property) => (
+                <PropertyCard
+                  key={property.id}
+                  {...property}
+                  onPress={() => router.push(`/property/${property.id}`)}
+                />
+              ))}
+            </div>
           </div>
-        </div>
+        </section>
 
         {/* All Services */}
-        <div>
-          <h2 className="text-base font-black mb-3" style={{ color: colors.text }}>
-            {t('home.allServices')}
-          </h2>
+        <section aria-labelledby="services-heading">
+          <div>
+            <h2 id="services-heading" className="text-base font-black mb-3" style={{ color: colors.text }}>
+              {t('home.allServices')}
+            </h2>
 
-          <div className="space-y-3">
-            {/* Search Property - Full width */}
-            <ServiceBanner
-              backgroundColor="#0B3C2A"
-              icon={Search}
-              title={t('home.services.searchProperty.title')}
-              subtitle={t('home.services.searchProperty.subtitle')}
-              image="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=900&q=80"
-              size="full"
-              onPress={() => router.push('/property')}
-            />
+            <div className="space-y-3">
+              {/* Search Property - Full width */}
+              <ServiceBanner
+                backgroundColor="#0B3C2A"
+                icon={Search}
+                title={t('home.services.searchProperty.title')}
+                subtitle={t('home.services.searchProperty.subtitle')}
+                image="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=900&q=80"
+                size="full"
+                onPress={() => router.push('/property')}
+              />
 
-            {/* Two columns grid - side by side on all screens */}
-            <div className="grid grid-cols-2 gap-3">
-              <ServiceBanner
-                backgroundColor="#0B3C2A"
-                icon={Plus}
-                title={t('home.services.postProperty.title')}
-                subtitle={t('home.services.postProperty.subtitle')}
-                image="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=500&q=80"
-                size="half"
-                onPress={() => router.push('/post-property')}
-              />
-              
-              <ServiceBanner
-                backgroundColor="#0B3C2A"
-                icon={Building2}
-                title={t('home.services.newProjects.title')}
-                subtitle={t('home.services.newProjects.subtitle')}
-                image="https://images.unsplash.com/photo-1541881451213-911293a9d905?auto=format&fit=crop&w=500&q=80"
-                size="half"
-                onPress={() => router.push('/projects')}
-              />
-            </div>
+              {/* Two columns grid - side by side on all screens */}
+              <div className="grid grid-cols-2 gap-3">
+                <ServiceBanner
+                  backgroundColor="#0B3C2A"
+                  icon={Plus}
+                  title={t('home.services.postProperty.title')}
+                  subtitle={t('home.services.postProperty.subtitle')}
+                  image="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=500&q=80"
+                  size="half"
+                  onPress={() => router.push('/post-property')}
+                />
+                
+                <ServiceBanner
+                  backgroundColor="#0B3C2A"
+                  icon={Building2}
+                  title={t('home.services.newProjects.title')}
+                  subtitle={t('home.services.newProjects.subtitle')}
+                  image="https://images.unsplash.com/photo-1541881451213-911293a9d905?auto=format&fit=crop&w=500&q=80"
+                  size="half"
+                  onPress={() => router.push('/projects')}
+                />
+              </div>
 
-            <div className="grid grid-cols-2 gap-3">
-              <ServiceBanner
-                backgroundColor="#0B3C2A"
-                icon={Briefcase}
-                title={t('home.services.developerHub.title')}
-                subtitle={t('home.services.developerHub.subtitle')}
-                image="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80"
-                size="half"
-                onPress={() => router.push('/developer-hub')}
-              />
-              
-              <ServiceBanner
-                backgroundColor="#0B3C2A"
-                icon={ShieldCheck}
-                title={t('home.services.verifiedBrokers.title')}
-                subtitle={t('home.services.verifiedBrokers.subtitle')}
-                image="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=500&q=80"
-                size="half"
-                onPress={() => router.push('/broker-hub')}
-              />
+              <div className="grid grid-cols-2 gap-3">
+                <ServiceBanner
+                  backgroundColor="#0B3C2A"
+                  icon={Briefcase}
+                  title={t('home.services.developerHub.title')}
+                  subtitle={t('home.services.developerHub.subtitle')}
+                  image="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80"
+                  size="half"
+                  onPress={() => router.push('/developer-hub')}
+                />
+                
+                <ServiceBanner
+                  backgroundColor="#0B3C2A"
+                  icon={ShieldCheck}
+                  title={t('home.services.verifiedBrokers.title')}
+                  subtitle={t('home.services.verifiedBrokers.subtitle')}
+                  image="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=500&q=80"
+                  size="half"
+                  onPress={() => router.push('/broker-hub')}
+                />
+              </div>
             </div>
           </div>
-        </div>
+        </section>
       </div>
 
       {/* Filters Modal - switches config based on active segment */}

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { X, SlidersHorizontal, ChevronDown } from 'lucide-react';
 import { useTheme } from '@/lib/theme/theme-provider';
 import {
@@ -33,6 +33,65 @@ export function SearchFiltersModal({
   const { colors } = useTheme();
   const [state, setState] = useState<FilterState>({});
   const [expandedSelectId, setExpandedSelectId] = useState<string | null>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previousActiveElement = useRef<HTMLElement | null>(null);
+
+  // Store the previously focused element
+  useEffect(() => {
+    if (visible) {
+      previousActiveElement.current = document.activeElement as HTMLElement;
+    }
+  }, [visible]);
+
+  // Focus management and escape key handler
+  useEffect(() => {
+    if (!visible) return;
+
+    // Focus the close button when modal opens
+    setTimeout(() => {
+      closeButtonRef.current?.focus();
+    }, 100);
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+
+      // Focus trap
+      if (e.key === 'Tab' && modalRef.current) {
+        const focusableElements = modalRef.current.querySelectorAll(
+          'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        );
+        const firstElement = focusableElements[0] as HTMLElement;
+        const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement?.focus();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement?.focus();
+          }
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [visible, onClose]);
+
+  // Return focus to trigger element when modal closes
+  useEffect(() => {
+    if (!visible && previousActiveElement.current) {
+      previousActiveElement.current.focus();
+    }
+  }, [visible]);
 
   useEffect(() => {
     if (!visible) return;
@@ -113,10 +172,16 @@ export function SearchFiltersModal({
       <div
         className="fixed inset-0 bg-black/40 z-40 backdrop-blur-sm"
         onClick={onClose}
+        aria-hidden="true"
       />
 
       {/* Modal */}
       <div
+        ref={modalRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="filter-modal-title"
+        aria-describedby="filter-modal-description"
         className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-2xl max-h-[85vh] rounded-2xl shadow-2xl overflow-hidden"
         style={{ backgroundColor: colors.background }}
       >
@@ -126,24 +191,27 @@ export function SearchFiltersModal({
           style={{ borderColor: colors.border }}
         >
           <div className="flex items-center gap-3">
-            <SlidersHorizontal size={20} style={{ color: colors.activeText }} />
+            <SlidersHorizontal size={20} style={{ color: colors.activeText }} aria-hidden="true" />
             <div>
-              <h2 className="text-base font-black" style={{ color: colors.text }}>
+              <h2 id="filter-modal-title" className="text-base font-black" style={{ color: colors.text }}>
                 {config.title}
               </h2>
               {config.subtitle && (
-                <p className="text-xs font-medium mt-0.5" style={{ color: colors.textMuted }}>
+                <p id="filter-modal-description" className="text-xs font-medium mt-0.5" style={{ color: colors.textMuted }}>
                   {config.subtitle}
                 </p>
               )}
             </div>
           </div>
           <button
+            ref={closeButtonRef}
             onClick={onClose}
+            type="button"
+            aria-label="Close filters dialog"
             className={`${iconButtonClasses.sm} flex items-center justify-center hover:bg-opacity-80 transition-colors`}
             style={{ backgroundColor: colors.surfaceMuted }}
           >
-            <X size={iconSize.lg} style={{ color: colors.textMuted }} />
+            <X size={iconSize.lg} style={{ color: colors.textMuted }} aria-hidden="true" />
           </button>
         </div>
 
@@ -210,6 +278,8 @@ function FilterSectionView({
     return (
       <SectionBlock title={section.label}>
         <div
+          role="radiogroup"
+          aria-label={section.label}
           className="flex gap-1 p-1 rounded-xl"
           style={{ backgroundColor: colors.surfaceMuted }}
         >
@@ -218,6 +288,9 @@ function FilterSectionView({
             return (
               <button
                 key={option.key}
+                type="button"
+                role="radio"
+                aria-checked={isActive}
                 onClick={() => onSegmentPress(section.id, option.key)}
                 className="flex-1 py-2.5 px-3 rounded-lg font-bold text-sm transition-all"
                 style={
@@ -250,11 +323,16 @@ function FilterSectionView({
 
           return (
             <div key={field.id} className="space-y-2 relative">
-              <label className="text-xs font-black uppercase tracking-wide" style={{ color: colors.textMuted }}>
+              <label htmlFor={field.id} className="text-xs font-black uppercase tracking-wide" style={{ color: colors.textMuted }}>
                 {field.label}
               </label>
               <button
+                id={field.id}
+                type="button"
                 onClick={() => onSelectPress(field.id)}
+                aria-expanded={isExpanded}
+                aria-haspopup="listbox"
+                aria-label={`Select ${field.label}, currently ${selectedValue}`}
                 className={`w-full ${inputClasses.lg} flex items-center justify-between transition-colors hover:bg-opacity-80 border`}
                 style={{
                   backgroundColor: colors.surface,
@@ -264,11 +342,13 @@ function FilterSectionView({
                 <span className="text-sm font-bold truncate" style={{ color: colors.text }}>
                   {selectedValue}
                 </span>
-                <ChevronDown size={iconSize.md} style={{ color: colors.textMuted }} />
+                <ChevronDown size={iconSize.md} style={{ color: colors.textMuted }} aria-hidden="true" />
               </button>
 
               {isExpanded && (
                 <div
+                  role="listbox"
+                  aria-label={`${field.label} options`}
                   className="absolute top-full left-0 right-0 mt-1 rounded-xl border shadow-lg overflow-hidden z-10 max-h-60 overflow-y-auto"
                   style={{
                     backgroundColor: colors.surface,
@@ -280,6 +360,9 @@ function FilterSectionView({
                     return (
                       <button
                         key={option.key}
+                        type="button"
+                        role="option"
+                        aria-selected={isSelected}
                         onClick={() => onSelectOption(field.id, option)}
                         className="w-full px-4 py-3 text-left text-sm font-bold hover:bg-opacity-80 transition-colors"
                         style={{
@@ -313,14 +396,16 @@ function FilterSectionView({
               borderColor: colors.border,
             }}
           >
-            <label className="text-[10px] font-black uppercase" style={{ color: colors.textMuted }}>
+            <label htmlFor={`${section.id}-min`} className="text-[10px] font-black uppercase" style={{ color: colors.textMuted }}>
               {minFieldLabel}
             </label>
             <input
+              id={`${section.id}-min`}
               type="number"
               placeholder={section.minLabel}
               value={String(state[`${section.id}_min`] ?? '')}
               onChange={(e) => onRangeChange(section.id, 'min', e.target.value)}
+              aria-label={`Minimum ${section.label}`}
               className="w-full bg-transparent outline-none text-base font-bold mt-1"
               style={{ color: colors.text }}
             />
@@ -333,21 +418,23 @@ function FilterSectionView({
               borderColor: colors.border,
             }}
           >
-            <label className="text-[10px] font-black uppercase" style={{ color: colors.textMuted }}>
+            <label htmlFor={`${section.id}-max`} className="text-[10px] font-black uppercase" style={{ color: colors.textMuted }}>
               {maxFieldLabel}
             </label>
             <input
+              id={`${section.id}-max`}
               type="number"
               placeholder={section.maxLabel}
               value={String(state[`${section.id}_max`] ?? '')}
               onChange={(e) => onRangeChange(section.id, 'max', e.target.value)}
+              aria-label={`Maximum ${section.label}`}
               className="w-full bg-transparent outline-none text-base font-bold mt-1"
               style={{ color: colors.text }}
             />
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2" role="group" aria-label={`${section.label} quick options`}>
           {section.quickOptions.map((option) => {
             const isActive = option.key === activeKey;
             return (
@@ -371,7 +458,7 @@ function FilterSectionView({
 
     return (
       <SectionBlock title={section.label}>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2" role="group" aria-label={section.label}>
           {section.options.map((option) => {
             const isActive = selectedSet.includes(option.key);
             return (
@@ -410,11 +497,13 @@ function FilterSectionView({
             type="checkbox"
             checked={Boolean(state[section.id] ?? section.value)}
             onChange={() => onToggle(section.id)}
+            aria-label={section.label}
             className="sr-only peer"
           />
           <div
             className="w-11 h-6 rounded-full peer transition-colors peer-checked:bg-[#0B8F55]"
             style={{ backgroundColor: colors.surface }}
+            aria-hidden="true"
           >
             <div
               className="w-5 h-5 bg-white rounded-full shadow-md transform transition-transform peer-checked:translate-x-5 translate-x-0.5 translate-y-0.5"
@@ -452,7 +541,9 @@ function FilterChip({
 
   return (
     <button
+      type="button"
       onClick={onPress}
+      aria-pressed={selected}
       className={`${buttonClasses.sm} rounded-full border transition-all hover:opacity-80`}
       style={
         selected

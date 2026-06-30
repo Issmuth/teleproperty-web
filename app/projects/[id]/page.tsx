@@ -125,7 +125,7 @@ export default function ProjectDetailsPage({ params }: { params: Promise<{ id: s
             <div className="relative h-64 lg:h-96 lg:rounded-2xl overflow-hidden bg-gray-900">
               <Image
                 src={project.gallery[selectedImageIndex]}
-                alt={project.title}
+                alt={`${project.title} by ${project.developer} - Gallery image ${selectedImageIndex + 1} of ${project.gallery.length}`}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 50vw"
                 className="object-cover"
@@ -136,14 +136,16 @@ export default function ProjectDetailsPage({ params }: { params: Promise<{ id: s
               <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
                 <button
                   onClick={handleBack}
+                  aria-label="Go back"
                   className="w-9 h-9 rounded-full flex items-center justify-center transition-transform active:scale-95"
                   style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
                 >
-                  <ChevronLeft size={20} className="text-white" strokeWidth={2.5} />
+                  <ChevronLeft size={20} className="text-white" strokeWidth={2.5} aria-hidden="true" />
                 </button>
 
                 <button
                   onClick={handleToggleSave}
+                  aria-label={isSaved ? 'Remove from saved projects' : 'Save project'}
                   className="w-9 h-9 rounded-full flex items-center justify-center transition-transform active:scale-95"
                   style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
                 >
@@ -151,13 +153,14 @@ export default function ProjectDetailsPage({ params }: { params: Promise<{ id: s
                     size={18}
                     className={isSaved ? 'text-red-500 fill-red-500' : 'text-white'}
                     strokeWidth={2.5}
+                    aria-hidden="true"
                   />
                 </button>
               </div>
 
               {/* Image Counter */}
-              <div className="absolute top-3 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-black bg-opacity-70 rounded-xl px-3 py-1.5 z-10">
-                <Camera size={14} className="text-white" />
+              <div className="absolute top-3 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-black bg-opacity-70 rounded-xl px-3 py-1.5 z-10" role="status" aria-live="polite">
+                <Camera size={14} className="text-white" aria-hidden="true" />
                 <span className="text-xs font-bold text-white">
                   {selectedImageIndex + 1} / {project.gallery.length}
                 </span>
@@ -177,11 +180,13 @@ export default function ProjectDetailsPage({ params }: { params: Promise<{ id: s
             </div>
 
             {/* Thumbnail Gallery */}
-            <div className="flex gap-2 overflow-x-auto px-4 lg:px-0 scrollbar-hide">
+            <nav aria-label="Project image gallery" className="flex gap-2 overflow-x-auto px-4 lg:px-0 scrollbar-hide">
               {project.gallery.map((image: string, index: number) => (
                 <button
                   key={index}
                   onClick={() => setSelectedImageIndex(index)}
+                  aria-label={`View image ${index + 1} of ${project.gallery.length}`}
+                  aria-current={index === selectedImageIndex ? 'true' : 'false'}
                   className="flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all"
                   style={{
                     borderColor: index === selectedImageIndex ? colors.activeText : 'transparent',
@@ -189,14 +194,14 @@ export default function ProjectDetailsPage({ params }: { params: Promise<{ id: s
                 >
                   <Image
                     src={image}
-                    alt={`Gallery ${index + 1}`}
+                    alt={`Gallery thumbnail ${index + 1}`}
                     width={80}
                     height={80}
                     className="object-cover w-full h-full"
                   />
                 </button>
               ))}
-            </div>
+            </nav>
 
             {/* Mobile: Title & Price (Desktop: In Sidebar) */}
             <div className="lg:hidden px-4 space-y-1">
@@ -218,19 +223,19 @@ export default function ProjectDetailsPage({ params }: { params: Promise<{ id: s
             </div>
 
             {/* Stats Row */}
-            <div className="grid grid-cols-3 gap-3 px-4 lg:px-0">
+            <div className="grid grid-cols-3 gap-3 px-4 lg:px-0" role="group" aria-label="Project statistics">
               <div className="flex flex-col items-center justify-center rounded-xl py-4 border min-h-[90px]" style={{ backgroundColor: colors.activeSurface, borderColor: colors.border }}>
-                <Building2 size={18} className="text-green-600" />
+                <Building2 size={18} className="text-green-600" aria-hidden="true" />
                 <span className="text-sm font-black mt-2" style={{ color: colors.text }}>{project.units}</span>
                 <span className="text-xs font-bold mt-1 text-center" style={{ color: colors.textMuted }}>Units</span>
               </div>
               <div className="flex flex-col items-center justify-center rounded-xl py-4 border min-h-[90px]" style={{ backgroundColor: colors.activeSurface, borderColor: colors.border }}>
-                <CalendarDays size={18} className="text-green-600" />
+                <CalendarDays size={18} className="text-green-600" aria-hidden="true" />
                 <span className="text-sm font-black mt-2" style={{ color: colors.text }}>{project.completion}</span>
                 <span className="text-xs font-bold mt-1 text-center" style={{ color: colors.textMuted }}>Completion</span>
               </div>
               <div className="flex flex-col items-center justify-center rounded-xl py-4 border min-h-[90px]" style={{ backgroundColor: colors.activeSurface, borderColor: colors.border }}>
-                <BadgeCheck size={18} className="text-green-600" />
+                <BadgeCheck size={18} className="text-green-600" aria-hidden="true" />
                 <span className="text-sm font-black mt-2" style={{ color: colors.text }}>{project.status}</span>
                 <span className="text-xs font-bold mt-1 text-center" style={{ color: colors.textMuted }}>Status</span>
               </div>
@@ -251,10 +256,10 @@ export default function ProjectDetailsPage({ params }: { params: Promise<{ id: s
             {/* Amenities */}
             <div className="mx-4 lg:mx-0 p-4 rounded-2xl border" style={{ backgroundColor: colors.surface, borderColor: colors.border }}>
               <h2 className="text-sm font-black mb-3" style={{ color: colors.text }}>Amenities</h2>
-              <div className="space-y-2">
+              <div className="space-y-2" role="list" aria-label="Project amenities">
                 {project.amenities.map((amenity: string) => (
-                  <div key={amenity} className="flex items-center gap-2">
-                    <CircleCheckBig size={16} className="text-green-600 flex-shrink-0" />
+                  <div key={amenity} className="flex items-center gap-2" role="listitem">
+                    <CircleCheckBig size={16} className="text-green-600 flex-shrink-0" aria-hidden="true" />
                     <span className="text-sm font-semibold" style={{ color: colors.text }}>
                       {amenity}
                     </span>
@@ -327,24 +332,26 @@ export default function ProjectDetailsPage({ params }: { params: Promise<{ id: s
               <div className="grid grid-cols-2 gap-3">
                 <button
                   onClick={handleCall}
+                  aria-label="Call developer"
                   className="flex items-center justify-center gap-2 py-3 rounded-xl font-black text-sm text-white transition-transform active:scale-98"
                   style={{ backgroundColor: colors.activeText }}
                 >
-                  <Phone size={16} strokeWidth={2.5} />
+                  <Phone size={16} strokeWidth={2.5} aria-hidden="true" />
                   <span>Call</span>
                 </button>
                 <button
                   onClick={handleWhatsApp}
+                  aria-label="Contact via WhatsApp"
                   className="flex items-center justify-center gap-2 py-3 rounded-xl font-black text-sm border transition-transform active:scale-98"
                   style={{ backgroundColor: colors.activeSurface, borderColor: colors.activeText, color: colors.activeText }}
                 >
-                  <MessageCircle size={16} strokeWidth={2.5} />
+                  <MessageCircle size={16} strokeWidth={2.5} aria-hidden="true" />
                   <span>WhatsApp</span>
                 </button>
               </div>
 
-              <button className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-black text-sm border transition-transform active:scale-98" style={{ backgroundColor: colors.surface, borderColor: colors.border, color: colors.text }}>
-                <ClipboardList size={18} strokeWidth={2} style={{ color: colors.textMuted }} />
+              <button aria-label="Request advisor" className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-black text-sm border transition-transform active:scale-98" style={{ backgroundColor: colors.surface, borderColor: colors.border, color: colors.text }}>
+                <ClipboardList size={18} strokeWidth={2} style={{ color: colors.textMuted }} aria-hidden="true" />
                 <span>Request Advisor</span>
               </button>
             </div>

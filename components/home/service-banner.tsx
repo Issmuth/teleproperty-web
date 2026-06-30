@@ -25,6 +25,15 @@ export function ServiceBanner({
   return (
     <div
       onClick={onPress}
+      role={onPress ? 'button' : undefined}
+      tabIndex={onPress ? 0 : undefined}
+      onKeyDown={onPress ? (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onPress();
+        }
+      } : undefined}
+      aria-label={`${title}: ${subtitle}`}
       className={`
         relative overflow-hidden rounded-xl cursor-pointer group
         ${isHalf ? 'h-36' : 'h-44'}
@@ -34,14 +43,15 @@ export function ServiceBanner({
       <div className="absolute inset-0">
         <Image
           src={image}
-          alt={title}
+          alt=""
           fill
           className="object-cover opacity-30 group-hover:opacity-40 transition-opacity"
+          aria-hidden="true"
         />
       </div>
       
       <div className="relative h-full p-4 flex flex-col justify-between text-white">
-        <Icon size={24} strokeWidth={2} />
+        <Icon size={24} strokeWidth={2} aria-hidden="true" />
         
         <div>
           <h3 className="font-black text-base mb-0.5">{title}</h3>

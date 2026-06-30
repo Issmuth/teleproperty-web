@@ -38,6 +38,7 @@ export const palette = {
   text: {
     primary: "#0F172A",
     secondary: "#64748B",
+    tertiary: "#6B7280",  // NEW: AA-compliant alternative to muted (4.6:1 on white)
     muted: "#94A3B8",
     inverse: "#FFFFFF",
   },

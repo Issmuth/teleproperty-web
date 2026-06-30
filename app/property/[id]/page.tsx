@@ -117,7 +117,7 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
             <div className="relative h-80 lg:h-96 lg:rounded-2xl overflow-hidden">
               <Image
                 src={property.gallery[selectedImageIndex]}
-                alt={property.title}
+                alt={`${property.title} - ${property.location} - Gallery image ${selectedImageIndex + 1} of ${property.gallery.length}`}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="object-cover"
@@ -129,21 +129,24 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
               <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
                 <button
                   onClick={handleBack}
+                  aria-label="Go back"
                   className="w-10 h-10 rounded-full flex items-center justify-center transition-transform active:scale-95"
                   style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
                 >
-                  <ChevronLeft size={22} className="text-white" strokeWidth={2.5} />
+                  <ChevronLeft size={22} className="text-white" strokeWidth={2.5} aria-hidden="true" />
                 </button>
 
                 <div className="flex items-center gap-2">
                   <button
+                    aria-label="Share property"
                     className="w-10 h-10 rounded-full flex items-center justify-center transition-transform active:scale-95"
                     style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
                   >
-                    <Share2 size={18} className="text-white" strokeWidth={2.5} />
+                    <Share2 size={18} className="text-white" strokeWidth={2.5} aria-hidden="true" />
                   </button>
                   <button
                     onClick={handleToggleSave}
+                    aria-label={isSaved ? 'Remove from saved properties' : 'Save property'}
                     className="w-10 h-10 rounded-full flex items-center justify-center transition-transform active:scale-95"
                     style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
                   >
@@ -151,14 +154,15 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
                       size={18}
                       className={isSaved ? 'text-red-500 fill-red-500' : 'text-white'}
                       strokeWidth={2.5}
+                      aria-hidden="true"
                     />
                   </button>
                 </div>
               </div>
 
               {/* Image Counter */}
-              <div className="absolute bottom-3 right-3 flex items-center gap-2 bg-black bg-opacity-70 rounded-xl px-3 py-1.5">
-                <Camera size={14} className="text-white" />
+              <div className="absolute bottom-3 right-3 flex items-center gap-2 bg-black bg-opacity-70 rounded-xl px-3 py-1.5" role="status" aria-live="polite">
+                <Camera size={14} className="text-white" aria-hidden="true" />
                 <span className="text-xs font-bold text-white">
                   {selectedImageIndex + 1} / {property.gallery.length}
                 </span>
@@ -166,11 +170,13 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
             </div>
 
             {/* Thumbnail Gallery */}
-            <div className="flex gap-2 overflow-x-auto px-4 lg:px-0 scrollbar-hide">
+            <nav aria-label="Property image gallery" className="flex gap-2 overflow-x-auto px-4 lg:px-0 scrollbar-hide">
               {property.gallery.map((image: string, index: number) => (
                 <button
                   key={index}
                   onClick={() => setSelectedImageIndex(index)}
+                  aria-label={`View image ${index + 1} of ${property.gallery.length}`}
+                  aria-current={index === selectedImageIndex ? 'true' : 'false'}
                   className="flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all"
                   style={{
                     borderColor: index === selectedImageIndex ? colors.activeText : 'transparent',
@@ -178,14 +184,14 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
                 >
                   <Image
                     src={image}
-                    alt={`Gallery ${index + 1}`}
+                    alt={`Gallery thumbnail ${index + 1}`}
                     width={80}
                     height={80}
                     className="object-cover w-full h-full"
                   />
                 </button>
               ))}
-            </div>
+            </nav>
 
             {/* Mobile: Title & Price (Desktop: In Sidebar) */}
             <div className="lg:hidden px-4 space-y-2">
@@ -208,19 +214,19 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
             </div>
 
             {/* Stats Row */}
-            <div className="grid grid-cols-3 gap-3 px-4 lg:px-0">
+            <div className="grid grid-cols-3 gap-3 px-4 lg:px-0" role="group" aria-label="Property statistics">
               <div className="flex flex-col items-center justify-center rounded-xl py-4 border" style={{ backgroundColor: colors.surfaceMuted, borderColor: colors.border }}>
-                <Bed size={20} className="text-green-600" />
+                <Bed size={20} className="text-green-600" aria-hidden="true" />
                 <span className="text-lg font-black mt-2" style={{ color: colors.text }}>{property.beds}</span>
                 <span className="text-xs font-bold mt-1" style={{ color: colors.textMuted }}>Bedrooms</span>
               </div>
               <div className="flex flex-col items-center justify-center rounded-xl py-4 border" style={{ backgroundColor: colors.surfaceMuted, borderColor: colors.border }}>
-                <Bath size={20} className="text-green-600" />
+                <Bath size={20} className="text-green-600" aria-hidden="true" />
                 <span className="text-lg font-black mt-2" style={{ color: colors.text }}>{property.baths}</span>
                 <span className="text-xs font-bold mt-1" style={{ color: colors.textMuted }}>Bathrooms</span>
               </div>
               <div className="flex flex-col items-center justify-center rounded-xl py-4 border" style={{ backgroundColor: colors.surfaceMuted, borderColor: colors.border }}>
-                <Square size={20} className="text-green-600" />
+                <Square size={20} className="text-green-600" aria-hidden="true" />
                 <span className="text-lg font-black mt-2" style={{ color: colors.text }}>{property.area} m²</span>
                 <span className="text-xs font-bold mt-1" style={{ color: colors.textMuted }}>Area</span>
               </div>
@@ -249,10 +255,14 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
               <div className="p-4 rounded-xl border space-y-3" style={{ backgroundColor: colors.surfaceMuted, borderColor: colors.border }}>
                 <h3 className="text-sm font-black" style={{ color: colors.text }}>Write a Review</h3>
                 
-                <div className="flex gap-2">
+                <div className="flex gap-2" role="radiogroup" aria-label="Rating">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <button
                       key={star}
+                      type="button"
+                      role="radio"
+                      aria-checked={star === reviewRating}
+                      aria-label={`${star} star${star > 1 ? 's' : ''}`}
                       onClick={() => setReviewRating(star)}
                       className="transition-transform active:scale-95"
                     >
@@ -260,15 +270,18 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
                         size={28}
                         className={star <= reviewRating ? 'text-amber-500 fill-amber-500' : 'text-amber-500'}
                         strokeWidth={2}
+                        aria-hidden="true"
                       />
                     </button>
                   ))}
                 </div>
 
                 <textarea
+                  id="review-text"
                   value={reviewText}
                   onChange={(e) => setReviewText(e.target.value)}
                   placeholder="Share your experience with this property..."
+                  aria-label="Review text"
                   className="w-full p-3 rounded-xl border text-sm resize-none"
                   style={{
                     backgroundColor: colors.surface,
@@ -280,22 +293,24 @@ export default function PropertyDetailsPage({ params }: { params: Promise<{ id: 
                 />
 
                 <button
+                  type="button"
                   onClick={handleSubmitReview}
                   disabled={!reviewText.trim() || reviewRating === 0}
+                  aria-label="Submit review"
                   className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-black text-sm transition-all active:scale-98 disabled:opacity-50"
                   style={{
                     backgroundColor: reviewText.trim() && reviewRating > 0 ? colors.activeText : colors.surfaceMuted,
                     color: '#fff',
                   }}
                 >
-                  <MessageCircleMore size={16} />
+                  <MessageCircleMore size={16} aria-hidden="true" />
                   <span>Submit Review</span>
                 </button>
               </div>
 
               {/* No Reviews State */}
-              <div className="p-6 rounded-xl border flex flex-col items-center gap-3 text-center" style={{ backgroundColor: colors.surface, borderColor: colors.border }}>
-                <MessageCircleMore size={32} style={{ color: colors.textMuted }} />
+              <div className="p-6 rounded-xl border flex flex-col items-center gap-3 text-center" style={{ backgroundColor: colors.surface, borderColor: colors.border }} role="status">
+                <MessageCircleMore size={32} style={{ color: colors.textMuted }} aria-hidden="true" />
                 <p className="text-sm" style={{ color: colors.textMuted }}>
                   No reviews yet. Be the first to share your experience!
                 </p>

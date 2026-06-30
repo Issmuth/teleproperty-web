@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/lib/theme/theme-provider";
 import { I18nProvider } from "@/lib/i18n/i18n-provider";
 import { LayoutWrapper } from "@/components/layout/layout-wrapper";
 import { SkipLinks } from "@/components/common/skip-links";
+import { ToastContainer } from "@/components/common/toast-container";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -36,6 +37,7 @@ export default function RootLayout({
             <LayoutWrapper>
               {children}
             </LayoutWrapper>
+            <ToastContainer />
           </I18nProvider>
         </ThemeProvider>
       </body>

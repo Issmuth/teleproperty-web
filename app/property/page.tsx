@@ -110,7 +110,13 @@ export default function PropertyPage() {
 
         {/* Results count */}
         <div className="px-4 lg:px-8 mb-3">
-          <h2 className="text-xs font-medium" style={{ color: colors.textMuted }}>
+          <h2 
+            className="text-xs font-medium" 
+            style={{ color: colors.textMuted }}
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+          >
             {t('property.resultsFound_other', { count: sampleProperties.length })}
           </h2>
         </div>

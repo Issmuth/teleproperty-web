@@ -40,8 +40,14 @@ export default function SavedPropertiesPage() {
 
       <div className="max-w-6xl mx-auto px-4 lg:px-8 pt-20 lg:pt-24 pb-32">
         {loading ? (
-          <div className="flex items-center justify-center pt-16">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2" style={{ borderColor: colors.activeText }} />
+          <div 
+            className="flex items-center justify-center pt-16"
+            role="status"
+            aria-live="polite"
+            aria-busy="true"
+          >
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2" style={{ borderColor: colors.activeText }} aria-hidden="true" />
+            <span className="sr-only">Loading saved properties...</span>
           </div>
         ) : savedProperties.length === 0 ? (
           <div className="flex items-center justify-center pt-16 lg:pt-24">

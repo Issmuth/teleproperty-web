@@ -11,37 +11,19 @@ const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
 
 export function SidebarProvider({ children }: { children: ReactNode }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isClient, setIsClient] = useState(false);
 
-  // Set isClient flag on mount
+  // Load saved preference from localStorage
   useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  // Load saved preference from localStorage (only on client)
-  useEffect(() => {
-    if (isClient && typeof window !== 'undefined') {
-      try {
-        const saved = localStorage.getItem('sidebar-collapsed');
-        if (saved !== null) {
-          setIsCollapsed(saved === 'true');
-        }
-      } catch (error) {
-        console.error('Failed to load sidebar state:', error);
-      }
+    const saved = localStorage.getItem('sidebar-collapsed');
+    if (saved !== null) {
+      setIsCollapsed(saved === 'true');
     }
-  }, [isClient]);
+  }, []);
 
   const toggleSidebar = () => {
     setIsCollapsed((prev) => {
       const newValue = !prev;
-      if (typeof window !== 'undefined') {
-        try {
-          localStorage.setItem('sidebar-collapsed', String(newValue));
-        } catch (error) {
-          console.error('Failed to save sidebar state:', error);
-        }
-      }
+      localStorage.setItem('sidebar-collapsed', String(newValue));
       return newValue;
     });
   };

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ChevronRight, Camera, CheckCircle2, ChevronLeft, Mail } from 'lucide-react';
 import { useTheme } from '@/lib/theme/theme-provider';
+import { useSidebar } from '@/lib/layout/sidebar-context';
 import { Tag } from '@/components/common/tag';
 import { iconSize, iconButtonClasses, buttonClasses, inputClasses } from '@/lib/design-system/dimensions';
 
@@ -12,6 +13,7 @@ type VerificationType = 'owner-id' | 'broker-license' | 'developer-document' | '
 export default function PostPropertyStep3() {
   const router = useRouter();
   const { colors } = useTheme();
+  const { isCollapsed } = useSidebar();
   const [whatsapp, setWhatsapp] = useState('');
   const [telegram, setTelegram] = useState('');
   const [email, setEmail] = useState('');
@@ -268,8 +270,13 @@ export default function PostPropertyStep3() {
       </main>
 
       {/* Footer */}
-      <div className="fixed bottom-0 left-0 lg:left-64 right-0 p-4 lg:p-6 z-20" style={{ backgroundColor: colors.background }}>
-        <div className="max-w-5xl mx-auto">
+      <div 
+        className={`fixed bottom-0 left-0 right-0 p-4 lg:p-6 z-20 transition-all duration-300 ${
+          isCollapsed ? 'lg:left-20' : 'lg:left-64'
+        }`} 
+        style={{ backgroundColor: colors.background }}
+      >
+        <div className="max-w-5xl mx-auto pb-16 lg:pb-0">
           <button
             type="button"
             onClick={() => router.push('/')}

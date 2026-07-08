@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { ChevronRight, House, LayoutGrid, Sparkles, UserRound, ChevronLeft } from 'lucide-react';
 import { useTheme } from '@/lib/theme/theme-provider';
 import { useI18n } from '@/lib/i18n/i18n-provider';
+import { useSidebar } from '@/lib/layout/sidebar-context';
 import { Tag } from '@/components/common/tag';
 import { buttonClasses, iconButtonClasses, iconSize } from '@/lib/design-system/dimensions';
 
@@ -13,6 +14,7 @@ type Role = 'owner' | 'broker-agent' | 'developer' | 'property-manager' | '';
 export default function PostPropertyStep1() {
   const router = useRouter();
   const { colors } = useTheme();
+  const { isCollapsed } = useSidebar();
   const [selectedRole, setSelectedRole] = useState<Role>('');
 
   const roleOptions = [
@@ -139,8 +141,13 @@ export default function PostPropertyStep1() {
       </div>
 
       {/* Footer */}
-      <div className="fixed bottom-0 left-0 lg:left-64 right-0 p-4 lg:p-6 z-20" style={{ backgroundColor: colors.background }}>
-        <div className="max-w-5xl mx-auto">
+      <div 
+        className={`fixed bottom-0 left-0 right-0 p-4 lg:p-6 z-20 transition-all duration-300 ${
+          isCollapsed ? 'lg:left-20' : 'lg:left-64'
+        }`} 
+        style={{ backgroundColor: colors.background }}
+      >
+        <div className="max-w-5xl mx-auto pb-16 lg:pb-0">
           <button
             onClick={() => selectedRole && router.push('/post-property/details')}
             disabled={!selectedRole}
